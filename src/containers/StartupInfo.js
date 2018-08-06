@@ -110,7 +110,7 @@ class StartupInfo extends React.Component {
                                
                                 <TextField
                                     type="text"
-                                    label="name"
+                                    label="Name"
                                     onChange={(event) => this.setState({name: event.target.value})}
                                     fullWidth
                                     defaultValue={name}
@@ -121,7 +121,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="founderName"
+                                    label="Founder Name"
                                     onChange={(event) => this.setState({founderName: event.target.value})}
                                     fullWidth
                                     defaultValue={founderName}
@@ -142,7 +142,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="totalMemberCount"
+                                    label="Total Member Count"
                                     onChange={(event) => this.setState({totalMemberCount: event.target.value})}
                                     fullWidth
                                     defaultValue={totalMemberCount}
@@ -153,7 +153,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="typeOfIncorporation"
+                                    label="Type Of Incorporation"
                                     onChange={(event) => this.setState({typeOfIncorporation: event.target.value})}
                                     fullWidth
                                     defaultValue={typeOfIncorporation}
@@ -164,7 +164,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="legalEntityName"
+                                    label="Legal Entity Name"
                                     onChange={(event) => this.setState({legalEntityName: event.target.value})}
                                     fullWidth
                                     defaultValue={legalEntityName}
@@ -185,7 +185,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="raisedFunds"
+                                    label="Raised Funds"
                                     onChange={(event) => this.setState({raisedFunds: event.target.value})}
                                     fullWidth
                                     defaultValue={raisedFunds}
@@ -196,7 +196,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="expectedFund"
+                                    label="Expected Fund"
                                     onChange={(event) => this.setState({expectedFund: event.target.value})}
                                     fullWidth
                                     defaultValue={expectedFund}
@@ -207,7 +207,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="registeredAddress"
+                                    label="Registered Address"
                                     onChange={(event) => this.setState({registeredAddress: event.target.value})}
                                     fullWidth
                                     defaultValue={registeredAddress}
@@ -218,7 +218,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="founderResidentialAddress"
+                                    label="Founder Residential Address"
                                     onChange={(event) => this.setState({founderResidentialAddress: event.target.value})}
                                     fullWidth
                                     defaultValue={founderResidentialAddress}
@@ -229,7 +229,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="founderContactNumber"
+                                    label="Founder Contact Number"
                                     onChange={(event) => this.setState({founderContactNumber: event.target.value})}
                                     fullWidth
                                     defaultValue={founderContactNumber}
@@ -240,7 +240,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="founderEmailAddress"
+                                    label="Founder Email Address"
                                     onChange={(event) => this.setState({founderEmailAddress: event.target.value})}
                                     fullWidth
                                     defaultValue={founderEmailAddress}
@@ -251,7 +251,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="secondaryContactName"
+                                    label="Secondary Contact Name"
                                     onChange={(event) => this.setState({secondaryContactName: event.target.value})}
                                     fullWidth
                                     defaultValue={secondaryContactName}
@@ -262,7 +262,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="secondaryContactNumber"
+                                    label="Secondary Contact Number"
                                     onChange={(event) => this.setState({secondaryContactNumber: event.target.value})}
                                     fullWidth
                                     defaultValue={secondaryContactNumber}
@@ -273,7 +273,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="secondaryEmailAddress"
+                                    label="Secondary Email Address"
                                     onChange={(event) => this.setState({secondaryEmailAddress: event.target.value})}
                                     fullWidth
                                     defaultValue={secondaryEmailAddress}
@@ -284,7 +284,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="startupWebsite"
+                                    label="Startup Website"
                                     onChange={(event) => this.setState({startupWebsite: event.target.value})}
                                     fullWidth
                                     defaultValue={startupWebsite}
@@ -295,7 +295,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="socialMediaLinks"
+                                    label="Social Media Links"
                                     onChange={(event) => this.setState({socialMediaLinks: event.target.value})}
                                     fullWidth
                                     margin="normal"
@@ -305,7 +305,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="startupPAN"
+                                    label="Startup PAN"
                                     onChange={(event) => this.setState({startupPAN: event.target.value})}
                                     fullWidth
                                     defaultValue={startupPAN}
@@ -316,7 +316,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="bankAccountNumber"
+                                    label="Bank Account Number"
                                     onChange={(event) => this.setState({bankAccountNumber: event.target.value})}
                                     fullWidth
                                     defaultValue={bankAccountNumber}
@@ -327,7 +327,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="bankName"
+                                    label="Bank Name"
                                     onChange={(event) => this.setState({bankName: event.target.value})}
                                     fullWidth
                                     defaultValue={bankName}
@@ -338,7 +338,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="bankIFSC"
+                                    label="Bank IFSC"
                                     onChange={(event) => this.setState({bankIFSC: event.target.value})}
                                     fullWidth
                                     defaultValue={bankIFSC}
@@ -349,7 +349,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="facilitiesNeededFromGUSEC"
+                                    label="Facilities Needed From GUSEC"
                                     onChange={(event) => this.setState({facilitiesNeededFromGUSEC: event.target.value})}
                                     fullWidth
                                     defaultValue={facilitiesNeededFromGUSEC}
@@ -360,7 +360,7 @@ class StartupInfo extends React.Component {
 
                                 <TextField
                                     type="text"
-                                    label="gusecPremisesAccess"
+                                    label="GUSEC Premises Access"
                                     onChange={(event) => this.setState({gusecPremisesAccess: event.target.value})}
                                     fullWidth
                                     defaultValue={gusecPremisesAccess}
@@ -374,8 +374,7 @@ class StartupInfo extends React.Component {
                                         this.props.showAuthLoader();
                                         this.props.userSignUp({name, email, password});
                                     }} color="primary">
-                                        <IntlMessages
-                                            id="appModule.regsiter"/>
+                                        Submit
                                     </Button>
                                    
                                 </div>
