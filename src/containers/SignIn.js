@@ -21,8 +21,8 @@ class SignIn extends React.Component {
     constructor() {
         super();
         this.state = {
-            email: 'demo@example.com',
-            password: 'demo#123'
+            email: '',
+            password: ''
         }
     }
 
@@ -56,7 +56,7 @@ class SignIn extends React.Component {
 
                     <div className="app-login-content">
                         <div className="app-login-header mb-4">
-                            <h1><IntlMessages id="appModule.email"/></h1>
+                            <h1>Create account</h1>
                         </div>
 
                         <div className="app-login-form">
