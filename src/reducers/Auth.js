@@ -10,7 +10,8 @@ import {
     SIGNIN_TWITTER_USER_SUCCESS,
     SIGNIN_USER_SUCCESS,
     SIGNOUT_USER_SUCCESS,
-    SIGNUP_USER_SUCCESS
+    SIGNUP_USER_SUCCESS,
+    ON_STARTUP_INFO_SUBMIT
 } from "constants/ActionTypes";
 
 const INIT_STATE = {
@@ -109,6 +110,12 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 loader: false
+            }
+        }
+        case ON_STARTUP_INFO_SUBMIT: {
+            return {
+                ...state,
+                loader: false,
             }
         }
         default:

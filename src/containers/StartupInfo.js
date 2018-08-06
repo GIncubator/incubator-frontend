@@ -10,11 +10,8 @@ import IntlMessages from 'util/IntlMessages';
 import {
     hideMessage,
     showAuthLoader,
-    userFacebookSignIn,
-    userGithubSignIn,
-    userGoogleSignIn,
     userSignUp,
-    userTwitterSignIn
+    submitStartupInfo
 } from 'actions/Auth';
 
 const formStyle = {
@@ -28,11 +25,19 @@ class StartupInfo extends React.Component {
         this.state = {
             name: '',
             founderName: '',
-            coFounders: [],
+            coFounders: [{
+                name: '',
+                designation: ''
+            }],
             totalMemberCount: '',
             typeOfIncorporation: '',
             legalEntityName: '',
-            legalEntityMembers: [],
+            legalEntityMembers: [
+                {
+                    name: '',
+                    designation: ''
+                }
+            ],
             raisedFunds: '',
             expectedFund: '',
             registeredAddress: '',
@@ -43,7 +48,9 @@ class StartupInfo extends React.Component {
             secondaryContactNumber: '',
             secondaryEmailAddress: '',
             startupWebsite: '',
-            socialMediaLinks: [],
+            socialMediaLinks: [
+                ''
+            ],
             startupPAN: '',
             bankAccountNumber: '',
             bankName: '',
@@ -64,15 +71,88 @@ class StartupInfo extends React.Component {
         }
     }
 
+    handleCofounderNameChange(idx) { 
+        return (evt) => {
+        const newCofounders = this.state.coFounders.map((coFounder, sidx) => {
+          if (idx !== sidx) return coFounder;
+          return { ...coFounder, name: evt.target.value };
+        });
+        
+        this.setState({ coFounders: newCofounders });
+      }
+    }
+
+
+      handleCofounderDesgChange (idx) {
+          return (evt) => {
+        const newCofounders = this.state.coFounders.map((coFounder, sidx) => {
+          if (idx !== sidx) return coFounder;
+          return { ...coFounder, designation: evt.target.value };
+        });
+        
+        this.setState({ coFounders: newCofounders });
+      }
+    }
+
+    addCofounder() {
+        this.setState({
+            coFounders: this.state.coFounders.concat([{ name: '', designation: '' }])
+        })
+    }
+
+    handleLegalEntityMemberNameChange(idx) { 
+        return (evt) => {
+        const newlegalEntityMembers = this.state.legalEntityMembers.map((legalEntity, sidx) => {
+          if (idx !== sidx) return legalEntity;
+          return { ...legalEntity, name: evt.target.value };
+        });
+        
+        this.setState({ legalEntityMembers: newlegalEntityMembers });
+      }
+    }
+
+      handleLegalEntityMemberDesgChange (idx) {
+          return (evt) => {
+        const newlegalEntityMembers = this.state.legalEntityMembers.map((legalEntity, sidx) => {
+          if (idx !== sidx) return legalEntity;
+          return { ...legalEntity, designation: evt.target.value };
+        });
+        
+        this.setState({ legalEntityMembers: newlegalEntityMembers });
+      }
+    }
+
+    addLegalEntityMember() {
+        console.log(this)
+        this.setState({
+            legalEntityMembers: this.state.legalEntityMembers.concat([{ name: '', designation: '' }])
+        })
+    }
+
+    handleSocialMediaLinkChange (idx) {
+        return (evt) => {
+      const newSocialMediaLinks = this.state.socialMediaLinks.map((link, sidx) => {
+        if (idx !== sidx) return link;
+        return evt.target.value;
+      });
+      
+      this.setState({ socialMediaLinks: newSocialMediaLinks });
+    }
+  }
+
+  addSocialLink() {
+      this.setState({
+          socialMediaLinks: this.state.socialMediaLinks.concat([''])
+      })
+  }
+
     render() {
         const {
             name,
             founderName,
-            coFounders,
             totalMemberCount,
             typeOfIncorporation,
             legalEntityName,
-            legalEntityMembers,
             raisedFunds,
             expectedFund,
             registeredAddress,
@@ -83,7 +163,6 @@ class StartupInfo extends React.Component {
             secondaryContactNumber,
             secondaryEmailAddress,
             startupWebsite,
-            socialMediaLinks,
             startupPAN,
             bankAccountNumber,
             bankName,
@@ -118,7 +197,6 @@ class StartupInfo extends React.Component {
                                     className="mt-0 mb-2"
                                 />
 
-
                                 <TextField
                                     type="text"
                                     label="Founder Name"
@@ -129,17 +207,30 @@ class StartupInfo extends React.Component {
                                     className="mt-0 mb-2"
                                 />
 
-
-                                <TextField
+                                {this.state.coFounders.map((f, i) => <div key={i}>
+                                    <TextField
                                     type="text"
-                                    label="coFounders"
-                                    onChange={(event) => this.setState({coFounders: event.target.value})}
+                                    label="Cofounder Name"
+                                    onChange={this.handleCofounderNameChange(i)}
                                     fullWidth
+                                    defaultValue={f.name}
                                     margin="normal"
                                     className="mt-0 mb-2"
-                                />
-
-
+                                     />
+                                    <TextField
+                                    type="text"
+                                    label="Cofounder Designation"
+                                    onChange={this.handleCofounderDesgChange(i)}
+                                    fullWidth
+                                    defaultValue={f.designation}
+                                    margin="normal"
+                                    className="mt-0 mb-2"
+                                    />
+                                    </div>)}
+                                    <Button variant="raised" onClick={this.addCofounder.bind(this)} type="button">
+                                    Add more Cofounder
+                                    </Button>
+                              
                                 <TextField
                                     type="text"
                                     label="Total Member Count"
@@ -173,14 +264,29 @@ class StartupInfo extends React.Component {
                                 />
 
 
-                                <TextField
+                               {this.state.legalEntityMembers.map((f, i) => <div key={i}>
+                                    <TextField
                                     type="text"
-                                    label="legalEntityMembers"
-                                    onChange={(event) => this.setState({legalEntityMembers: event.target.value})}
+                                    label="Legal Entity Member Name"
+                                    onChange={this.handleLegalEntityMemberNameChange(i)}
                                     fullWidth
+                                    defaultValue={f.name}
                                     margin="normal"
                                     className="mt-0 mb-2"
-                                />
+                                     />
+                                    <TextField
+                                    type="text"
+                                    label="Legal Entity Member Designation"
+                                    onChange={this.handleLegalEntityMemberDesgChange(i)}
+                                    fullWidth
+                                    defaultValue={f.designation}
+                                    margin="normal"
+                                    className="mt-0 mb-2"
+                                    />
+                                    </div>)}
+                                    <Button variant="raised" onClick={this.addLegalEntityMember.bind(this)} type="button">
+                                    Add more Legal Entity Member
+                                    </Button>
 
 
                                 <TextField
@@ -293,15 +399,20 @@ class StartupInfo extends React.Component {
                                 />
 
 
-                                <TextField
+                                {this.state.socialMediaLinks.map((f, i) => <div key={i}>
+                                    <TextField
                                     type="text"
-                                    label="Social Media Links"
-                                    onChange={(event) => this.setState({socialMediaLinks: event.target.value})}
+                                    label="Social media link"
+                                    onChange={this.handleSocialMediaLinkChange(i)}
                                     fullWidth
+                                    defaultValue={f}
                                     margin="normal"
                                     className="mt-0 mb-2"
-                                />
-
+                                     />
+                                    </div>)}
+                                    <Button variant="raised" onClick={this.addSocialLink.bind(this)} type="button">
+                                    Add more link
+                                    </Button>
 
                                 <TextField
                                     type="text"
@@ -372,7 +483,8 @@ class StartupInfo extends React.Component {
                                 <div className="mb-3 d-flex align-items-center justify-content-between">
                                     <Button variant="raised" onClick={() => {
                                         this.props.showAuthLoader();
-                                        this.props.userSignUp({name, email, password});
+                                        console.log(this.state)
+                                        this.props.submitStartupInfo(this.state);
                                     }} color="primary">
                                         Submit
                                     </Button>
@@ -406,8 +518,5 @@ export default connect(mapStateToProps, {
     userSignUp,
     hideMessage,
     showAuthLoader,
-    userFacebookSignIn,
-    userGoogleSignIn,
-    userGithubSignIn,
-    userTwitterSignIn
+    submitStartupInfo
 })(StartupInfo);

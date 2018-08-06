@@ -17,7 +17,8 @@ import {
     SIGNIN_TWITTER_USER,
     SIGNIN_USER,
     SIGNOUT_USER,
-    SIGNUP_USER
+    SIGNUP_USER,
+    ON_STARTUP_INFO_SUBMIT
 } from "constants/ActionTypes";
 import { showAuthMessage, userSignInSuccess, userSignOutSuccess, userSignUpSuccess } from "actions/Auth";
 import {
@@ -182,6 +183,11 @@ function* signOut() {
     }
 }
 
+function* submitStartupInfoData({payload}) {
+    console.log(payload);
+    yield put(showAuthMessage('wow'))
+}
+
 export function* createUserAccount() {
     yield takeEvery(SIGNUP_USER, createUserWithEmailPassword);
 }
@@ -210,6 +216,10 @@ export function* signOutUser() {
     yield takeEvery(SIGNOUT_USER, signOut);
 }
 
+export function* submitStartupInfo() {
+    yield takeEvery(ON_STARTUP_INFO_SUBMIT, submitStartupInfoData);
+}
+
 export default function* rootSaga() {
     yield all([fork(signInUser),
         fork(createUserAccount),
@@ -217,5 +227,6 @@ export default function* rootSaga() {
         fork(signInWithFacebook),
         fork(signInWithTwitter),
         fork(signInWithGithub),
-        fork(signOutUser)]);
+        fork(signOutUser),
+        fork(submitStartupInfo)]);
 }
