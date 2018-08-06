@@ -7,6 +7,10 @@ import {
     twitterAuthProvider
 } from "firebase/firebase";
 import {
+    registerUser,
+    loginUser
+} from '../services/auth-service'
+import {
     SIGNIN_FACEBOOK_USER,
     SIGNIN_GITHUB_USER,
     SIGNIN_GOOGLE_USER,
@@ -15,7 +19,7 @@ import {
     SIGNOUT_USER,
     SIGNUP_USER
 } from "constants/ActionTypes";
-import {showAuthMessage, userSignInSuccess, userSignOutSuccess, userSignUpSuccess} from "actions/Auth";
+import { showAuthMessage, userSignInSuccess, userSignOutSuccess, userSignUpSuccess } from "actions/Auth";
 import {
     userFacebookSignInSuccess,
     userGithubSignInSuccess,
@@ -23,15 +27,17 @@ import {
     userTwitterSignInSuccess
 } from "../actions/Auth";
 
-const createUserWithEmailPasswordRequest = async (email, password) =>
-    await  auth.createUserWithEmailAndPassword(email, password)
+const createUserWithEmailPasswordRequest = async (name, email, password) => 
+    await registerUser(name, email, password)
         .then(authUser => authUser)
         .catch(error => error);
 
-const signInUserWithEmailPasswordRequest = async (email, password) =>
-    await  auth.signInWithEmailAndPassword(email, password)
+
+const signInUserWithEmailPasswordRequest = async (email, password) => 
+     await loginUser(email, password)
         .then(authUser => authUser)
         .catch(error => error);
+
 
 const signOutRequest = async () =>
     await  auth.signOut()
@@ -60,14 +66,14 @@ const signInUserWithTwitterRequest = async () =>
         .catch(error => error);
 
 function* createUserWithEmailPassword({payload}) {
-    const {email, password} = payload;
+    const {name, email, password} = payload;
     try {
-        const signUpUser = yield call(createUserWithEmailPasswordRequest, email, password);
-        if (signUpUser.message) {
-            yield put(showAuthMessage(signUpUser.message));
+        const signUpUser = yield call(createUserWithEmailPasswordRequest, name, email, password);
+        if (signUpUser.error) {
+            yield put(showAuthMessage(signUpUser.error));
         } else {
-            localStorage.setItem('user_id', signUpUser.user.uid);
-            yield put(userSignUpSuccess(signUpUser.user.uid));
+            localStorage.setItem('user', signUpUser);
+            yield put(userSignUpSuccess(signUpUser));
         }
     } catch (error) {
         yield put(showAuthMessage(error));
@@ -141,11 +147,12 @@ function* signInUserWithEmailPassword({payload}) {
     const {email, password} = payload;
     try {
         const signInUser = yield call(signInUserWithEmailPasswordRequest, email, password);
-        if (signInUser.message) {
-            yield put(showAuthMessage(signInUser.message));
+        console.log(signInUser);
+        if (signInUser.error) {
+            yield put(showAuthMessage(signInUser.error));
         } else {
-            localStorage.setItem('user_id', signInUser.user.uid);
-            yield put(userSignInSuccess(signInUser.user.uid));
+            localStorage.setItem('user', signInUser);
+            yield put(userSignInSuccess(signInUser));
         }
     } catch (error) {
         yield put(showAuthMessage(error));
@@ -156,7 +163,7 @@ function* signOut() {
     try {
         const signOutUser = yield call(signOutRequest);
         if (signOutUser === undefined) {
-            localStorage.removeItem('user_id');
+            localStorage.removeItem('user');
             yield put(userSignOutSuccess(signOutUser));
         } else {
             yield put(showAuthMessage(signOutUser.message));

@@ -10,16 +10,19 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import {
     hideMessage,
     showAuthLoader,
+    userFacebookSignIn,
+    userGithubSignIn,
     userGoogleSignIn,
-    userSignIn
+    userSignIn,
+    userTwitterSignIn
 } from 'actions/Auth';
 
 class SignIn extends React.Component {
     constructor() {
         super();
         this.state = {
-            email: '',
-            password: ''
+            email: 'demo@example.com',
+            password: 'demo#123'
         }
     }
 
@@ -53,7 +56,7 @@ class SignIn extends React.Component {
 
                     <div className="app-login-content">
                         <div className="app-login-header mb-4">
-                            <h1><IntlMessages id="appModule.signIn"/></h1>
+                            <h1><IntlMessages id="appModule.email"/></h1>
                         </div>
 
                         <div className="app-login-form">
@@ -94,6 +97,25 @@ class SignIn extends React.Component {
                                         <IntlMessages
                                             id="signIn.connectWith"/>
                                         <ul className="social-link">
+                                            <li>
+                                                <IconButton className="icon"
+                                                            onClick={() => {
+                                                                this.props.showAuthLoader();
+                                                                this.props.userFacebookSignIn();
+                                                            }}>
+                                                    <i className="zmdi zmdi-facebook"/>
+                                                </IconButton>
+                                            </li>
+
+                                            <li>
+                                                <IconButton className="icon"
+                                                            onClick={() => {
+                                                                this.props.showAuthLoader();
+                                                                this.props.userTwitterSignIn();
+                                                            }}>
+                                                    <i className="zmdi zmdi-twitter"/>
+                                                </IconButton>
+                                            </li>
 
                                             <li>
                                                 <IconButton className="icon"
@@ -102,10 +124,19 @@ class SignIn extends React.Component {
                                                                 this.props.userGoogleSignIn();
 
                                                             }}>
-                                                    <i className="zmdi zmdi-google"/>
+                                                    <i className="zmdi zmdi-google-plus"/>
                                                 </IconButton>
                                             </li>
 
+                                            <li>
+                                                <IconButton className="icon"
+                                                            onClick={() => {
+                                                                this.props.showAuthLoader();
+                                                                this.props.userGithubSignIn();
+                                                            }}>
+                                                    <i className="zmdi zmdi-github"/>
+                                                </IconButton>
+                                            </li>
                                         </ul>
                                     </div>
 
@@ -137,5 +168,8 @@ export default connect(mapStateToProps, {
     userSignIn,
     hideMessage,
     showAuthLoader,
+    userFacebookSignIn,
     userGoogleSignIn,
+    userGithubSignIn,
+    userTwitterSignIn
 })(SignIn);

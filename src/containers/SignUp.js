@@ -10,8 +10,11 @@ import IntlMessages from 'util/IntlMessages';
 import {
     hideMessage,
     showAuthLoader,
+    userFacebookSignIn,
+    userGithubSignIn,
     userGoogleSignIn,
-    userSignUp
+    userSignUp,
+    userTwitterSignIn
 } from 'actions/Auth';
 
 class SignUp extends React.Component {
@@ -54,6 +57,10 @@ class SignUp extends React.Component {
 
                     <div className="app-login-content">
                         <div className="app-login-header">
+                            <h1>Sign Up</h1>
+                        </div>
+
+                        <div className="mb-4">
                             <h2><IntlMessages id="appModule.createAccount"/></h2>
                         </div>
 
@@ -92,7 +99,7 @@ class SignUp extends React.Component {
                                 <div className="mb-3 d-flex align-items-center justify-content-between">
                                     <Button variant="raised" onClick={() => {
                                         this.props.showAuthLoader();
-                                        this.props.userSignUp({email, password});
+                                        this.props.userSignUp({name, email, password});
                                     }} color="primary">
                                         <IntlMessages
                                             id="appModule.regsiter"/>
@@ -105,17 +112,16 @@ class SignUp extends React.Component {
                                     <IntlMessages
                                         id="signIn.connectWith"/>
                                     <ul className="social-link">
-                                  
                                         <li>
                                             <IconButton className="icon"
                                                         onClick={() => {
                                                             this.props.showAuthLoader();
                                                             this.props.userGoogleSignIn();
+
                                                         }}>
-                                                <i className="zmdi zmdi-google"/>
+                                                <i className="zmdi zmdi-google-plus"/>
                                             </IconButton>
                                         </li>
-
                                     </ul>
                                 </div>
 
@@ -147,5 +153,8 @@ export default connect(mapStateToProps, {
     userSignUp,
     hideMessage,
     showAuthLoader,
-    userGoogleSignIn
+    userFacebookSignIn,
+    userGoogleSignIn,
+    userGithubSignIn,
+    userTwitterSignIn
 })(SignUp);

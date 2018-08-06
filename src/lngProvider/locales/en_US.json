@@ -537,7 +537,7 @@
   "signUp.success": "Account successfully created",
   "signUp.error": "Right",
   "signIn.signUp": "Create an account",
-  "signIn.connectWith": "or login using",
+  "signIn.connectWith": "or connect with",
   "signUp.alreadyMember": "I am already a member",
   "appModule.signin": "Sign In",
   "appModule.signup": "Sign Up",
