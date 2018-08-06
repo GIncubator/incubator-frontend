@@ -25,7 +25,8 @@ class StartupInfo extends React.Component {
         this.state = {
             name: '',
             founderName: '',
-            coFounders: [{
+            coFounders: [
+                {
                 name: '',
                 designation: ''
             }],
@@ -175,13 +176,10 @@ class StartupInfo extends React.Component {
             <div
                 className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
                 <div className="app-login-main-content">
-                    
-
                     <div className="app-login-content" style={formStyle}>
+
                         <div className="app-login-header">
-                            <h1>
-                            Information about your startup and its team
-                            </h1>
+                            <h1>Information about your startup and its team</h1>
                         </div>
 
                         <div className="app-login-form">
@@ -483,7 +481,6 @@ class StartupInfo extends React.Component {
                                 <div className="mb-3 d-flex align-items-center justify-content-between">
                                     <Button variant="raised" onClick={() => {
                                         this.props.showAuthLoader();
-                                        console.log(this.state)
                                         this.props.submitStartupInfo(this.state);
                                     }} color="primary">
                                         Submit

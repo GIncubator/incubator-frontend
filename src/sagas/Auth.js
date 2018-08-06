@@ -8,8 +8,9 @@ import {
 } from "firebase/firebase";
 import {
     registerUser,
-    loginUser
-} from '../services/auth-service'
+    loginUser,
+    startupInfo
+} from '../services'
 import {
     SIGNIN_FACEBOOK_USER,
     SIGNIN_GITHUB_USER,
@@ -20,7 +21,7 @@ import {
     SIGNUP_USER,
     ON_STARTUP_INFO_SUBMIT
 } from "constants/ActionTypes";
-import { showAuthMessage, userSignInSuccess, userSignOutSuccess, userSignUpSuccess } from "actions/Auth";
+import { showAuthMessage, userSignInSuccess, userSignOutSuccess, userSignUpSuccess, submitStartupInfoDone } from "actions/Auth";
 import {
     userFacebookSignInSuccess,
     userGithubSignInSuccess,
@@ -183,9 +184,23 @@ function* signOut() {
     }
 }
 
+const submitStartupInfoRequest = async (payload) => 
+    await startupInfo(payload)
+        .then(data => data)
+        .catch(error => error);
+
 function* submitStartupInfoData({payload}) {
-    console.log(payload);
-    yield put(showAuthMessage('wow'))
+    try {
+        const startup = yield call(submitStartupInfoRequest, payload);
+        console.log(startup)
+        if(startup.data.error) {
+            yield put(showAuthMessage(startup.data.error))
+        } else {
+            yield put(submitStartupInfoDone())
+        }
+    } catch(error) {
+        yield put(showAuthMessage(error))
+    }
 }
 
 export function* createUserAccount() {
