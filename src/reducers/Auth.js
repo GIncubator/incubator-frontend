@@ -18,7 +18,8 @@ const INIT_STATE = {
     alertMessage: '',
     showMessage: false,
     initURL: '',
-    authUser: localStorage.getItem('user_id'),
+    authUser: localStorage.getItem('user'),
+    token: localStorage.getItem('token'),
 };
 
 
@@ -48,7 +49,7 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 authUser: null,
-                initURL: '/app/dashboard/default',
+                initURL: '/app/sample-page',
                 loader: false
             }
         }

@@ -29,8 +29,6 @@ class App extends React.Component {
         else if (document.body.classList.contains('ios-mobile-view-height')) {
             document.body.classList.remove('ios-mobile-view-height')
         }
-
-        console.log(navigationStyle, horizontalNavPosition);
         return (
             <div className={`app-container ${drawerStyle}`}>
                 <Tour/>
@@ -50,7 +48,8 @@ class App extends React.Component {
                         <div className="app-main-content">
                             <Switch>
                                 <Route path={`${match.url}/sample-page`}
-                                       component={asyncComponent(() => import('./routes/SamplePage'))}/> <Route
+                                       component={asyncComponent(() => import('./routes/SamplePage'))}/>             
+                            <Route
                                 component={asyncComponent(() => import('components/Error404'))}/>
                             </Switch>
                         </div>
