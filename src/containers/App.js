@@ -53,7 +53,7 @@ class App extends Component {
     if (location.pathname === '/') {
       if (authUser === null) {
         return <Redirect to={'/signin'} />
-      } else if (initURL === '' || initURL === '/' || initURL === '/signin') {
+      } else if (initURL === '' || initURL === '/' || initURL === '/signin' || initURL === '/signup') {
         return <Redirect to={'/app/sample-page'} />
       } else {
         return <Redirect to={initURL} />
