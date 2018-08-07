@@ -1,7 +1,7 @@
 export const weatherData = {
         city: {
             name: "San Francisco",
-            dateTime:"Mon, 12:30 PM, Mostly Sunny",
+            dateTime: "Mon, 12:30 PM, Mostly Sunny",
             country: "US",
 
         },

@@ -1,10 +1,7 @@
 import React from 'react';
-import {Modal, ModalHeader} from 'reactstrap';
+import {Button, Modal, ModalHeader} from 'reactstrap';
 import Moment from 'moment';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+
 
 class ComposeMail extends React.Component {
     constructor() {
@@ -26,42 +23,33 @@ class ComposeMail extends React.Component {
                    style={{zIndex: 2600}}>
                 <ModalHeader className="modal-box-header bg-primary">
                     New Message
-                    <IconButton className="text-white"
-                                onClick={onClose}>
-                        <CloseIcon/>
-                    </IconButton>
+                    <span className="text-white pointer" onClick={onClose}>
+                        <i className="zmdi zmdi-close zmdi-hc-lg"/>
+                    </span>
                 </ModalHeader>
                 <div className="modal-box-content d-flex flex-column">
 
-                    <TextField
-                        id="required"
-                        label="To*"
-                        onChange={(event) => this.setState({to: event.target.value})}
-                        defaultValue={to}
-                        margin="normal"/>
-                    <TextField
-                        id="required"
-                        label="Subject"
-                        onChange={(event) => this.setState({subject: event.target.value})}
-                        value={subject}
-                        margin="normal"
+                    <input type="text" className="form-control mb-2" placeholder="To*"
+                           onChange={(event) => this.setState({to: event.target.value})}
+                           defaultValue={to}
                     />
-                    <TextField
-                        id="required"
-                        label="Message"
-                        onChange={(event) => this.setState({message: event.target.value})}
-                        value={message}
-                        multiline
-                        rowsMax="4"
-                        margin="normal"/>
+                    <input type="text" className="form-control mb-2" placeholder="Subject"
+                           onChange={(event) => this.setState({subject: event.target.value})}
+                           value={subject}
+
+                    />
+                    <input type="text" className="form-control mb-2" placeholder="Message"
+                           onChange={(event) => this.setState({message: event.target.value})}
+                           value={message}
+                    />
                 </div>
 
                 <div className="modal-box-footer">
-                    <Button className="attach-file jr-btn text-muted">
+                    <span className="attach-file jr-btn text-muted bg-white">
                         <i className="zmdi zmdi-attachment mr-2 zmdi-hc-2x"/> Attach File
-                    </Button>
+                    </span>
 
-                    <Button disabled={to === ''} variant="raised" color="primary" onClick={() => {
+                    <Button disabled={to === ''} color="primary" onClick={() => {
                         onClose();
                         onMailSend(
                             {
@@ -90,7 +78,7 @@ class ComposeMail extends React.Component {
                             })
 
                     }}>
-                        <i class="zmdi zmdi-mail-send mr-2"></i> Send Message</Button>
+                        <i className="zmdi zmdi-mail-send mr-2"/> Send Message</Button>
                 </div>
             </Modal>
         );

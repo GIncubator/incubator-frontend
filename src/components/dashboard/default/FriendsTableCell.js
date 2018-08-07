@@ -1,5 +1,4 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 
 const FriendsTableCell = ({data}) => {
     const {id, name, designation, image, status} = data;
@@ -11,10 +10,10 @@ const FriendsTableCell = ({data}) => {
             key={id}>
             <td>
                 <div className="user-profile d-flex flex-row align-items-center">
-                    <Avatar
+                    <img
                         alt={name}
                         src={image}
-                        className="user-avatar"
+                        className="user-avatar rounded-circle"
                     />
                     <div className="user-detail">
                         <h5 className="user-name">{name} </h5>

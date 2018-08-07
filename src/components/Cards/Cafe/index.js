@@ -1,11 +1,11 @@
 import React from 'react';
-import {Card, CardBody, CardImg} from 'reactstrap';
+import {Button, Card, CardBody, CardImg} from 'reactstrap';
 import StarRatingComponent from 'react-star-rating-component';
-import Button from '@material-ui/core/Button';
+
 
 const CafeCard = () => {
     return (
-        <Card className="shadow border-0">
+        <Card>
             <CardImg top width="100%" src="http://via.placeholder.com/500x330" alt="Card image cap"/>
             <CardBody>
                 <h3 className="card-title mb-0">Cafe Basilico</h3>
@@ -29,23 +29,17 @@ const CafeCard = () => {
             </CardBody>
 
             <div className="card-mt-footer">
-                <div>
-                    <Button size="small" className="jr-btn jr-btn-sm" color="default">
+                <div className="btn-group-mins mb-2">
+                    <span className="jr-btn">
                         <i className="zmdi zmdi-time zmdi-hc-lg"/>
                         <span>Time</span>
-                    </Button>
+                    </span>
 
-                    <Button size="small" className="jr-btn jr-btn-sm" color="default">
-                        <span>7:30 PM</span>
-                    </Button>
+                    <span className="jr-btn">7:30 PM</span>
 
-                    <Button size="small" className="jr-btn jr-btn-sm" color="default">
-                        <span>9:00 PM</span>
-                    </Button>
+                    <span className="jr-btn">9:00 PM</span>
                 </div>
-                <Button size="small" className="jr-btn jr-btn-sm" color="primary">
-                    <span>RESERVE</span>
-                </Button>
+                <Button size="sm" outline color="primary" className="ml-2">RESERVE</Button>
             </div>
         </Card>
     );

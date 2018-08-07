@@ -1,11 +1,8 @@
 /*Alert Styles*/
 .alert {
   border: 0 none;
-}
-
-.alert {
   padding: 20px 24px;
-  @include border-radius($border-radius-sm);
+  @include border-radius($border-radius-lg);
   position: relative;
 
   & .close {

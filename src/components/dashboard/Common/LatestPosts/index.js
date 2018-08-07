@@ -8,7 +8,7 @@ const LatestPosts = ({recentData}) => {
             <div className="size-80 post-image mr-3">
                 <div className="grid-thumb-equal rounded">
                     <div className="grid-thumb-cover">
-                        <img className="img-fluid rounded" src={image} alt="user-image" />
+                        <img className="img-fluid rounded" src={image} alt="user-image"/>
                     </div>
                 </div>
             </div>

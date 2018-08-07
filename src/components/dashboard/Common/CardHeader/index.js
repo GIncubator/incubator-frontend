@@ -1,29 +1,11 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton'
-import CardMenu from '../CardMenu';
 
 class CardHeader extends React.Component {
 
 
-    onOptionMenuSelect = event => {
-        this.setState({menuState: true, anchorEl: event.currentTarget});
-    };
-    handleRequestClose = () => {
-        this.setState({menuState: false});
-    };
-
-    constructor() {
-        super();
-        this.state = {
-            anchorEl: undefined,
-            menuState: false,
-        }
-    }
-
     render() {
         const {heading, subHeading} = this.props;
         let {styleName} = this.props;
-        const {anchorEl, menuState} = this.state;
         return (
             <div className={`jr-card-header d-flex ${styleName}`}>
                 <div className="mr-auto">
@@ -31,11 +13,9 @@ class CardHeader extends React.Component {
                     {subHeading && <p className="sub-heading">{subHeading}</p>}
                 </div>
 
-                <IconButton className="size-30" onClick={this.onOptionMenuSelect.bind(this)}>
+                <span className="icon-btn size-30">
                     <i className="zmdi zmdi-chevron-down"/>
-                </IconButton>
-                <CardMenu menuState={menuState} anchorEl={anchorEl}
-                          handleRequestClose={this.handleRequestClose.bind(this)}/>
+                </span>
             </div>
         )
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import {Button} from 'reactstrap';
 
 const StoryOfTheDay = () => {
     return (
@@ -20,7 +20,7 @@ const StoryOfTheDay = () => {
                     Animi distinctio ea eligendi laborum nemo odio perferendis quas qui sint voluptatibus, iste minus
                     perspiciatis quod vero!
                 </p>
-                <Button size="small" color="primary">Learn More</Button>
+                <Button size="sm" color="primary">Learn More</Button>
             </div>
         </div>
     )

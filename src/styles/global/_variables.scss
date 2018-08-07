@@ -1,25 +1,25 @@
 @import "../bootstrap/functions";
 @import "../bootstrap/variables";
-
+@import "../bootstrap/mixins";
 // Fonts
 //
 // Font, line-height, and color for body text, headings, and more.
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i');
 
 //# sourceMappingURL=roboto.css.map
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif: 'Roboto', sans-serif;
+$font-family-sans-serif: 'Nunito Sans', sans-serif;
 $font-family-base: $font-family-sans-serif;
 
 // stylelint-enable value-keyword-case
-$font-size-base: 14px; // Assumes the browser default, typically `16px`
+$font-size-base: 13px; // Assumes the browser default, typically `16px`
 $font-size-lg: ($font-size-base + 4);
 $font-size-sm: $font-size-base;
 
 $h1-font-size: 24px;
-$h2-font-size: 20px;
-$h3-font-size: 17px;
+$h2-font-size: 18px;
+$h3-font-size: 16px;
 $h4-font-size: 15px;
 $h5-font-size: 13px;
 $h6-font-size: 12px;
@@ -30,18 +30,23 @@ $headings-font-weight: 400;
 $headings-line-height: 1.2;
 $headings-color: inherit;
 
-//Bootstrap Card Variables
-$card-spacer-y: 20px;
-$card-spacer-x: 24px;
-
 //Border Radius
 $border-radius-sm: 2px;
-$border-radius: 2px;
-$border-radius-lg: 6px;
+$border-radius: 4px;
+$border-radius-lg: 8px;
 $border-radius-xl: 10px !default;
+$border-radius-circle: 50% !default;
+
+//Bootstrap Card Variables
+$card-spacer-y: 24px;
+$card-spacer-x: 30px;
+$card-border-color: $border-color;
+$card-border-radius: $border-radius-lg;
+$card-inner-border-radius: $border-radius-lg;
+$list-group-border-radius: $border-radius-lg;
 
 //Grid Gutter Space Between
-$grid-gutter-width: 24px;
+$grid-gutter-width: 34px;
 
 //Mixin Values True and False
 $enable-shadows: true;
@@ -49,11 +54,27 @@ $enable-shadows: true;
 $app-primary: #3f51b5 !default;
 $primary: $app-primary;
 $secondary: #E91E63;
+$gray-default: #808080 !default;
 
-$sidebar-bg: #252525 !default;
-$sidebar-text-color: #a1a1a1 !default;
+$sidebar-bg: $white !default;
+$sidebar-text-color: #868e96 !default;
 $sidebar-bg-darken: darken($sidebar-bg, 3%);
-$sidebar-hover-color: $white;
+$sidebar-hover-color: $app-primary;
+
+$top-nav-bg: $app-primary !default;
+
+//Default shadow
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+$shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+$shadow-lg: 0 1px 8px -1px rgba(0, 0, 0, 0.20);
+$shadow-xl: 0 0 16px 0px rgba(0, 0, 0, 0.20);
+$avatar-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.50);
+
+//Custom Card Variables
+$jr-card-shadow: $shadow !default;
+$jr-card-margin: 34px !default;
+$jr-card-padding: 24px 30px !default;
+$jr-border: 1px solid $gray-400 !default;
 
 // Links
 $link-color: $app-primary;
@@ -66,7 +87,8 @@ $warning: #ff9800;
 $danger: #f44336;
 $light: #e8eaf6;
 $dark: $gray-800;
-$body-bg: $gray-100;
+$body-bg: #f4f4f4;
+$body-color: #5c5c5c;
 
 $theme-colors: (
         "primary": $primary,
@@ -78,13 +100,6 @@ $theme-colors: (
         "light": $light,
         "dark": $dark
 );
-
-//Default shadow
-$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
-$shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
-$shadow-lg: 0 1px 8px -1px rgba(0, 0, 0, 0.20);
-$shadow-xl: 0 0 16px 0px rgba(0, 0, 0, 0.20);
-$avatar-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.50);
 
 //Default Image Location
 $image_path: "../assets/images" !default;
@@ -111,12 +126,6 @@ $footer-height: 50px !default;
 $letter-spacing-base: 3px !default;
 $letter-spacing-lg: 6px !default;
 $letter-spacing-xl: 8px !default;
-
-//Custom Card Variables
-$jr-card-shadow: $shadow !default;
-$jr-card-margin: 24px !default;
-$jr-card-padding: 18px $jr-card-margin !default;
-$jr-border: 1px solid $gray-400 !default;
 
 //Button Variables
 $btn-font-size-lg: $font-size-lg !default;

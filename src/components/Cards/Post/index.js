@@ -1,5 +1,4 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import CardLayout from 'components/CardLayout';
 
 const PostCard = () => {
@@ -7,10 +6,10 @@ const PostCard = () => {
         <CardLayout styleName="col-lg-6">
             <div className="card-header">
                 <div className="user-profile d-flex flex-row align-items-center">
-                    <Avatar
+                    <img
                         alt="..."
                         src="http://via.placeholder.com/150x150"
-                        className="user-avatar"
+                        className="user-avatar rounded-circle"
                     />
                     <div className="user-detail">
                         <h5 className="user-name">Jimmy Ropertson</h5>
@@ -24,7 +23,8 @@ const PostCard = () => {
                     Some quick example text to build on the card title and make up the bulk of the card's content. Lorem
                     ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
                 </p>
-                <a href="javascript:void(0)" className="card-link text-uppercase"><i className="zmdi zmdi-image-o zmdi-hc-fw"/>latest pictures</a>
+                <a href="javascript:void(0)" className="card-link text-uppercase"><i
+                    className="zmdi zmdi-image-o zmdi-hc-fw"/>latest pictures</a>
             </div>
         </CardLayout>
     );

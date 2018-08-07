@@ -8,11 +8,11 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const OrdersChart = () => (
     <ResponsiveContainer width="100%" height={350}>
         <PieChart>
-            <Legend />
+            <Legend/>
             <Pie dataKey="value"
                  data={data01} cx={200} cy={200} innerRadius={70} outerRadius={90} fill="#3367d6" label>
                 {
-                    data01.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)
+                    data01.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]}/>)
                 }
             </Pie>
         </PieChart>

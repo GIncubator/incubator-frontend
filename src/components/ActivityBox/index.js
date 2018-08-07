@@ -1,9 +1,10 @@
 import React from 'react';
 
-const ActivityBox = ({visit,newVisit,lastWeekVisit,styleName}) => {
+const ActivityBox = ({visit, newVisit, lastWeekVisit, styleName}) => {
     return (
 
-        <div className={`list-group-item d-flex justify-content-between text-center border-left-0 border-right-0 ${styleName}`}>
+        <div
+            className={`list-group-item d-flex justify-content-between text-center border-left-0 border-right-0 ${styleName}`}>
             <div className="my-2">
                 <div className="mb-1 text-muted">
                     Page / Visit

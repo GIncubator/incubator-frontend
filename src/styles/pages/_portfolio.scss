@@ -9,7 +9,6 @@
     }
     &:hover {
       & img {
-        @include box-shadow(0 2px 8px -2px rgba($black, 0.6));
         -webkit-transform: scale(1.08);
         -ms-transform: scale(1.08);
         transform: scale(1.08);

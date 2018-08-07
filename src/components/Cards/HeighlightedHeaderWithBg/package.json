@@ -4,6 +4,6 @@
   "private": true,
   "main": "./MediaCard.js",
   "dependencies": {
-    "material-ui": "next"
+    "reactstrap": "next"
   }
 }

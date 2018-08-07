@@ -1,15 +1,14 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 
 const FeedCell = ({feed}) => {
     const {id, desc, time, updateTime, image, isSocial} = feed;
     return (
 
         <div key={id} className="media user-profile">
-            <Avatar
+            <img
                 alt="..."
                 src={image}
-                className="user-avatar"
+                className="user-avatar rounded-circle mr-2"
             />
             <div className="media-body align-self-center">
                 <h5 className="mb-1">{desc}</h5>

@@ -6,41 +6,123 @@
   padding: 0 5px !important;
   @extend %jr-menu-icon;
   margin-right: 15px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
 }
 
 .app-main-header {
-  //z-index: 1302 !important;
-  background-color: $app-primary !important;
-  color: $white !important;
+  background-color: $white;
+  color: $gray-default;
+  max-height: 70px;
+  position: relative;
 
   & .search-bar input {
     @include transition($transition-base);
-    background-color: lighten($app-primary, 5%);
-    color: $white;
+    background-color: transparent;
+    color: $gray-default;
     & + .search-icon {
       top: 0;
       & i {
-        color: rgba($white, 0.8);
+        color: rgba($gray-default, 0.8);
       }
     }
 
     &:focus {
-      background-color: $white;
-      color: $body-color;
+      background-color: $body-bg;
+      color: $gray-default;
       + .search-icon {
         & i {
-          color: rgba($body-color, 0.8);
+          color: rgba($gray-default, 0.8);
         }
       }
     }
   }
+
+  .app-header & {
+    border-bottom: 1px solid $border-color;
+  }
+
+  .jr-card & {
+    border: 1px solid $gray-400;
+    @include border-radius($border-radius-lg);
+  }
 }
 
-.app-logo img {
-  height: 35px;
+.app-logo {
+  margin-right: 12px;
+
+  & img {
+    height: 35px;
+
+    @media screen and (max-width: 575px) {
+      height: 28px;
+    }
+  }
+
+  .app-header & {
+    margin-right: 20px;
+
+    @media screen and (max-width: 991px) {
+      margin-right: auto;
+    }
+  }
+}
+
+//Logo disable condition
+.react-logo-white.d-block {
+  display: none !important;
+}
+
+@media screen and (min-width: 992px) {
+  .react-logo-white.d-lg-block {
+    display: none !important;
+  }
+}
+
+.sidebar-header {
+  min-height: 70px;
+  padding: 10px 22px;
+  border-bottom: 1px solid $border-color;
+}
+
+.app-toolbar {
+  min-height: $app-bar-height;
+  padding: 0 40px;
+
+  & .search-bar {
+    margin-right: auto;
+    max-width: 320px;
+    width: 300px;
+
+    @media screen and (max-width: 1199px) {
+      width: 240px;
+    }
+
+    @media screen and (max-width: 1099px) {
+      width: 200px;
+    }
+
+    @media screen and (max-width: 767px) {
+      margin-left: 40px;
+      width: 180px;
+    }
+  }
 
   @media screen and (max-width: 575px) {
-    height: 28px;
+    padding: 0 20px;
+  }
+
+  .app-top-nav & {
+    min-height: 40px;
+  }
+}
+
+.app-header-horizontal {
+  & .app-toolbar .search-bar {
+    @media screen and (max-width: 1199px) {
+      margin-right: 10px;
+    }
   }
 }
 
@@ -54,50 +136,6 @@
 
     @media screen and (max-width: 767px) {
       width: 200px;
-    }
-  }
-}
-
-.app-toolbar {
-  min-height: $app-bar-height;
-  height: $app-bar-height;
-  max-height: $app-bar-height;
-
-  & .search-bar {
-    margin-left: 100px;
-    margin-right: auto;
-    max-width: 400px;
-    width: 380px;
-
-    @media screen and (max-width: 991px) {
-      width: 280px;
-    }
-
-    @media screen and (max-width: 767px) {
-      margin-left: 40px;
-      width: 200px;
-    }
-  }
-}
-
-.app-header-horizontal .app-toolbar {
-  & .search-bar {
-    margin-left: 20px;
-    max-width: 320px;
-    width: 300px;
-
-    @media screen and (max-width: 1199px) {
-      width: 240px;
-      margin-right: 10px;
-    }
-
-    @media screen and (max-width: 1099px) {
-      width: 200px;
-    }
-
-    @media screen and (max-width: 767px) {
-      margin-left: 40px;
-      width: 180px;
     }
   }
 }
@@ -138,9 +176,20 @@
   & li {
     vertical-align: middle;
   }
+
+  & .list-inline-item:not(:last-child) {
+    @media screen and (max-width: 449px) {
+      margin-right: 0;
+    }
+  }
+}
+
+.dropdown-menu {
+  @include box-shadow(none);
 }
 
 .quick-menu {
+
   & .dropdown-menu {
     padding: 5px 10px;
     width: 350px;
@@ -177,11 +226,11 @@
     }
 
     @media screen and (max-width: 449px) {
-      width: 280px;
+      width: 230px;
     }
 
     @media screen and (max-width: 359px) {
-      width: 240px;
+      width: 180px;
     }
   }
 
@@ -201,16 +250,42 @@
   }
 }
 
+.app-header .nav-searchbox.quick-menu {
+  & .dropdown-menu {
+    width: 200px;
+    left: 0 !important;
+    right: auto !important;
+  }
+
+  & .dropdown-menu:after {
+    right: auto;
+    left: 8px;
+  }
+
+  & .dropdown-menu:before {
+    right: auto;
+    left: 8px;
+  }
+
+  @media screen and (max-width: 400px) {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 575px) {
-  .nav-searchbox.quick-menu .dropdown-menu {
+  .app-header .nav-searchbox.quick-menu .dropdown-menu {
     width: 200px;
   }
 }
 
 @media screen and (max-width: 399px) {
-  .nav-searchbox.quick-menu .dropdown-menu {
+  .app-header .nav-searchbox.quick-menu .dropdown-menu {
     width: 100px;
   }
+}
+
+.language-list li {
+  display: block !important;
 }
 
 .messages-list.language-list ul li {
@@ -251,7 +326,7 @@
 
 .quick-menu {
   & .icon-btn {
-    color: $white;
+    color: $gray-default;
   }
 
   & .icon-alert {
@@ -314,10 +389,15 @@
     background-color: $body-bg;
     margin-bottom: 15px;
     @include border-radius(0.25rem 0.25rem 0 0);
-    @include display-flex();
-
-    & .user-avatar {
-      margin-right: 0;
-    }
   }
+}
+
+.module-box-header-right {
+  @include display-flex();
+  @include align-items(center);
+}
+
+.app-top-header {
+  position: relative;
+  z-index: 9999;
 }

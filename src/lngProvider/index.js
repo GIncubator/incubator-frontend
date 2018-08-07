@@ -14,11 +14,11 @@ const AppLocale = {
     es: esLang,
     fr: frLang
 };
-addLocaleData(AppLocale.en.data);
-addLocaleData(AppLocale.zh.data);
-addLocaleData(AppLocale.ar.data);
-addLocaleData(AppLocale.it.data);
-addLocaleData(AppLocale.es.data);
-addLocaleData(AppLocale.fr.data);
+addLocaleData (AppLocale.en.data);
+addLocaleData (AppLocale.zh.data);
+addLocaleData (AppLocale.ar.data);
+addLocaleData (AppLocale.it.data);
+addLocaleData (AppLocale.es.data);
+addLocaleData (AppLocale.fr.data);
 
 export default AppLocale;

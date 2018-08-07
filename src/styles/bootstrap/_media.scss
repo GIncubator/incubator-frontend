@@ -6,3 +6,8 @@
 .media-body {
   flex: 1;
 }
+
+.social-list-line:not(:last-child) {
+  padding-bottom: 25px;
+}
+

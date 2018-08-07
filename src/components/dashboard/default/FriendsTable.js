@@ -27,7 +27,7 @@ class FriendsTable extends Component {
                     <tbody>
                     {data.map(data => {
                         return (
-                            <FriendsTableCell key={data.id} data={data} />
+                            <FriendsTableCell key={data.id} data={data}/>
                         );
                     })}
                     </tbody>

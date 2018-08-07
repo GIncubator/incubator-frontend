@@ -30,7 +30,6 @@
   }
 
   &:hover {
-    @include box-shadow(0px 8px 10px rgba($black, 0.2));
     @include transition(all 0.4s ease-in-out 0.1s);
     background-color: darken($white, 5%);
   }

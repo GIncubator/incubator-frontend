@@ -6,7 +6,7 @@ const CardBox = ({heading, children, styleName, cardStyle, childrenStyle, header
         <div className={`${styleName}`}>
             {headerOutside &&
             <div className="jr-entry-header">
-                <h3 className="entry-heading">{heading}</h3>
+                <h3 className="entry-heading heading">{heading}</h3>
                 {children.length > 1 && <div className="entry-description">{children[0]}</div>}
             </div>
             }

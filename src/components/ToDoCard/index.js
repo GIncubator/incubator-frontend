@@ -26,7 +26,7 @@ class SimpleToDo extends React.Component {
             <div className="todo-cell-group">
                 {toDos.map((todo, index) =>
                     <ToDoItem key={index} index={index} todo={todo}
-                              onTodoChecked={this.onTodoChecked.bind(this)} />
+                              onTodoChecked={this.onTodoChecked.bind(this)}/>
                 )}
             </div>
         )

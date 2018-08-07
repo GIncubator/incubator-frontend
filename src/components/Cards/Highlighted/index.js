@@ -11,7 +11,8 @@ const HighlightedHeader = () => {
                 <p className="card-text text-muted">
                     Some quick example text to build on the card title and make up the bulk of the card's content.
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat.
                 </p>
                 <a href="javascript:void(0)" className="card-link text-uppercase">View More</a>
             </div>

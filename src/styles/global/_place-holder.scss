@@ -6,9 +6,11 @@
     height: 1px;
     min-height: 1px;
     color: inherit;
-    background-color: $white;
+    background-color: $gray-default;
     display: block;
     @include transition(all 0.4s ease);
+    margin: 6px 0;
+    cursor: pointer;
 
     &:after,
     &:before {
@@ -68,18 +70,18 @@
   line-height: $size-100;
 }
 
-%size-30 {
-  height: $size-30 !important;
-  width: $size-30 !important;
-  line-height: $size-30;
-}
-
 %size-20 {
   height: $size-20 !important;
   width: $size-20 !important;
   line-height: $size-20;
 }
 
+
+%size-30 {
+  height: $size-30 !important;
+  width: $size-30 !important;
+  line-height: $size-30;
+}
 
 %size-40 {
   height: $size-40 !important;
@@ -101,10 +103,10 @@
 
 %jr-card-style {
   padding: $jr-card-padding;
-  @include box-shadow($jr-card-shadow);
   margin-bottom: $jr-card-margin;
   background-color: $white;
-  @include border-radius($border-radius-sm);
+  @include border-radius($border-radius-lg);
+  border: $jr-border;
   position: relative;
 }
 
@@ -300,4 +302,18 @@
 // Pointer
 %pointer {
   cursor: pointer;
+}
+
+//Remove Botton Shadow
+
+%btn-no-shadow {
+  &:not([disabled]):not(.disabled):active,
+  &:not([disabled]):not(.disabled).active {
+    background-image: none;
+    @include box-shadow(none);
+
+    &:focus {
+      @include box-shadow(none);
+    }
+  }
 }

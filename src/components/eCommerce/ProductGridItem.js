@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import {Button} from 'reactstrap';
 import StarRatingComponent from 'react-star-rating-component';
 import IntlMessages from 'util/IntlMessages';
 
@@ -40,7 +40,7 @@ const ProductGridItem = ({product}) => {
                         <p>{description}</p>
                     </div>
                     <div>
-                        <Button color="primary" variant="raised" className="jr-btn jr-btn-sm ">
+                        <Button outline color="primary" className="jr-btn jr-btn-sm ">
                             <i className="zmdi zmdi-shopping-cart"/>
                             <span><IntlMessages id="eCommerce.buyNow"/></span>
                         </Button>

@@ -1,5 +1,17 @@
-import {all, call, fork, put, takeEvery} from 'redux-saga/effects'
-import {auth, facebookAuthProvider, githubAuthProvider, googleAuthProvider, twitterAuthProvider} from 'firebase/firebase'
+import {
+  all,
+  call,
+  fork,
+  put,
+  takeEvery
+} from 'redux-saga/effects'
+import {
+  auth,
+  facebookAuthProvider,
+  githubAuthProvider,
+  googleAuthProvider,
+  twitterAuthProvider
+} from '../firebase/firebase'
 import {
   registerUser,
   loginUser,
@@ -14,7 +26,7 @@ import {
   SIGNOUT_USER,
   SIGNUP_USER,
   ON_STARTUP_INFO_SUBMIT
-} from 'constants/ActionTypes'
+} from '../constants/ActionTypes'
 import {
   showAuthMessage,
   userSignInSuccess,
@@ -31,16 +43,6 @@ import {
 import {fireBasePasswordToDBUserModel, fireBaseGoogleToDBUserModel} from './../transform'
 import * as Api from './../api'
 
-// const createUserWithEmailPasswordRequest = async (name, email, password) =>
-//   await registerUser(name, email, password)
-//   .then(authUser => authUser)
-//   .catch(error => error)
-
-// const signInUserWithEmailPasswordRequest = async (email, password) =>
-//   await loginUser(email, password)
-//   .then(authUser => authUser)
-//   .catch(error => error)
-
 const createUserWithEmailPasswordRequest = async (email, password) =>
   await auth.createUserWithEmailAndPassword(email, password)
   .then(authUser => authUser)
@@ -56,14 +58,6 @@ const signOutRequest = async () =>
   .then(authUser => authUser)
   .catch(error => error)
 
-// const signInUserWithGoogleRequest = async () => {
-//     return await Promise.resolve().then(() => {
-//         let newWin = window.open('http://localhost:4000/auth/google/start')
-//         newWin.onmessage = (msg) => {
-//             console.log(msg)
-//         }
-//     })
-// }
 
 const signInUserWithGoogleRequest = async () =>
   await auth.signInWithPopup(googleAuthProvider)
@@ -88,11 +82,11 @@ const signInUserWithTwitterRequest = async () =>
 function* createUserWithEmailPassword({payload}) {
   const {name, email, password} = payload
   try {
-      const signUpUser = yield call(createUserWithEmailPasswordRequest, email, password)
-      if (signUpUser.message) {
-        yield put(showAuthMessage(signUpUser.message))
-      } else {
-        const response = yield call(Api.getUser, {filter: `?passwordUid=${signUpUser.user.uid}`})
+    const signUpUser = yield call(createUserWithEmailPasswordRequest, email, password)
+    if (signUpUser.message) {
+      yield put(showAuthMessage(signUpUser.message))
+    } else {
+      const response = yield call(Api.getUser, {filter: `?passwordUid=${signUpUser.user.uid}`})
 
         const userModel = fireBasePasswordToDBUserModel(name, signUpUser)
         if (response.data.length === 0) {
@@ -102,7 +96,7 @@ function* createUserWithEmailPassword({payload}) {
         yield put(userSignUpSuccess(userModel))
       }
   } catch (error) {
-      yield put(showAuthMessage(error))
+    yield put(showAuthMessage(error))
   }
 }
 
@@ -194,7 +188,6 @@ function* signOut() {
     const signOutUser = yield call(signOutRequest)
     if (signOutUser === undefined) {
       localStorage.removeItem('user')
-      localStorage.removeItem('token')
       yield put(userSignOutSuccess(signOutUser))
     } else {
       yield put(showAuthMessage(signOutUser.message))
@@ -256,7 +249,8 @@ export function* submitStartupInfo() {
 }
 
 export default function* rootSaga() {
-  yield all([fork(signInUser),
+  yield all([
+    fork(signInUser),
     fork(createUserAccount),
     fork(signInWithGoogle),
     fork(signInWithFacebook),

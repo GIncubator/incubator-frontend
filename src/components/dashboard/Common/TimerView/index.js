@@ -1,42 +1,27 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import Avatar from '@material-ui/core/Avatar';
-import CardMenu from 'components/dashboard/Common/CardMenu';
+
 
 class TimerView extends React.Component {
 
-    onOptionMenuSelect = event => {
-        this.setState({menuState: true, anchorEl: event.currentTarget});
-    };
-    handleRequestClose = () => {
-        this.setState({menuState: false});
-    };
-
-    constructor() {
-        super();
-        this.state = {
-            anchorEl: undefined,
-            menuState: false,
-        }
-    }
-
     render() {
         const {headerColor} = this.props;
-        const {anchorEl, menuState} = this.state;
         return (
-            <div className="jr-card">
+            <div className="jr-card overflow-hidden">
 
                 <div className={`jr-card-header-color text-center bg-${headerColor}`}>
-                    <div className="jr-card-header-top">
-                        <IconButton className="jr-menu-icon mr-auto" aria-label="Menu">
+                    <div className="jr-card-header-top mr-0">
+                        <div className="jr-menu-icon mr-auto">
                             <span className="menu-icon bg-white"/>
-                        </IconButton>
-                        <IconButton onClick={this.onOptionMenuSelect.bind(this)}><i
-                            className="zmdi zmdi-more-vert text-white"/></IconButton>
+                        </div>
+                        <span className="icon-btn">
+                            <i className="zmdi zmdi-more-vert text-white zmdi-hc-lg"/>
+                        </span>
                     </div>
 
-                    <Avatar className="bg-blue lighten-4 size-100 mx-auto mb-3"><h1
-                        className="m-0 text-blue text-darken-4 font-weight-bold">24</h1></Avatar>
+                    <div
+                        className="bg-blue lighten-4 size-100 mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center">
+                        <h1 className="m-0 text-blue text-darken-4 font-weight-bold">24</h1>
+                    </div>
 
 
                     <div className="jr-card-hd-content text-white">
@@ -76,9 +61,6 @@ class TimerView extends React.Component {
 
                     </div>
                 </div>
-
-                <CardMenu menuState={menuState} anchorEl={anchorEl}
-                          handleRequestClose={this.handleRequestClose.bind(this)}/>
             </div>
         )
     }

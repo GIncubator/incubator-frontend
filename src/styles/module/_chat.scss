@@ -9,12 +9,10 @@
 }
 
 .chat-module-box {
-  @include box-shadow($shadow-lg);
   @include display-flex(flex, row, nowrap);
   @include flex(1);
   background-color: $gray-100;
   position: relative;
-  z-index: 2;
   width: 100%;
 }
 
@@ -29,6 +27,8 @@
   @include display-flex(flex, column, nowrap);
   @include flex(1);
   max-width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 .chat-sidenav-header {
@@ -50,7 +50,7 @@
     @include flex();
 
     & .form-control {
-      @include box-shadow(0 0 3px rgba(0, 0, 0, 0.3));
+      @include box-shadow(none);
       @include border-radius(0);
       padding-left: 42px;
       height: 42px;
@@ -262,38 +262,11 @@
   & .bubble {
     padding: 8px 12px;
     background-color: $white;
-    @include box-shadow(0 0 2px rgba(0, 0, 0, .13));
     @include border-radius(20px 20px 20px 0px);
     position: relative;
     margin-left: 16px;
     max-width: 600px;
-
-    /* &:before,
-     &:after {
-       content: "";
-       position: absolute;
-       z-index: 1;
-       width: 0;
-       height: 0;
-     }
-
-     &:before {
-       border-top: 9px solid transparent;
-       border-bottom: 9px solid transparent;
-
-       border-right: 9px solid $gray-300;
-       left: -9px;
-       top: 5px;
-     }
-
-     &:after {
-       border-top: 8px solid transparent;
-       border-bottom: 8px solid transparent;
-
-       border-right: 8px solid $white;
-       left: -8px;
-       top: 6px;
-     }*/
+    border: solid 1px $gray-400;
   }
 
   &.flex-row-reverse {
@@ -302,20 +275,6 @@
       margin-left: 0;
       background-color: lighten($app-primary, 45%);
       @include border-radius(20px 20px 0 20px);
-
-      /*&:before {
-        left: auto;
-        right: -9px;
-        border-left: 9px solid $gray-300;
-        border-right: 0 none;
-      }
-
-      &:after {
-        left: auto;
-        right: -8px;
-        border-left: 8px solid lighten($app-primary, 45%);
-        border-right: 0 none;
-      }*/
     }
   }
 }

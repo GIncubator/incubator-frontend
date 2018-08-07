@@ -1,28 +1,8 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-
-import CardMenu from '../Common/CardMenu'
 
 class OrderTableCell extends React.Component {
 
-    onOptionMenuSelect = event => {
-        this.setState({menuState: true, anchorEl: event.currentTarget});
-    };
-    handleRequestClose = () => {
-        this.setState({menuState: false});
-    };
-
-    constructor() {
-        super();
-        this.state = {
-            anchorEl: undefined,
-            menuState: false,
-        }
-    }
-
     render() {
-        const {anchorEl, menuState} = this.state;
         const {id, orderId, name, image, orderDate, deliveryDate, status} = this.props.data;
         const statusStyle = status.includes("Completed") ? "text-white bg-success" : status.includes("On Hold") ? "bg-amber" : status.includes("Delayed") ? "text-white bg-danger" : "text-white bg-grey";
         return (
@@ -33,10 +13,10 @@ class OrderTableCell extends React.Component {
                 <td>{orderId}</td>
                 <td>
                     <div className="user-profile d-flex flex-row align-items-center">
-                        <Avatar
+                        <img
                             alt={name}
                             src={image}
-                            className="user-avatar"
+                            className="user-avatar rounded-circle mr-3"
                         />
                         <div className="user-detail">
                             <h5 className="user-name">{name} </h5>
@@ -49,10 +29,8 @@ class OrderTableCell extends React.Component {
                     <div className={` badge text-uppercase ${statusStyle}`}>{status}</div>
                 </td>
                 <td className="text-right">
-                    <IconButton className="size-30" onClick={this.onOptionMenuSelect.bind(this)}>
-                        <i className="zmdi zmdi-more-vert"/></IconButton>
-                    <CardMenu menuState={menuState} anchorEl={anchorEl}
-                              handleRequestClose={this.handleRequestClose.bind(this)}/>
+                    <span className="icon-btn size-30">
+                        <i className="zmdi zmdi-more-vert zmdi-hc-lg"/></span>
                 </td>
             </tr>
 

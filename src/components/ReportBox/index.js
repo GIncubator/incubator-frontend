@@ -17,7 +17,7 @@ const ReportBox = ({styleName, heading, title, detail, children, subHeadingColor
                     <span className={`sub-heading ${subHeadingColor}`}>{detail}</span>
                 </div>
                 <div className="col-7">
-                    <ResponsiveContainer height={95}>
+                    <ResponsiveContainer height={80}>
                         {children}
                     </ResponsiveContainer>
                 </div>

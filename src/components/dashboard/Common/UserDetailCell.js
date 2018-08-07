@@ -1,32 +1,27 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import {Badge} from 'reactstrap';
 
 const UserDetailCell = ({data}) => {
-    const {id, name, detail, image, about, color} = data;
+    const {id, name, image, about} = data;
     return (
         <tr
             tabIndex={-1}
             key={id}>
-            <td>
-                <div className="user-profile d-flex flex-row align-items-center">
-                    <Avatar
+            <td className="pr-2 size-60">
+                <div className="align-items-center py-1">
+                    <img
                         alt={name}
                         src={image}
-                        className="user-avatar avatar-shadow mr-2"
-                    />
-                    <div className="user-detail">
-                        <h4 className="user-name text-capitalize">{name} </h4>
-                        <p className="user-description">{about}</p>
-                    </div>
+                        className="user-avatar avatar-shadow rounded-circle"/>
                 </div>
             </td>
-            <td className="text-right">
-                <Badge className="d-block text-uppercase" href="javascript:void(0)" color={color}>{detail}</Badge>
+            <td>
+                <div className="user-detail">
+                    <h4 className="user-name text-capitalize">{name} </h4>
+                    <p className="user-description">{about}</p>
+                </div>
             </td>
-            <td className="text-right p-0">
-                <IconButton className="size-30"><i className="zmdi zmdi-more-vert"/></IconButton>
+            <td className="d-flex justify-content-end align-items-center p-0 mt-1">
+                <span className="icon-btn"><i className="zmdi zmdi-more-vert"/></span>
             </td>
         </tr>
 

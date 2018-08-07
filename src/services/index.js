@@ -10,7 +10,7 @@ const JWT_TOKEN = `JWT ${token}`;
 let axiosConfig = {
   headers : {
     'Content-Type': 'application/json',
-    'Authorization': JWT_TOKEN 
+    'Authorization': JWT_TOKEN
   }
 };
 

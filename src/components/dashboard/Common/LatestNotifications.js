@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
+import {Nav, NavItem, NavLink, TabContent, TabPane} from 'reactstrap';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import SwipeableViews from 'react-swipeable-views';
-import Tabs from '@material-ui/core/Tabs';import Tab from '@material-ui/core/Tab';
-import IconButton from '@material-ui/core/IconButton';
 import CardLayout from "components/CardLayout/index";
 import UserList from "./UserList";
-import CardMenu from "components/dashboard/Common/CardMenu";
 
 
 function TabContainer({children, dir}) {
@@ -32,25 +28,22 @@ class LatestNotifications extends Component {
         this.setState({value: index});
     };
 
-    onOptionMenuSelect = event => {
-        this.setState({menuState: true, anchorEl: event.currentTarget});
-    };
-    handleRequestClose = () => {
-        this.setState({menuState: false});
-    };
-
     constructor() {
         super();
         this.state = {
-            value: 0,
-            anchorEl: undefined,
-            menuState: false,
+            activeTab: '1',
+        }
+    }
+
+    toggle(tab) {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab
+            });
         }
     }
 
     render() {
-        const {anchorEl, menuState} = this.state;
-        const {theme} = this.props;
 
         return (
             <CardLayout styleName="col-lg-12">
@@ -61,49 +54,48 @@ class LatestNotifications extends Component {
                             Latest Notifications
                         </h3>
                     </div>
-                    <IconButton className="size-30" onClick={this.onOptionMenuSelect.bind(this)}>
+                    <span className="icon-btn size-30">
                         <i className="zmdi zmdi-more-vert"/>
-                    </IconButton>
+                    </span>
                 </div>
 
-                <div className="tab-notifications">
-                    <Tabs
-                        value={this.state.value}
-                        onChange={this.handleChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        centered
-                        fullWidth
-                    >
-                        <Tab className="tab" label="App Notifications"/>
-
-                        <Tab className="tab" label="Announcements"/>
-                    </Tabs>
+                <div className="tab-notifications px-4 border-bottom-0">
+                    <Nav tabs className="nav-fill">
+                        <NavItem className="nav-item">
+                            <NavLink aria-selected="true" data-toggle="tab" role="tab"
+                                     className={this.state.activeTab === '1' ? 'active' : ''}
+                                     onClick={() => {
+                                         this.toggle('1');
+                                     }}>
+                                App Notifications
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink aria-selected="true" data-toggle="tab" role="tab"
+                                     className={this.state.activeTab === '2' ? 'active' : ''}
+                                     onClick={() => {
+                                         this.toggle('2');
+                                     }}>
+                                Announcements
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
                 </div>
 
-                <SwipeableViews
-                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                    index={this.state.value}
-                    onChangeIndex={this.handleChangeIndex}
-                >
-                    <TabContainer dir={theme.direction}>
+                <TabContent activeTab={this.state.activeTab}>
+                    <TabPane tabId="1">
                         <UserList users={this.props.appNotification}/>
-                    </TabContainer>
-                    <TabContainer dir={theme.direction}>
+                    </TabPane>
+                    <TabPane tabId="2">
                         <UserList users={this.props.announcementsNotification}/>
-                    </TabContainer>
+                    </TabPane>
 
-                </SwipeableViews>
-                <CardMenu menuState={menuState} anchorEl={anchorEl}
-                          handleRequestClose={this.handleRequestClose.bind(this)}/>
+                </TabContent>
             </CardLayout>
 
         );
     }
 }
 
-LatestNotifications.propTypes = {
-    theme: PropTypes.object.isRequired,
-};
 
-export default withStyles(null, {withTheme: true})(LatestNotifications);
+export default LatestNotifications;

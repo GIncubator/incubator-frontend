@@ -1,5 +1,4 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
 import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import {siteTrafficData} from "../../../app/routes/dashboard/routes/News/data";
 
@@ -18,31 +17,43 @@ const SiteTraffic = () => {
 
             <div className="row mb-4">
                 <div className="col-3">
-                    <IconButton className="border-2 border-green mr-3 align-middle">
-                        <i className="zmdi zmdi-plus text-green"/>
-                    </IconButton>
-                    <span>New Visitor</span>
+                    <div className="d-flex align-items-center">
+                         <span
+                             className="border-2 border-green mr-3 rounded-circle p-1 size-60 d-flex align-items-center justify-content-center">
+                        <i className="zmdi zmdi-plus text-green zmdi-hc-2x"/>
+                    </span>
+                        <span>New Visitor</span>
+                    </div>
                 </div>
-                <div className="col-3">
-                    <IconButton className="border-2 border-red mr-3 align-middle">
-                        <i className="zmdi zmdi-repeat-one text-red"/>
-                    </IconButton>
-                    <span>Repeated User</span>
 
+                <div className="col-3">
+                    <div className="d-flex align-items-center">
+                        <span
+                            className="border-2 border-red mr-3 rounded-circle p-1 size-60 d-flex align-items-center justify-content-center">
+                        <i className="zmdi zmdi-repeat-one text-red zmdi-hc-2x"/>
+                    </span>
+                        <span>Repeated User</span>
+                    </div>
                 </div>
-                <div className="col-3">
-                    <IconButton className="border-2 border-primary mr-3 align-middle">
-                        <i className="zmdi zmdi-star text-primary"/>
-                    </IconButton>
-                    <span>Subscriber</span>
 
+                <div className="col-3">
+                    <div className="d-flex align-items-center">
+                        <span
+                            className="border-2 border-primary mr-3 rounded-circle p-1 size-60 d-flex align-items-center justify-content-center">
+                        <i className="zmdi zmdi-star text-primary zmdi-hc-2x"/>
+                    </span>
+                        <span>Subscriber</span>
+                    </div>
                 </div>
-                <div className="col-3">
 
-                    <IconButton className="border-2 border-red mr-3 align-middle">
-                        <i className="zmdi zmdi-share text-red"/>
-                    </IconButton>
-                    <span>Share</span>
+                <div className="col-3">
+                    <div className="d-flex align-items-center">
+                        <span
+                            className="border-2 border-red mr-3 rounded-circle p-1 size-60 d-flex align-items-center justify-content-center">
+                        <i className="zmdi zmdi-share text-red zmdi-hc-2x"/>
+                    </span>
+                        <span>Share</span>
+                    </div>
                 </div>
             </div>
 

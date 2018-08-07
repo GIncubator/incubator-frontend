@@ -18,7 +18,7 @@ const galleryData = [
         title: 'Olive oil',
     },
     {
-        img: 'http://via.placeholder.com/600x400',
+        img: 'http://via.placeholder.com/500x330',
         title: 'Blue Bird',
     },
     {

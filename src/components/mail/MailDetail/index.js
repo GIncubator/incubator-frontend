@@ -1,36 +1,33 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
+import CustomScrollbars from 'util/CustomScrollbars';
 
 import labels from 'app/routes/mail/data/labels';
-import CustomScrollbars from 'util/CustomScrollbars';
 
 class MailDetail extends React.Component {
 
-    state = {
-        anchorEl: undefined,
-        open: false,
-        showDetail: false
+    handleToggle = event => {
+        this.setState({open: !this.state.open});
     };
 
-    handleClick = event => {
-        this.setState({open: true, anchorEl: event.currentTarget});
-    };
+    constructor() {
+        super();
+        this.state = {
+            open: false,
+            showDetail: false
+        };
+    }
 
-    handleRequestClose = () => {
-        this.setState({open: false});
-    };
 
     render() {
         const {mail, onStartSelect, onImportantSelect, width} = this.props;
+        console.log(width);
+        const {open} = this.state;
         const options = [
             'Reply',
             'Forward',
             'Print',
         ];
-
-        const ITEM_HEIGHT = 48;
         return (
             <div className="module-detail mail-detail">
                 <CustomScrollbars className="module-list-scroll scrollbar" style={{
@@ -55,24 +52,24 @@ class MailDetail extends React.Component {
 
                         <div className="mail-header-actions">
 
-                            <IconButton type="button" className="btn btn-icon" onClick={() => {
+                            <span className="icon-btn" onClick={() => {
                                 onStartSelect(mail);
                             }}>
                                 {mail.starred ?
-                                    <IconButton> <i className="zmdi zmdi-star"/> </IconButton> :
-                                    <IconButton><i className="zmdi zmdi-star-outline"/></IconButton>
+                                    <i className="zmdi zmdi-star"/> :
+                                    <i className="zmdi zmdi-star-outline"/>
                                 }
 
-                            </IconButton>
-                            <IconButton type="button" className="btn btn-icon" onClick={() => {
+                            </span>
+                            <span className="icon-btn" onClick={() => {
                                 onImportantSelect(mail);
                             }}>
 
                                 {mail.important ?
-                                    <IconButton><i className="zmdi zmdi-label-alt"/></IconButton>
-                                    : <IconButton> <i className="zmdi zmdi-label-alt-outline"/></IconButton>
+                                    <i className="zmdi zmdi-label-alt"/>
+                                    : <i className="zmdi zmdi-label-alt-outline"/>
                                 }
-                            </IconButton>
+                            </span>
                         </div>
 
                     </div>
@@ -82,9 +79,9 @@ class MailDetail extends React.Component {
 
                         {mail.from.avatar === '' ?
                             <div
-                                className="bg-blue avatar rounded-circle size-40 text-white text-center"
+                                className="bg-blue avatar rounded-circle size-40 text-white d-flex align-items-center justify-content-center"
                                 style={{fontSize: 16}}> {mail.from.name.charAt(0).toUpperCase()}</div> :
-                            <img className="rounded-circle avatar size-40" alt="Alice Freeman"
+                            <img className="rounded-circle avatar size-40 mr-4" alt="Alice Freeman"
                                  src={mail.from.avatar}/>
                         }
 
@@ -93,30 +90,24 @@ class MailDetail extends React.Component {
                         </div>
 
 
-                        <IconButton
-                            aria-label="More"
-                            aria-owns={this.state.open ? 'long-SidenavContent.js' : null}
-                            aria-haspopup="true"
-                            onClick={this.handleClick}>
-                            <MoreVertIcon/>
-                        </IconButton>
+                        <Dropdown isOpen={open} className="ml-auto"
+                                  toggle={this.handleToggle.bind(this)}>
+                            <DropdownToggle tag="span">
+                                <span className="icon-btn">
+                                      <i className="zmdi zmdi-more-vert"/>
+                                </span>
+                            </DropdownToggle>
 
-                        <Menu id="long-menu"
-                              anchorEl={this.state.anchorEl}
-                              open={this.state.open}
-                              onClose={this.handleRequestClose}
+                            <DropdownMenu>
+                                {options.map(option =>
+                                    <DropdownItem key={option}>
+                                        {option}
+                                    </DropdownItem>,
+                                )}
+                            </DropdownMenu>
 
-                              MenuListProps={{
-                                  style: {
-                                      width: 200,
-                                  },
-                              }}>
-                            {options.map(option =>
-                                <MenuItem key={option} onClick={this.handleRequestClose}>
-                                    {option}
-                                </MenuItem>,
-                            )}
-                        </Menu>
+                        </Dropdown>
+
 
                     </div>
 

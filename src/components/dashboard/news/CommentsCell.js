@@ -1,6 +1,5 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton'
-import Button from '@material-ui/core/Button'
+import {Button} from 'reactstrap'
 
 
 const CommentsCell = ({data}) => {
@@ -12,13 +11,13 @@ const CommentsCell = ({data}) => {
                 <h5 className="mt-0">{name}</h5>
                 <p className="card-text">{desc}</p>
                 <div className="comment-footer">
-                    <Button size="small" variant="raised" color="primary" className="mr-4">APPROVE</Button>
-                    <Button size="small" variant="raised" color="secondary">DENY</Button>
+                    <Button size="sm" color="primary" className="mr-4">APPROVE</Button>
+                    <Button size="sm" color="secondary">DENY</Button>
                 </div>
             </div>
-            <IconButton>
-                <i className="zmdi zmdi-close"/>
-            </IconButton>
+            <span className="icon-btn">
+                <i className="zmdi zmdi-close zmdi-hc-lg"/>
+            </span>
         </div>
     );
 };

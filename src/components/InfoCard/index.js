@@ -3,12 +3,12 @@ import React from 'react';
 
 const InfoCard = ({data, styleName}) => {
     return (
-        <div className={`jr-card net-chart ${styleName}`}>
-            <div className="jr-card-thumb">
-                <img className="img-fluid" src={data.img}/>
+        <div className={`jr-card net-chart`}>
+            <div className={`jr-card-thumb  ${styleName}`}>
+                <i className="zmdi zmdi-mic-outline"/>
             </div>
-            <div className="jr-card-body text-white br-break">
-                <h4 className="mb-0"><strong>{data.title} </strong></h4>
+            <div className="jr-card-body br-break">
+                <h4 className="mb-0"><strong>{data.title}</strong></h4>
                 <p className="mb-0">{data.subTitle} </p>
             </div>
 

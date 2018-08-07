@@ -38,7 +38,7 @@ class AssignmentTable extends Component {
                     <tbody>
                     {data.map(data => {
                         return (
-                            <AssignmentTableCell key={data.id} data={data} />
+                            <AssignmentTableCell key={data.id} data={data}/>
                         );
                     })}
                     </tbody>

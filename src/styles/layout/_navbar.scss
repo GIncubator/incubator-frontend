@@ -20,7 +20,7 @@
       }
 
       & > a {
-        color: $secondary;
+        color: $app-primary;
       }
     }
 
@@ -43,7 +43,7 @@
 
     &.mega-menu ul.sub-menu {
       @include display-flex();
-      width: 84%;
+      width: 85%;
       margin: 0 auto;
       left: 0;
       right: 0;
@@ -79,12 +79,11 @@
     padding: 0 10px;
 
     & > a {
-      padding: 24px 0 25px;
-      color: $white;
+      padding: 23px 0;
     }
 
     &.active > a {
-      color: $secondary;
+      color: $app-primary;
     }
   }
 
@@ -92,7 +91,7 @@
   & li.nav-item:focus > a,
   & li.nav-item > a:hover,
   & li.nav-item > a:focus {
-    color: $secondary;
+    color: $app-primary;
   }
 
   ul.sub-menu {
@@ -105,7 +104,6 @@
     padding: 10px 0;
     background-color: $white;
     visibility: hidden;
-    margin-top: -1px;
     @include border-radius(4px);
     @include transition(all 0.5s ease-in-out);
 
@@ -204,7 +202,7 @@
 }
 
 .app-top-nav {
-  background-color: #252525 !important;
+  background-color: $top-nav-bg;
 
   & .navbar-nav {
     & li.nav-item {
@@ -213,7 +211,7 @@
 
     & li.nav-item > a {
       color: $white;
-      padding: 9px 0 10px;
+      padding: 13px 0;
     }
 
     & li.nav-item:hover > a,

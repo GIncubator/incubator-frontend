@@ -90,8 +90,9 @@
 .mail-header-actions {
   text-align: right;
   min-width: 100px;
+  @include display-flex();
 
-  & .btn:not(:last-child) {
+  & .icon-btn:not(:last-child) {
     margin-right: 3px;
   }
 }
@@ -112,7 +113,10 @@
   .mail-detail {
     @include flex(1, 1, auto);
     max-width: 100%;
-    padding: 24px;
+
+    & .module-list-scroll {
+      padding: 24px;
+    }
   }
 }
 

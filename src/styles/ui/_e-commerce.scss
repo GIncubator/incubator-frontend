@@ -1,8 +1,7 @@
 /*E-commerce Styles*/
 
 .product-item {
-  border: 0 none;
-  @include box-shadow(0 1px 4px 0 rgba(#000,0.20));
+  overflow: hidden;
 }
 
 .product-item-vertical {

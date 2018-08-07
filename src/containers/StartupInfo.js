@@ -69,13 +69,13 @@ class StartupInfo extends React.Component {
         }
     }
 
-    handleCofounderNameChange(idx) { 
+    handleCofounderNameChange(idx) {
         return (evt) => {
         const newCofounders = this.state.coFounders.map((coFounder, sidx) => {
           if (idx !== sidx) return coFounder;
           return { ...coFounder, name: evt.target.value };
         });
-        
+
         this.setState({ coFounders: newCofounders });
       }
     }
@@ -87,7 +87,7 @@ class StartupInfo extends React.Component {
           if (idx !== sidx) return coFounder;
           return { ...coFounder, designation: evt.target.value };
         });
-        
+
         this.setState({ coFounders: newCofounders });
       }
     }
@@ -98,13 +98,13 @@ class StartupInfo extends React.Component {
         })
     }
 
-    handleLegalEntityMemberNameChange(idx) { 
+    handleLegalEntityMemberNameChange(idx) {
         return (evt) => {
         const newlegalEntityMembers = this.state.legalEntityMembers.map((legalEntity, sidx) => {
           if (idx !== sidx) return legalEntity;
           return { ...legalEntity, name: evt.target.value };
         });
-        
+
         this.setState({ legalEntityMembers: newlegalEntityMembers });
       }
     }
@@ -115,7 +115,7 @@ class StartupInfo extends React.Component {
           if (idx !== sidx) return legalEntity;
           return { ...legalEntity, designation: evt.target.value };
         });
-        
+
         this.setState({ legalEntityMembers: newlegalEntityMembers });
       }
     }
@@ -133,7 +133,7 @@ class StartupInfo extends React.Component {
         if (idx !== sidx) return link;
         return evt.target.value;
       });
-      
+
       this.setState({ socialMediaLinks: newSocialMediaLinks });
     }
   }
@@ -181,7 +181,7 @@ class StartupInfo extends React.Component {
 
                         <div className="app-login-form">
                             <form method="post" action="/">
-                               
+
                                 <TextField
                                     type="text"
                                     label="Name"
@@ -225,7 +225,7 @@ class StartupInfo extends React.Component {
                                     <Button variant="raised" onClick={this.addCofounder.bind(this)} type="button">
                                     Add more Cofounder
                                     </Button>
-                              
+
                                 <TextField
                                     type="text"
                                     label="Total Member Count"
@@ -474,7 +474,7 @@ class StartupInfo extends React.Component {
                                     className="mt-0 mb-2"
                                 />
 
-                                                                
+
                                 <div className="mb-3 d-flex align-items-center justify-content-between">
                                     <Button variant="raised" onClick={() => {
                                         this.props.showAuthLoader();
@@ -482,7 +482,7 @@ class StartupInfo extends React.Component {
                                     }} color="primary">
                                         Submit
                                     </Button>
-                                   
+
                                 </div>
                             </form>
                         </div>

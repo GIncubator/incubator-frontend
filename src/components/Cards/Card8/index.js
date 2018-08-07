@@ -10,9 +10,9 @@ const GalleryCard = () => {
             </div>
             <div className="d-flex flex-row align-items-center  justify-content-around card-actions"
                  style={{height: 70}}>
-                <i className="btn zmdi zmdi-favorite p-2" />
-                <i className="btn zmdi zmdi-bookmark p-2" />
-                <i className="btn zmdi zmdi-share p-2" />
+                <i className="btn zmdi zmdi-favorite p-2"/>
+                <i className="btn zmdi zmdi-bookmark p-2"/>
+                <i className="btn zmdi zmdi-share p-2"/>
             </div>
         </div>
     );

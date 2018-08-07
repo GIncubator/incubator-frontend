@@ -1,7 +1,4 @@
 import React from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton'
 import {SortableElement, SortableHandle} from 'react-sortable-hoc';
 
 import labels from 'app/routes/todo/data/labels'
@@ -18,35 +15,44 @@ const ToDoItem = SortableElement(({todo, onTodoSelect, onTodoChecked, onMarkAsSt
     return (
         <div className="module-list-item">
             <div className="module-list-icon">
-            <span className="bar-icon">
-              <DragHandle/>
-            </span>
+                <span className="bar-icon">
+                  <DragHandle/>
+                </span>
 
-                <Checkbox color="primary"
-                          checked={todo.selected}
-                          onClick={(event) => {
-                              event.stopPropagation();
-                              onTodoChecked(todo);
-                          }}
-                          value="SelectTodo"
-                />
+                <div className="form-control-checkbox d-flex">
+                    <div className="form-checkbox">
+                        <input type="checkbox"
+                               checked={todo.selected}
+                               onChange={(event) => {
+                                   event.stopPropagation();
+                                   onTodoChecked(todo);
+                               }}
+                               value="SelectTodo"
+                        />
 
-                <IconButton onClick={() => {
-                    todo.starred = !todo.starred;
-                    onMarkAsStart(todo);
-                }}>
-                    {todo.starred ?
-                        <i className="zmdi zmdi-star"/> :
-                        <i className="zmdi zmdi-star-outline"/>
-                    }
+                        <span className="check">
+                            <i className="zmdi zmdi-check zmdi-hc-lg"/>
+                        </span>
+                    </div>
 
-                </IconButton>
+                    <span className="icon-btn" onClick={() => {
+                        todo.starred = !todo.starred;
+                        onMarkAsStart(todo);
+                    }}>
+                        {todo.starred ?
+                            <i className="zmdi zmdi-star zmdi-hc-lg"/> :
+                            <i className="zmdi zmdi-star-outline zmdi-hc-lg"/>
+                        }
+
+                    </span>
+                </div>
             </div>
+
             <div className="module-list-info" onClick={() => {
                 onTodoSelect(todo);
             }}>
                 <div className="row">
-                    <div className="module-todo-content col-9 col-sm-10 col-md-11">
+                    <div className="module-todo-content col-9 col-sm-10 col-md-9">
                         <div className={`subject ${todo.completed && 'text-muted text-strikethrough'}`}>
                             {todo.title}
                         </div>
@@ -58,16 +64,19 @@ const ToDoItem = SortableElement(({todo, onTodoSelect, onTodoChecked, onMarkAsSt
                             })}
                         </div>
                     </div>
-                    <div className="module-todo-right col-3 col-sm-2 col-md-1">
+                    <div className="module-todo-right col-3 col-sm-2 col-md-2">
                         <div className="d-flex flex-row-reverse">
-                            {user === null ? <Avatar>U</Avatar>
-                                : <Avatar alt={user.name}
-                                          src={user.thumb}/>}
+                            {user === null ?
+                                <span
+                                    className="avatar size-40 rounded-circle bg-grey d-flex align-items-center justify-content-center">U</span>
+                                : <img className="avatar size-40 rounded-circle" alt={user.name}
+                                       src={user.thumb}/>}
 
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
     )

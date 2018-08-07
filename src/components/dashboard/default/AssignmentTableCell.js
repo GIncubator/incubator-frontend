@@ -1,5 +1,4 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 
 
 const AssignmentTableCell = ({data}) => {
@@ -19,13 +18,13 @@ const AssignmentTableCell = ({data}) => {
             </td>
 
             <td>
-                <Avatar
+                <img
                     alt={name}
                     src={image}
                     className="user-avatar"
                 />
             </td>
-            <td className="text-center"><i className={`zmdi zmdi-trending-up zmdi-hc-lg text-${color}`} /></td>
+            <td className="text-center"><i className={`zmdi zmdi-trending-up zmdi-hc-lg text-${color}`}/></td>
             <td className="text-center">{task}</td>
             <td className="status-cell text-right">
                 <div className={`text-white badge bg-${color}`}>{status}</div>

@@ -5,7 +5,7 @@ import CardLayout from "components/CardLayout";
 const WeatherCard = () => {
     return (
         <CardLayout styleName="col-lg-6">
-            <WeatherDetail />
+            <WeatherDetail/>
         </CardLayout>
     );
 };

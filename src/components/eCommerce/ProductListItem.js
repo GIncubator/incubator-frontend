@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import {Button} from 'reactstrap';
 import StarRatingComponent from 'react-star-rating-component';
 import IntlMessages from 'util/IntlMessages';
 
-const ProductListItem = ({product}) => {
-    const {thumb, name, price, mrp, offer, variant, rating, reviews, description} = product;
+const ProductListItem = ({ product }) => {
+    const { thumb, name, price, mrp, offer, variant, rating, reviews, description } = product;
     return (
         <div className="card product-item-vertical hoverable animation flipInX">
             <div className="row d-flex align-items-sm-center">
@@ -13,7 +13,7 @@ const ProductListItem = ({product}) => {
                         <div className="card-image">
                             <div className="grid-thumb-equal">
                                 <a className="grid-thumb-cover" href="javascript:void(0)">
-                                    <img className="img-fluid" src={thumb} alt="..."/>
+                                    <img className="img-fluid" src={thumb} alt="..." />
                                 </a>
                             </div>
                         </div>
@@ -34,12 +34,12 @@ const ProductListItem = ({product}) => {
                                 <h5 className="text-success">{offer} off</h5>
                             </div>
 
-                            <div className="d-flex flex-row " style={{height: 25}}>
+                            <div className="d-flex flex-row " style={{ height: 25 }}>
                                 <StarRatingComponent
                                     name=""
                                     value={rating}
                                     starCount={5}
-                                    editing={false}/>
+                                    editing={false} />
                                 <p className="ml-2">{rating}</p>
                             </div>
                             <p>{description}</p>
@@ -50,11 +50,11 @@ const ProductListItem = ({product}) => {
                 <div className="col-xl-3 col-lg-3 col-md-3 col-12">
                     <div className="card-footer border-0 text-center bg-white">
                         <div className="cart-btn mb-2">
-                            <Button variant="raised" className="bg-primary text-white"><IntlMessages
-                                id="eCommerce.addToCart"/></Button>
+                            <Button color="primary"><IntlMessages
+                                id="eCommerce.addToCart" /></Button>
                         </div>
 
-                        <Button color="primary"><IntlMessages id="eCommerce.readMore"/></Button>
+                        <Button outline color="primary"><IntlMessages id="eCommerce.readMore" /></Button>
                     </div>
                 </div>
             </div>

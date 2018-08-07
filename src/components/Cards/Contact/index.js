@@ -1,9 +1,9 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import {Button} from 'reactstrap';
 
 const ContactCard = () => {
     return (
-        <div className="jr-card p-0">
+        <div className="jr-card p-0 overflow-hidden">
             <div className="jr-card-header mb-0 p-4 bg-grey lighten-4">
                 <h3 className="card-heading">Our Office</h3>
                 <p className="sub-heading">
@@ -48,7 +48,7 @@ const ContactCard = () => {
                     </li>
                 </ul>
 
-                <Button size="small" color="primary">Get directions</Button>
+                <Button size="sm" outline color="primary" className="text-uppercase">Get directions</Button>
             </div>
         </div>
     );

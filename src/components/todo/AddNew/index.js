@@ -1,12 +1,7 @@
 import React from 'react';
-import Dialog from '@material-ui/core/Dialog';import DialogTitle from '@material-ui/core/DialogTitle';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import Moment from 'moment';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import AttachFile from '@material-ui/icons/AttachFile';
-import Delete from '@material-ui/icons/Delete';
+
 
 class AddNew extends React.Component {
     constructor() {
@@ -17,71 +12,64 @@ class AddNew extends React.Component {
             bcc: '',
             subject: '',
             message: '',
-        }
+            modal: false
+        };
+
+        this.toggle = this.toggle.bind(this);
     }
+
+    toggle() {
+        this.setState({
+            modal: !this.state.modal
+        });
+    }
+
 
     render() {
         const {onTodoAdd, onClose, user} = this.props;
         const {to, cc, bcc, subject, message} = this.state;
         return (
-            <Dialog onClose={onClose} open={this.props.open}>
-                <DialogTitle>
+
+            <Modal onClose={onClose} isOpen={this.props.open}>
+                <ModalHeader>
                     <div className="header" style={{minWidth: 300}}>
                         <div className="subject">
                             New Message
                         </div>
-                        <IconButton
-                            onClick={onClose}>
-                            <CloseIcon/>
-                        </IconButton>
+                        <span onClick={onClose}>
+                            <i className="zmdi zmdi-close"/>
+                        </span>
                     </div>
-                </DialogTitle>
+                </ModalHeader>
                 <div className="add-todo" style={{minWidth: 300}}>
-                    <div className="body d-flex flex-column" style={{width: '100%'}}>
-                        <TextField
-                            disabled
-                            id="required"
-                            label="From"
-                            defaultValue={user.email}
-                            margin="normal"/>
-                        <TextField
-                            id="required"
-                            label="To*"
-                            onChange={(event) => this.setState({to: event.target.value})}
-                            defaultValue={to}
-                            margin="normal"/>
-                        <TextField
-                            required
-                            id="required"
-                            label="CC"
-                            onChange={(event) => this.setState({cc: event.target.value})}
-                            defaultValue={cc}
-                            margin="normal"/>
-                        <TextField
-                            id="required"
-                            label="Bcc"
-                            onChange={(event) => this.setState({bcc: event.target.value})}
-                            value={bcc}
-                            margin="normal"/>
-                        <TextField
-                            id="required"
-                            label="Subject"
-                            onChange={(event) => this.setState({subject: event.target.value})}
-                            value={subject}
-                            margin="normal"
+                    <ModalBody className="body d-flex flex-column" style={{width: '100%'}}>
+                        <input type="text" className="form-control" placeholder="From"
+                               defaultValue={user.email}
                         />
-                        <TextField
-                            id="required"
-                            label="Message"
-                            onChange={(event) => this.setState({message: event.target.value})}
-                            value={message}
-                            multiline
-                            rowsMax="4"
-                            margin="normal"/>
-                    </div>
+                        <input type="text" className="form-control" placeholder="To*"
+                               onChange={(event) => this.setState({to: event.target.value})}
+                               defaultValue={to}
+                        />
+                        <input type="text" className="form-control" placeholder="CC"
+                               onChange={(event) => this.setState({cc: event.target.value})}
+                               defaultValue={cc}
+                        />
+                        <input type="text" className="form-control" placeholder="Bcc"
+                               onChange={(event) => this.setState({bcc: event.target.value})}
+                               value={bcc}
+                        />
+                        <input type="text" className="form-control" placeholder="Subject"
+                               onChange={(event) => this.setState({subject: event.target.value})}
+                               value={subject}
+                        />
+                        <input type="text" className="form-control" placeholder="Message"
+                               onChange={(event) => this.setState({message: event.target.value})}
+                               value={message}
+                        />
+                    </ModalBody>
 
-                    <div className="footer d-flex flex-row">
-                        <Button disabled={to === ''} variant="raised" color="primary" onClick={() => {
+                    <ModalFooter className="footer d-flex flex-row">
+                        <Button disabled={to === ''} color="primary" onClick={() => {
                             onClose();
                             onTodoAdd(
                                 {
@@ -110,17 +98,17 @@ class AddNew extends React.Component {
                                 })
 
                         }}>Save ToDo</Button>
-                        <IconButton>
-                            <AttachFile/>
-                        </IconButton>
-                        <IconButton onClick={() => {
+                        <span>
+                            <i className="zmdi zmdi-attachment"/>
+                        </span>
+                        <span onClick={() => {
                             onClose();
                         }}>
-                            <Delete/>
-                        </IconButton>
-                    </div>
+                            <i className="zmdi zmdi-delete"/>
+                        </span>
+                    </ModalFooter>
                 </div>
-            </Dialog>
+            </Modal>
         );
     }
 }

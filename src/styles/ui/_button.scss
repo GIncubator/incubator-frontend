@@ -2,48 +2,129 @@
 button {
   outline: 0 none !important;
   cursor: pointer;
+  border: 1px solid transparent;
 }
 
-.btn, .jr-btn {
+.jr-btn {
   position: relative;
-  min-width: 10px !important;
-  min-height: 10px !important;
-  font-size: $btn-font-size !important;
-  font-weight: $btn-font-weight !important;
-  text-transform: capitalize !important;
-  line-height: $btn-line-height !important;
-  @include border-radius($border-radius !important);
+  display: inline-block;
+  font-size: $btn-font-size;
+  font-weight: $btn-font-weight;
+  text-transform: capitalize;
+  line-height: $btn-line-height;
+  @include border-radius($border-radius);
+  vertical-align: top;
   cursor: pointer;
-}
+  text-align: center;
 
-.btn {
+  &:hover,
   &:focus,
   &:active {
-    outline: 0 none !important;
+    outline: 0 none;
+    text-decoration: none;
     @include box-shadow(none !important);
+  }
+
+  .login-content & {
+    padding: 10px 35px;
   }
 }
 
-.text-uppercase {
-  text-transform: uppercase !important;
+.btn {
+  &:hover,
+  &:focus,
+  &:active {
+    outline: 0 none;
+    text-decoration: none;
+    @include box-shadow(none !important);
+  }
+
+  .login-content & {
+    padding: 10px 35px;
+  }
+}
+
+.btn,
+.btn-info,
+.btn-success,
+.btn-warning,
+.btn-danger,
+.btn-light,
+.btn-dark,
+.btn-primary,
+.btn-secondary {
+  @extend %btn-no-shadow;
+  @include box-shadow(none !important);
+}
+
+.show > {
+  .btn,
+  .btn-info,
+  .btn-success,
+  .btn-warning,
+  .btn-danger,
+  .btn-light,
+  .btn-dark,
+  .btn-primary,
+  .btn-secondary {
+    &.dropdown-toggle:focus {
+      @include box-shadow(none !important);
+    }
+  }
 }
 
 .jr-btn,
 .jr-fab-btn,
+.jr-flat-btn,
 .btn {
   margin-bottom: 6px;
+  text-transform: capitalize;
+
   &:not(:last-child) {
     margin-right: 15px;
   }
+
+  .form-inline & {
+    margin-bottom: 0;
+    min-height: 35px;
+  }
+
+  .navbar & {
+    margin-bottom: 0;
+  }
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  box-shadow: none !important;
+}
+
+.input-group > .input-group-prepend > .btn,
+.input-group > .input-group-append > .btn {
+  margin-right: 0;
+  margin-bottom: 0;
+  line-height: inherit;
 }
 
 .jr-fab-btn {
+  position: relative;
+  display: inline-flex;
   @extend %size-50;
-  min-height: 10px !important;
+  @include border-radius($border-radius-circle);
+  @include justify-content(center);
+  @include align-items(center);
+  background-color: map_get($gray, lighten-3);
+  overflow: hidden;
+
+  &:hover,
+  &:focus {
+    outline: 0 none;
+    text-decoration: none;
+  }
 }
 
-.jr-btn {
-  padding: $btn-padding !important;
+.jr-btn,
+.jr-flat-btn {
+  padding: $btn-padding;
 
   & i + span,
   & span + i {
@@ -51,8 +132,19 @@ button {
   }
 }
 
+.jr-flat-btn {
+  background-color: transparent;
+  color: $body-color;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: map_get($gray, lighten-4);
+    color: $body-color;
+  }
+}
+
 .jr-btn-group {
-  margin: 0 -10px;
+  margin: 0 -8px;
 
   &:not(:last-child) {
     margin-bottom: 16px;
@@ -60,7 +152,7 @@ button {
 
   & .jr-btn,
   & .jr-fab-btn {
-    margin: 0 10px 18px;
+    margin: 0 8px 18px;
   }
 }
 
@@ -69,15 +161,15 @@ button {
 }
 
 .jr-btn-lg {
-  padding: $btn-padding-lg !important;
+  padding: $btn-padding-lg;
 }
 
 .jr-btn-sm {
-  padding: $btn-padding-sm !important;
+  padding: $btn-padding-sm;
 }
 
 .jr-btn-xs {
-  padding: $btn-padding-xs !important;
+  padding: $btn-padding-xs;
 }
 
 // Fab Button
@@ -95,30 +187,30 @@ button {
 
 .jr-btn-fab-lg,
 .jr-btn-lg {
-  font-size: $btn-font-size-lg !important;
+  font-size: $btn-font-size-lg;
   & i {
-    font-size: ($btn-font-size-lg + 2px) !important;
+    font-size: ($btn-font-size-lg + 2px);
   }
 }
 
 .jr-btn-fab-sm,
 .jr-btn-sm {
-  font-size: $btn-font-size-sm !important;
+  font-size: ($btn-font-size-sm - 2px);
   & i {
-    font-size: $btn-font-size-sm !important;
+    font-size: ($btn-font-size-sm - 2px);
   }
 }
 
 .jr-btn-fab-xs,
 .jr-btn-xs {
-  font-size: $btn-font-size-xs !important;
+  font-size: $btn-font-size-xs;
   & i {
-    font-size: $btn-font-size-xs !important;
+    font-size: $btn-font-size-xs;
   }
 }
 
 .complex-btn-wrapper {
- @include display-flex();
+  @include display-flex(flex, row, wrap);
   min-width: 200px;
   width: 100%;
 }
@@ -127,9 +219,12 @@ button {
   position: relative;
   height: 200px;
   overflow: hidden;
+  width: 33.333%;
+  border: 0 none;
+
   @media screen and (max-width: 767px) {
-    width: 100% !important;
-    height: 100px !important;
+    width: 100%;
+    height: 100px;
   }
   &:hover {
     z-index: 1;
@@ -209,6 +304,7 @@ button {
   width: $size-40;
   height: 100%;
   line-height: 42px;
+  text-align: center;
 }
 
 .jr-btn.jr-btn-label.left i {
@@ -247,4 +343,169 @@ button {
 .jr-btn.jr-btn-label.jr-btn-xs i {
   line-height: 24px;
   width: $size-30;
+}
+
+//Button function
+@each $color_name, $color in $colors_palette {
+  @each $color_type, $color_value in $color {
+    @if $color_type == "base" {
+      .btn-#{$color_name} {
+        background-color: $color_value;
+        color: $white;
+        &:hover,
+        &:focus {
+          background-color: darken($color_value, 5%);
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+.jr-btn-shadow {
+  @include box-shadow(0 1px 5px 0 rgba($black, 0.2), 0 2px 2px 0 rgba($black, 0.14), 0 3px 1px -2px rgba($black, 0.12) !important);
+  &:hover,
+  &:focus {
+    @include box-shadow(0 1px 5px 0 rgba($black, 0.2), 0 2px 2px 0 rgba($black, 0.14), 0 3px 1px -2px rgba($black, 0.12) !important);
+  }
+
+  &:active {
+    @include box-shadow(none !important);
+  }
+}
+
+.jr-btn.disabled,
+.jr-btn.disabled {
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+.jr-btn-default {
+  background-color: $white;
+  color: $body-color;
+  border: 1px solid $gray-300;
+  &:hover,
+  &:focus {
+    background-color: darken($white, 5%);
+    color: $body-color;
+  }
+}
+
+.jr-btn-secondary {
+  background-color: $secondary;
+  color: $white;
+  &:hover,
+  &:focus {
+    background-color: darken($secondary, 5%);
+    color: $white;
+  }
+}
+
+.jr-flat-btn.jr-btn-primary {
+  background-color: transparent;
+  color: $app-primary;
+
+  &:hover,
+  &:focus {
+    background-color: rgba($app-primary, 0.12);
+    color: $app-primary;
+  }
+}
+
+.bg-primary {
+  & .jr-flat-btn.jr-btn-primary {
+    background-color: transparent;
+    color: $white;
+
+    &:hover,
+    &:focus {
+      background-color: rgba($white, 0.12);
+      color: $white;
+    }
+  }
+}
+
+.jr-flat-btn.jr-btn-secondary {
+  background-color: transparent;
+  color: $secondary;
+
+  &:hover,
+  &:focus {
+    background-color: rgba($secondary, 0.12);
+    color: $secondary;
+  }
+}
+
+.bg-secondary {
+  & .jr-flat-btn.jr-btn-secondary {
+    background-color: transparent;
+    color: $white;
+
+    &:hover,
+    &:focus {
+      background-color: rgba($white, 0.12);
+      color: $white;
+    }
+  }
+}
+
+.jr-btn-hover:hover:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: inline-block;
+  background-color: rgba($black, 0.06);
+}
+
+.dropdown-toggle-split {
+  padding-right: 0.5625rem;
+  padding-left: 0.5625rem;
+}
+
+.action-btn {
+  height: $size-40;
+  width: $size-40;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  @include align-items(center);
+  @include justify-content(center);
+  font-size: 24px;
+  cursor: pointer;
+  vertical-align: middle;
+  color: rgba($black, 0.54);
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+    color: rgba($black, 0.64);
+  }
+
+  .circle-check & {
+    height: 24px;
+    width: 24px;
+    font-size: 16px;
+  }
+
+  .chat-main-header & {
+    color: $white;
+  }
+}
+
+.action-replay .jr-btn-default {
+  font-size: 14px;
+  padding: 5px 10px;
+  border-color: $gray-600 !important;
+}
+
+.btn-outline-primary,
+.btn-outline-secondary {
+  &:focus {
+    @include box-shadow(none !important);
+  }
 }

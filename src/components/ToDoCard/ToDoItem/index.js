@@ -1,26 +1,37 @@
 import React from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
 
 
 const ToDoItem = ({todo, onTodoChecked}) => {
 
     return (
-        <div className="todo-cell d-flex align-items-center">
 
-            <Checkbox color="primary"
-                      checked={todo.selected}
-                      onClick={(event) => {
+        <div className="media mb-3">
+            <div className="form-checkbox mr-3">
+                <input type="checkbox"
+                       value="SelectTodo"
+                       checked={todo.selected}
+                       onChange={(event) => {
+                           event.stopPropagation();
+                           onTodoChecked(todo);
+                       }}>
+
+                </input>
+
+                <span className="check">
+                        <i className="zmdi zmdi-check zmdi-hc-lg"/>
+                    </span>
+
+            </div>
+            <div className="media-body">
+                <span className="text-grey d-block">{todo.title}</span>
+                <label onClick={(event) => {
                     event.stopPropagation();
                     onTodoChecked(todo);
-                }}
-                      value="SelectTodo"
-                      className="size-30 mr-2"
-            />
+                }} className={`wra ${todo.selected && 'text-muted text-strikethrough d-block'}`}>
+                    <span>{todo.notes}</span>
 
-            <span className={`wra ${todo.selected && 'text-muted text-strikethrough'}`}>
-                 {todo.notes}
-            </span>
-
+                </label>
+            </div>
         </div>
 
     )

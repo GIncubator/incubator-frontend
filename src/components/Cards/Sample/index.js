@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import {Button} from 'reactstrap';
 
 function SimpleCard() {
 
@@ -13,7 +13,7 @@ function SimpleCard() {
                 “a benevolent smile”
             </p>
 
-            <Button size="small" color="primary">Learn More</Button>
+            <Button size="sm" outline color="primary">Learn More</Button>
         </div>
     );
 }

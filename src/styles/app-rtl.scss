@@ -79,11 +79,22 @@
 
 /*Sidebar Styles*/
 .rtl .side-nav {
-  border-left: 0 none !important;
+  border-left: solid 1px $gray-200 !important;
 
   & .user-avatar {
     margin: 0 0 0 15px !important;
   }
+}
+
+.rtl.dark-indigo .side-nav,
+.rtl.dark-cyan .side-nav,
+.rtl.dark-amber .side-nav,
+.rtl.dark-deep-orange .side-nav,
+.rtl.dark-pink .side-nav,
+.rtl.dark-blue .side-nav,
+.rtl.dark-deep-purple .side-nav,
+.rtl.dark-green .side-nav {
+  border-left: 0 none !important;
 }
 
 .rtl ul.nav-menu li.menu > a {
@@ -223,26 +234,6 @@
   }
 }
 
-/*App Layout Styles*/
-.rtl .app-container.fixed-drawer {
-  & .app-main-header {
-    left: 0;
-    right: $side-nav-width;
-
-    @media screen and (max-width: 1199px) {
-      left: 0;
-      right: 0;
-    }
-  }
-}
-
-.rtl .app-container.mini-drawer {
-  & .app-main-header {
-    left: 0;
-    right: $mini-drawer-width;
-  }
-}
-
 /*Header Styles*/
 .rtl .jr-menu-icon {
   margin-right: 0;
@@ -250,23 +241,7 @@
 }
 
 .rtl .app-toolbar .search-bar {
-  margin-left: auto;
-  margin-right: 100px;
-
-  @media screen and (max-width: 767px) {
-    margin-left: auto;
-    margin-right: 40px;
-  }
-}
-
-.rtl .app-header-horizontal .app-toolbar .search-bar {
-  margin-left: 10px;
-  margin-right: 20px;
-
-  @media screen and (max-width: 767px) {
-    margin-left: 10px;
-    margin-right: 20px;
-  }
+  margin-right: 0;
 }
 
 .rtl .app-toolbar .nav-searchbox {
@@ -320,27 +295,34 @@
   }
 }
 
+.rtl .app-logo {
+  margin-right: 0;
+  margin-left: 12px;
+}
+
+.rtl .app-header .app-logo {
+  margin-right: 0;
+  margin-left: 20px;
+
+  @media screen and (max-width: 991px) {
+    margin-right: 0;
+    margin-left: auto;
+  }
+}
+
+
 /*Dashboard Styles*/
 .rtl .net-chart {
-  padding-left: 8px;
-  padding-right: 0;
+  padding-left: 15px;
+  padding-right: 80px;
 
   & .jr-card-thumb {
-    margin: 0 0 0 20px;
+    left: auto;
+    right: 15px;
   }
 
   &:hover .jr-card-thumb {
-    margin-right: 0;
-    margin-left: 5px;
-  }
-
-  & .jr-card-thumb img {
-    margin-left: 0;
-    margin-right: 15px;
-  }
-
-  &:hover .jr-card-thumb img {
-    margin: -18px 0 -18px 15px;
+    right: 0;
   }
 }
 
@@ -430,21 +412,6 @@
   }
 }
 
-/*Button Group Styles*/
-// and we need :first-child and :last-child to both match
-.rtl .btn-group > .jr-btn:first-child {
-  &:not(:last-child):not(.dropdown-toggle) {
-    @include border-right-radius(2px !important);
-    @include border-left-radius(0 !important);
-  }
-}
-
-.rtl .btn-group > .jr-btn:last-child:not(:first-child),
-.rtl .btn-group > .dropdown-toggle:not(:first-child) {
-  @include border-left-radius(2px !important);
-  @include border-right-radius(0 !important);
-}
-
 /* App Module Style */
 .rtl .module-nav {
   & li i {
@@ -495,7 +462,7 @@
 .rtl .search-wrapper {
   & .search-bar.right-side-icon {
     & .form-control {
-      padding-left: 0;
+      padding-left: 16px;
       padding-right: 32px;
     }
 
@@ -709,6 +676,14 @@
   }
 }
 
+.rtl .right-sidebar .jr-btn,
+.rtl .right-sidebar .jr-fab-btn,
+.rtl .right-sidebar .btn {
+  &:not(:last-child) {
+    margin-left: 0;
+  }
+}
+
 .rtl .jr-btn {
   & i + span,
   & span + i {
@@ -740,6 +715,38 @@
 .rtl .jr-btn.jr-btn-label.right i + span {
   margin-right: 0;
   margin-left: $size-30;
+}
+
+/*Button Group Styles*/
+.rtl .btn-group .jr-btn,
+.rtl .btn-group .jr-fab-btn,
+.rtl .btn-group .btn {
+  &:not(:last-child) {
+    margin-left: -$input-btn-border-width;
+  }
+}
+
+.rtl .btn-group,
+.rtl .btn-group-vertical {
+  .jr-btn + .jr-btn,
+  .jr-btn + .btn-group,
+  .btn-group + .jr-btn,
+  .btn-group + .btn-group {
+    margin-left: -$input-btn-border-width;
+  }
+}
+
+.rtl .btn-group > .jr-btn:first-child {
+  &:not(:last-child):not(.dropdown-toggle) {
+    @include border-right-radius(2px !important);
+    @include border-left-radius(0 !important);
+  }
+}
+
+.rtl .btn-group > .jr-btn:last-child:not(:first-child),
+.rtl .btn-group > .dropdown-toggle:not(:first-child) {
+  @include border-left-radius(2px !important);
+  @include border-right-radius(0 !important);
 }
 
 /*Callout Styles*/
@@ -874,15 +881,15 @@
 
 .rtl .timeline-panel {
   &:before {
-    border-width: 15px 0 15px 15px;
+    border-width: 10px 0 10px 17px;
     left: auto;
-    right: -15px;
+    right: -17px;
   }
 
   &:after {
-    border-width: 14px 0 14px 14px;
+    border-width: 10px 0 10px 16px;
     left: auto;
-    right: -14px;
+    right: -16px;
   }
 }
 
@@ -935,13 +942,14 @@
 
     & .timeline-panel {
       &:before {
-        border-width: 15px 15px 15px 0;
-        left: -15px;
+        border-width: 10px 17px 10px 0;
+        left: -17px;
         right: auto;
       }
+
       &:after {
-        border-width: 14px 14px 14px 0;
-        left: -14px;
+        border-width: 10px 16px 10px 0;
+        left: -16px;
         right: auto;
       }
     }
@@ -1077,14 +1085,14 @@
 
       & .timeline-panel {
         &:before {
-          border-width: 15px 0 15px 15px;
+          border-width: 10px 0 10px 17px;
           left: auto;
-          right: -15px;
+          right: -17px;
         }
         &:after {
-          border-width: 14px 0 14px 14px;
+          border-width: 10px 0 10px 16px;
           left: auto;
-          right: -14px;
+          right: -16px;
         }
       }
     }
@@ -1199,4 +1207,55 @@
 
 .rtl .owl-carousel {
   direction: ltr;
+}
+
+.rtl .rc-collapse-header .arrow {
+  margin-left: 8px;
+}
+
+.rtl .list-group {
+  padding-left: 0;
+}
+
+.rtl .switch.on .switch-toggle {
+  right: 23px;
+}
+
+.rtl .switch-toggle {
+  right: 0;
+}
+
+.rtl .nav-pill-sales {
+  & li:first-child .nav-link {
+    @include border-left-radius(0);
+    @include border-right-radius($border-radius);
+  }
+
+  & li:last-child .nav-link {
+    @include border-right-radius(0);
+    @include border-left-radius($border-radius);
+  }
+}
+
+.rtl .form-checkbox-custom .check {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+/* Grid list */
+.rtl .grid {
+  & > img {
+    left: auto;
+    right: 50%;
+    transform: translate(50%, -50%);
+  }
+}
+
+.rtl .card-header .badge:last-child {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+.rtl .icons-showcase > div {
+  text-align: right;
 }

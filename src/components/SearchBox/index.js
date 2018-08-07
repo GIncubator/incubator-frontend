@@ -17,4 +17,5 @@ export default SearchBox;
 SearchBox.defaultProps = {
     styleName: "",
     value: "",
+    placeholder: "Search here.."
 };

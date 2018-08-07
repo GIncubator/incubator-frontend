@@ -22,3 +22,8 @@
 .badge-border {
   border: 2px solid !important;
 }
+
+.badge-outline {
+  background-color: transparent;
+  border: $jr-border;
+}

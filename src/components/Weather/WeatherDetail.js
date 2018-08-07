@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
+import {Button} from 'reactstrap';
 import {weatherData} from './weatherData';
 import WeatherList from './WeatherList';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
+
 
 class WeatherDetail extends Component {
 
@@ -43,23 +43,23 @@ class WeatherDetail extends Component {
                                 <p className="sub-heading">{city.dateTime}</p>
                             </div>
 
-                            <IconButton className="size-30">
-                                <i className="zmdi zmdi-chevron-down zmdi-hc-fw" />
-                            </IconButton>
+                            <span className="size-30">
+                                <i className="zmdi zmdi-chevron-down zmdi-hc-fw"/>
+                            </span>
                         </div>
                         <div className="temp-section py-sm-5 d-flex justify-content-between align-items-center">
                             <h2 className="temp-point text-muted">{list[0].main.temp.toFixed(1)}
                                 <small><sup>°C</sup></small>
                             </h2>
                             <div className="px-md-4">
-                                <i className={"detail-icon text-blue-grey wi wi-owm-" + list[0].weather[0].id} />
+                                <i className={"detail-icon text-blue-grey wi wi-owm-" + list[0].weather[0].id}/>
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr />
-                <WeatherList weather={list} />
-                <Button variant="raised" color="primary" className="jr-btn text-uppercase text-white">full
+                <hr/>
+                <WeatherList weather={list}/>
+                <Button color="primary" className="jr-btn text-uppercase text-white">full
                     report</Button>
             </div>
         )

@@ -151,8 +151,8 @@
 }
 
 .tab-notifications {
-  margin-left: -$jr-card-margin;
-  margin-right: -$jr-card-margin;
+  margin-left: -$jr-card-margin + 4px;
+  margin-right: -$jr-card-margin + 4px;
   border-bottom: 1px solid $gray-500;
 
   @media screen and (max-width: 567px) {
@@ -182,51 +182,36 @@
 
 /*Intranet Dashboard Styles*/
 .net-chart {
-  padding-left: 0;
-  padding-right: 8px;
+  padding-left: 80px;
+  padding-right: 15px;
   min-height: 100px;
+  position: relative;
+  overflow: hidden;
   @include display-flex();
   @include align-items(center);
 
   & .jr-card-thumb {
-    margin: 0 20px 0 0;
-    width: 65px;
-    @include transition(all 0.2s ease 0.1s);
+    margin: 0;
+    width: $size-50;
+    height: $size-50;
+    color: $white;
+    font-size: 20px;
+    @include border-radius($border-radius-circle);
+    @include display-flex(flex, column, nowrap);
+    @include justify-content(center);
+    @include align-items(center);
+    @include transition(all 100ms ease);
+    position: absolute;
+    left: 15px;
   }
 
   &:hover .jr-card-thumb {
-    margin-right: 5px;
-    width: $size-80;
-  }
-
-  & .jr-card-thumb img {
-    @include border-radius(50%);
-    width: $size-50;
-    height: $size-50;
-    @include transition(all 0.2s ease 0.1s);
-    overflow: hidden;
-    margin-left: 15px;
-  }
-
-  &:hover .jr-card-thumb img {
-    width: $size-80;
-    height: $size-100;
+    width: 70px;
+    height: 100%;
+    font-size: 30px;
     @include border-radius(0);
-    margin: -18px 15px -18px 0;
-  }
-
-  & .jr-card-body {
-    width: calc(100% - 95px);
-  }
-
-  &:hover .jr-card-body {
-    width: calc(100% - 95px);
-  }
-}
-
-.jr-chart-or {
-  & .chart-header {
-    padding-bottom: 0;
+    position: absolute;
+    left: 0;
   }
 }
 
@@ -238,8 +223,8 @@
   overflow: hidden;
 
   & .jr-card-thumb {
-    margin: -30px 12px -30px -24px;
-    min-width: $size-100;
+    margin: -30px 12px -30px -30px;
+    min-width: $size-100 + 5px;
   }
 
   & .grid-thumb-equal {
@@ -267,7 +252,7 @@
 
 .jr-card-header-color {
   padding: 10px 20px 20px;
-  margin: -18px -24px 25px;
+  margin: -24px -30px 25px;
 }
 
 .todo-cell-group {
@@ -292,6 +277,7 @@
     z-index: 1;
   }
 }
+
 
 .list-line-item {
   position: relative;
@@ -319,3 +305,123 @@
   width: 10px;
   background-color: $gray-500;
 }
+
+.circle-shape {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  @include border-radius($border-radius-circle);
+}
+
+.project-list {
+  line-height: 1;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  & .circle-shape {
+    margin-top: 4px;
+    margin-right: 16px;
+  }
+
+  & .project-name {
+    display: block;
+    margin-bottom: 4px;
+    color: $body-color;
+
+    &:hover,
+    &:focus {
+      color: $app-primary;
+      text-decoration: none;
+    }
+  }
+}
+
+.nav-pill-sales {
+  & li + li {
+    margin-right: -1px;
+  }
+  & .nav-link {
+    background-color: $gray-200;
+    border-radius: 0;
+    padding: 6px 15px;
+    color: $gray-600;
+    font-size: 13px;
+    border: $jr-border;
+
+    &.active {
+      background-color: $app-primary;
+      color: $white;
+      border-color: $app-primary;
+
+      &:hover,
+      &:focus {
+        color: $white;
+      }
+    }
+  }
+
+  & li:first-child .nav-link {
+    @include border-left-radius($border-radius);
+  }
+
+  & li:last-child .nav-link {
+    @include border-right-radius($border-radius);
+  }
+}
+
+.temp-week-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  color: lighten($gray-600, 8%);
+
+  & li:not(:last-child) {
+    margin-bottom: 10px;
+    @media screen and (max-width: 340px) {
+      margin-bottom: 20px;
+    }
+  }
+
+  & img {
+    width: 24px;
+    height: 24px;
+  }
+
+  & span {
+    display: inline-block;
+
+    &.temp-point {
+      margin: 0 20px;
+
+      @media screen and (max-width: 1199px) {
+        margin: 0 10px;
+      }
+
+      @media screen and (max-width: 1050px) {
+        margin: 0 5px;
+      }
+
+      @media screen and (max-width: 340px) {
+        margin: 0 20px;
+      }
+    }
+  }
+}
+
+.temp-section {
+
+  .temp-point {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 0;
+
+    & sub,
+    & sup {
+      font-size: 70%;
+    }
+  }
+}
+
+

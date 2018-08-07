@@ -1,5 +1,4 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 
 
 const ApplicationTableCell = ({data}) => {
@@ -11,10 +10,10 @@ const ApplicationTableCell = ({data}) => {
         >
             <td>
                 <div className="user-profile d-flex flex-row align-items-center">
-                    <Avatar
+                    <img
                         alt={name}
                         src={image}
-                        className="ml-3 user-avatar"
+                        className="mx-3 user-avatar rounded-circle"
                     />
                     <div className="user-detail">
                         <h5 className="user-name">{name} </h5>

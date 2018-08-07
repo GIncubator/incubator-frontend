@@ -9,7 +9,7 @@ class WeatherList extends Component {
         return (
             <div className="text-muted my-4">
                 {
-                    this.props.weather.map((data, index) => <DayWeather dayData={data} key={index} />)
+                    this.props.weather.map((data, index) => <DayWeather dayData={data} key={index}/>)
                 }
             </div>
         )
@@ -46,7 +46,7 @@ const DayWeather = ({dayData}) => {
                 <h4>{Moment(day).format('ddd d MMM')}</h4>
             </div>
             <div className="list-icon col-3">
-                <h3><i className={" wi wi-owm-" + iconId} /></h3>
+                <h3><i className={" wi wi-owm-" + iconId}/></h3>
             </div>
             <div className="col-4">
                 <h4>{temp.toFixed(1)} °C</h4>

@@ -13,7 +13,7 @@ import {
   SIGNUP_USER_SUCCESS,
   ON_STARTUP_INFO_SUBMIT,
   ON_STARTUP_INFO_SUBMIT_DONE
-} from "constants/ActionTypes"
+} from 'constants/ActionTypes'
 
 const INIT_STATE = {
   loader: false,
@@ -53,7 +53,7 @@ export default (state = INIT_STATE, action) => {
         return {
           ...state,
           authUser: null,
-          initURL: '/app/sample-page',
+          initURL: '/app/dashboard/default',
           loader: false
         }
       }

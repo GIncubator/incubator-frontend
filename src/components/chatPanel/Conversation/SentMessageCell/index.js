@@ -1,11 +1,12 @@
 import React from 'react';
 
-const SentMessageCell = ({conversation}) => {
+const SentMessageCell = ({ conversation }) => {
     return (
         <div className="d-flex flex-nowrap chat-item flex-row-reverse">
 
-            <img className="rounded-circle avatar size-40 align-self-end" src="http://via.placeholder.com/150x150"
-                 alt={conversation.name}/>
+            <img className="rounded-circle avatar size-40 align-self-end"
+                 src="http://via.placeholder.com/150x150"
+                 alt={conversation.name} />
 
             <div className="bubble jambo-card">
                 <div className="message">{conversation.message}</div>

@@ -28,9 +28,9 @@ class AssignmentTable extends Component {
                 <table className="default-table table table-sm table-hover">
                     <thead>
                     <tr>
-                        <th>Application</th>
-                        <th>Time</th>
-                        <th>Price</th>
+                        <th className="border-top-0 px-4 py-3">Application</th>
+                        <th className="border-top-0 px-4 py-3">Time</th>
+                        <th className="border-top-0 px-4 py-3">Price</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -21,9 +21,12 @@ const GalleryCard = () => {
                     </div>
                 </div>
 
-                <a href="javascript:void(0)" className="card-link"><i className="zmdi zmdi-image zmdi-hc-fw"/>Gallary</a>
-                <a href="javascript:void(0)" className="card-link"><i className="zmdi zmdi-railway zmdi-hc-fw"/>Route</a>
-                <a href="javascript:void(0)" className="card-link"><i className="zmdi zmdi-money zmdi-hc-fw"/>Avarage Cost</a>
+                <a href="javascript:void(0)" className="card-link"><i
+                    className="zmdi zmdi-image zmdi-hc-fw"/>Gallary</a>
+                <a href="javascript:void(0)" className="card-link"><i
+                    className="zmdi zmdi-railway zmdi-hc-fw"/>Route</a>
+                <a href="javascript:void(0)" className="card-link"><i className="zmdi zmdi-money zmdi-hc-fw"/>Avarage
+                    Cost</a>
             </div>
         </CardLayout>
     );

@@ -1,22 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import Drawer from '@material-ui/core/Drawer';
+import Drawer from 'rmc-drawer';
+import {Config} from 'constants/ThemeColors';
 import SidenavContent from './SidenavContent';
-import UserInfo from 'components/UserInfo';
+import SidenavLogo from 'components/SidenavLogo';
 import {COLLAPSED_DRAWER, FIXED_DRAWER, HORIZONTAL_NAVIGATION} from 'constants/ActionTypes';
 import {toggleCollapsedNav, updateWindowWidth} from 'actions/Setting';
 
 class SideNav extends React.PureComponent {
 
-    constructor(props) {
-        super(props);
-    }
-
     onToggleCollapsedNav = (e) => {
         const val = !this.props.navCollapsed;
         this.props.toggleCollapsedNav(val);
     };
+
+    constructor(props) {
+        super(props);
+    }
 
     componentDidMount() {
         window.addEventListener('resize', () => {
@@ -25,39 +26,39 @@ class SideNav extends React.PureComponent {
     }
 
     render() {
-        const {navCollapsed, drawerType, width, navigationStyle} = this.props;
+        const {navCollapsed, drawerType, width, isDirectionRTL, navigationStyle} = this.props;
         let drawerStyle = drawerType.includes(FIXED_DRAWER) ? 'd-xl-flex' : drawerType.includes(COLLAPSED_DRAWER) ? '' : 'd-flex';
-        let type = 'permanent';
+        let type = true;
         if (drawerType.includes(COLLAPSED_DRAWER) || (drawerType.includes(FIXED_DRAWER) && width < 1200)) {
-            type = 'temporary';
+            type = false;
+        }
+        if (navigationStyle===HORIZONTAL_NAVIGATION) {
+            drawerStyle = "";
+            type = false;
         }
 
-        if (navigationStyle === HORIZONTAL_NAVIGATION) {
-            drawerStyle = '';
-            type = 'temporary';
-        }
         return (
-            <div className={`app-sidebar d-none ${drawerStyle}`}>
-                <Drawer className="app-sidebar-content"
-                        variant={type}
-                        open={type.includes('temporary') ? navCollapsed : true}
-                        onClose={this.onToggleCollapsedNav}
-                        classes={{
-                            paper: 'side-nav',
-                        }}
-                >
-                    <UserInfo/>
-                    <SidenavContent/>
-                </Drawer>
-            </div>
+            <Drawer docked={type} className={`app-sidebar ${drawerStyle}`}
+                    style={{overflow: 'auto'}}
+                    touch={true}
+                    position={isDirectionRTL ? 'right' : 'left'}
+                    transitions={true}
+                    enableDragHandle={true}
+                    open={navCollapsed}
+                    onOpenChange={this.onToggleCollapsedNav}
+                    sidebar={<div className="side-nav">
+                        <SidenavLogo drawerType={drawerType}/>
+                        <SidenavContent/>
+                    </div>}>
+                <div/>
+            </Drawer>
         );
     }
 }
 
 const mapStateToProps = ({settings}) => {
-    const {navCollapsed, drawerType, width, navigationStyle} = settings;
-    return {navCollapsed, drawerType, width, navigationStyle}
+    const {navCollapsed, drawerType, width, isDirectionRTL, navigationStyle} = settings;
+    return {navCollapsed, drawerType, width, isDirectionRTL, navigationStyle}
 };
 
 export default withRouter(connect(mapStateToProps, {toggleCollapsedNav, updateWindowWidth})(SideNav));
-

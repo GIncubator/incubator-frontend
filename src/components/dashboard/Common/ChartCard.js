@@ -2,7 +2,7 @@ import React from 'react';
 
 const ChartCard = ({styleName, children}) => {
     return (
-        <div className={`card border-0 shadow ${styleName}`}>
+        <div className={`card border-0 ${styleName}`}>
             <div className="chart-header">
                 {children[0]}
             </div>

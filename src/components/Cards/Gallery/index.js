@@ -14,7 +14,7 @@ function GalleryCard() {
             <div className="row px-3">
                 {gallery.map((image, index) => (
                     <img className="col-sm-4 col-6 p-1" key={index} alt={image.title} src={image.img}
-                         style={{maxHeight: 80}} />
+                         style={{maxHeight: 80}}/>
                 ))}
             </div>
 

@@ -1,9 +1,5 @@
 import React from 'react';
-import {Modal, ModalHeader} from 'reactstrap';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import {Button, Modal, ModalHeader} from 'reactstrap';
 import IntlMessages from 'util/IntlMessages';
 
 class AddContact extends React.Component {
@@ -20,9 +16,11 @@ class AddContact extends React.Component {
             designation,
             selected,
             starred,
-            frequently
-        }
+            frequently,
+        };
+
     }
+
 
     render() {
         const {onSaveContact, onDeleteContact, onContactClose, open, contact} = this.props;
@@ -36,10 +34,9 @@ class AddContact extends React.Component {
                 <ModalHeader className="modal-box-header bg-primary">
                     {contact.name === '' ? <IntlMessages id="contact.addContact"/> :
                         <IntlMessages id="contact.saveContact"/>}
-                    <IconButton className="text-white"
-                                onClick={onContactClose}>
-                        <CloseIcon/>
-                    </IconButton>
+                    <span className="text-white pointer">
+                        <i className="zmdi zmdi-close zmdi-hc-lg" onClick={onContactClose}/>
+                    </span>
                 </ModalHeader>
 
                 <div className="modal-box-content">
@@ -49,40 +46,33 @@ class AddContact extends React.Component {
                         </div>
 
                         <div className="col-lg-9 d-flex flex-column order-lg-1">
-                            <TextField
-                                required
-                                id="required"
-                                label={<IntlMessages id="appModule.name"/>}
-                                onChange={(event) => this.setState({name: event.target.value})}
-                                defaultValue={name}
-                                margin="none"/>
-                            <TextField
-                                id="required"
-                                label={<IntlMessages id="appModule.email"/>}
-                                onChange={(event) => this.setState({email: event.target.value})}
-                                value={email}
-                                margin="normal"/>
-                            <TextField
-                                id="required"
-                                label={<IntlMessages id="appModule.phone"/>}
-                                onChange={(event) => this.setState({phone: event.target.value})}
-                                value={phone}
-                                margin="normal"
+                            <input type="text" className="form-control mb-2"
+                                   placeholder="Name"
+                                   onChange={(event) => this.setState({name: event.target.value})}
+                                   defaultValue={name}
                             />
-                            <TextField
-                                id="required"
-                                label={<IntlMessages id="appModule.designation"/>}
-                                onChange={(event) => this.setState({designation: event.target.value})}
-                                value={designation}
-                                multiline
-                                rowsMax="4"
-                                margin="normal"/>
+                            <input type="text" className="form-control mb-2"
+                                   placeholder="Email"
+                                   onChange={(event) => this.setState({email: event.target.value})}
+                                   value={email}
+                            />
+                            <input type="text" className="form-control mb-2"
+                                   placeholder="Phone"
+                                   onChange={(event) => this.setState({phone: event.target.value})}
+                                   value={phone}
+
+                            />
+                            <input type="text" className="form-control mb-2"
+                                   placeholder="Designation"
+                                   onChange={(event) => this.setState({designation: event.target.value})}
+                                   value={designation}
+                            />
                         </div>
                     </div>
                 </div>
 
                 <div className="modal-box-footer d-flex flex-row">
-                    <Button disabled={name === ''} variant="raised" color="primary" onClick={() => {
+                    <Button className="text-uppercase" disabled={name === ''} color="primary" onClick={() => {
                         onContactClose();
                         onSaveContact(
                             {

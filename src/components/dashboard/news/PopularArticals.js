@@ -3,7 +3,7 @@ import React from 'react';
 const PopularArticles = ({article}) => {
     const {image, title, description} = article;
     return (
-        <div className="col-sm-6 col-12 mb-4">
+        <div className="col-sm-6 col-12 mt-4">
             <div className="row">
                 <div className="col-md-5 col-6 mb-2">
                     <img className="img-fluid" src={image} alt={title}/>

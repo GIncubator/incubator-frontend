@@ -1,15 +1,13 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 
 const YourDailyFeedCell = ({feed}) => {
     const {id, title, time, image, isSocial} = feed;
     return (
         <div key={id} className="media user-profile">
-            <Avatar
+            <img
                 alt={image}
                 src={image}
-                className="user-avatar"
+                className="user-avatar rounded-circle mr-2"
             />
             <div className="media-body align-self-center">
                 <h5 className="mb-1">{title} </h5>
@@ -23,7 +21,7 @@ const YourDailyFeedCell = ({feed}) => {
                 </div>
                 }
             </div>
-            <IconButton className="size-30"><i className="zmdi zmdi-chevron-right"/></IconButton>
+            <span className="icon-btn size-30"><i className="zmdi zmdi-chevron-right"/></span>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import {Button} from 'reactstrap';
 import IntlMessages from 'util/IntlMessages';
 
 const Callout = ({styleName, callout}) => {
@@ -19,7 +19,8 @@ const Callout = ({styleName, callout}) => {
                 <div className="product-content-inner">
                     <h2 className="fw-regular">{title}</h2>
                     <p>{description}</p>
-                    <Button color="primary">{<IntlMessages id="callouts.viewRange"/>}</Button>
+                    <Button outline color="primary" className="text-uppercase">{<IntlMessages
+                        id="callouts.viewRange"/>}</Button>
                 </div>
             </div>
         </div>

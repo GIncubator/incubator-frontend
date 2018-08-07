@@ -1,51 +1,38 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import Card, {CardContent, CardMedia} from '@material-ui/core/Card';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import styles from './style';
+import {Card, CardBody, CardImg, CardSubtitle, CardTitle} from 'reactstrap';
+import styles from './style.css';
 
 function MediaControlCard(props) {
-    const classes = props.classes;
 
     return (
         <div>
-            <Card className={classes.card}>
-                <div className={classes.details}>
-                    <CardContent className={classes.content}>
-                        <Typography type="headline">Live From Space</Typography>
-                        <Typography type="subheading" color="secondary">
+            <Card className={styles.card}>
+                <div className={styles.details}>
+                    <CardBody className={styles.content}>
+                        <CardTitle>Live From Space</CardTitle>
+                        <CardSubtitle color="secondary">
                             Mac Miller
-                        </Typography>
-                    </CardContent>
-                    <div className={classes.controls}>
-                        <IconButton aria-label="Previous">
-                            <SkipPreviousIcon />
-                        </IconButton>
-                        <IconButton aria-label="Play/pause">
-                            <PlayArrowIcon className={classes.playIcon} />
-                        </IconButton>
-                        <IconButton aria-label="Next">
-                            <SkipNextIcon />
-                        </IconButton>
+                        </CardSubtitle>
+                    </CardBody>
+                    <div className={styles.controls}>
+                        <span className="icon-btn">
+                            <i className="zmdi zmdi-skip-previous"/>
+                        </span>
+                        <span className="icon-btn">
+                            <i className="zmdi zmdi-skip-previous" {styles.playIcon} />
+                        </span>
+                        <span className="icon-btn">
+                            <i className="zmdi zmdi-skip-next"/>
+                        </span>
                     </div>
                 </div>
-                <CardMedia
-                    className={classes.cover}
-                    image="http://via.placeholder.com/500x330"
-                    title="Live from space album cover"
+                <CardImg className={styles.cover}
+                         image="http://via.placeholder.com/600x400"
+                         title="Live from space album cover"
                 />
             </Card>
         </div>
     );
 }
 
-MediaControlCard.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(MediaControlCard);
+export default MediaControlCard;

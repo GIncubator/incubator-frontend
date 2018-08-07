@@ -9,7 +9,11 @@
 .app-module {
   position: relative;
   @include display-flex(flex, row, nowrap);
-  margin: -24px;
+  margin: -36px -40px 0 -40px;
+
+  @media screen and (max-width: 575px) {
+    margin: -20px;
+  }
 }
 
 .module-side {
@@ -74,7 +78,7 @@
 
   & li a {
     padding: 12px 29px;
-    color: lighten($body-color, 50%);
+    color: lighten($body-color, 20%);
     @include display-flex();
     @include align-items(center);
     text-decoration: none;
@@ -291,9 +295,6 @@
   @include justify-content(center);
   @include align-items(center);
 
-  & .slimScrollBar {
-    display: none !important;
-  }
 }
 
 .loader-view {
@@ -310,6 +311,7 @@
     @include flex(1);
     max-width: $side-nav-width;
     min-width: $side-nav-width;
+    background-color: $white;
   }
 
   .module-box-header {

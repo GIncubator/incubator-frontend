@@ -1,18 +1,8 @@
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import {Dropdown, DropdownMenu, DropdownToggle} from 'reactstrap';
-import {
-    BELOW_THE_HEADER,
-    COLLAPSED_DRAWER,
-    FIXED_DRAWER,
-    HORIZONTAL_NAVIGATION,
-    INSIDE_THE_HEADER
-} from 'constants/ActionTypes';
+import {COLLAPSED_DRAWER, FIXED_DRAWER, HORIZONTAL_NAVIGATION, INSIDE_THE_HEADER} from 'constants/ActionTypes';
 import SearchBox from 'components/SearchBox';
 import MailNotification from '../MailNotification/index';
 import AppNotification from '../AppNotification/index';
@@ -20,10 +10,11 @@ import CardHeader from 'components/dashboard/Common/CardHeader/index';
 import {switchLanguage, toggleCollapsedNav} from 'actions/Setting';
 import IntlMessages from 'util/IntlMessages';
 import LanguageSwitcher from 'components/LanguageSwitcher/index';
-import Menu from 'components/TopNav/Menu';
-import UserInfoPopup from 'components/UserInfo/UserInfoPopup';
+import UserInfo from 'components/UserInfo';
+import Menu from "components/Header/Menu";
 
 class Header extends React.Component {
+
 
     onAppNotificationSelect = () => {
         this.setState({
@@ -35,9 +26,16 @@ class Header extends React.Component {
             mailNotification: !this.state.mailNotification
         })
     };
+
+    onUserInfoSelect = () => {
+        this.setState({
+            userInfo: !this.state.userInfo
+        })
+    };
+
     onLangSwitcherSelect = (event) => {
         this.setState({
-            langSwitcher: !this.state.langSwitcher, anchorEl: event.currentTarget
+            langSwitcher: !this.state.langSwitcher
         })
     };
     onSearchBoxSelect = () => {
@@ -45,39 +43,26 @@ class Header extends React.Component {
             searchBox: !this.state.searchBox
         })
     };
-    onUserInfoSelect = () => {
-        this.setState({
-            userInfo: !this.state.userInfo
-        })
-    };
     handleRequestClose = () => {
-        this.setState({
-            langSwitcher: false,
-            userInfo: false,
-            mailNotification: false,
-            appNotification: false,
-            searchBox: false
-        });
+        this.setState({langSwitcher: false, mailNotification: false, appNotification: false, searchBox: false});
     };
-
-
-    constructor() {
-        super();
-        this.state = {
-            anchorEl: undefined,
-            searchBox: false,
-            searchText: '',
-            mailNotification: false,
-            userInfo: false,
-            langSwitcher: false,
-            appNotification: false,
-        }
-    }
-
     onToggleCollapsedNav = (e) => {
         const val = !this.props.navCollapsed;
         this.props.toggleCollapsedNav(val);
     };
+
+    constructor() {
+        super();
+        this.state = {
+            searchBox: false,
+            searchText: '',
+            mailNotification: false,
+            langSwitcher: false,
+            appNotification: false,
+            userInfo: false
+
+        }
+    }
 
     updateSearchText(evt) {
         this.setState({
@@ -87,31 +72,32 @@ class Header extends React.Component {
 
     render() {
         const {drawerType, locale, navigationStyle, horizontalNavPosition} = this.props;
-        const drawerStyle = drawerType.includes(FIXED_DRAWER) ? 'd-block d-xl-none' : drawerType.includes(COLLAPSED_DRAWER) ? 'd-block' : 'd-none';
+        const drawerStyle = drawerType.includes(FIXED_DRAWER) ? 'd-flex d-xl-none' : drawerType.includes(COLLAPSED_DRAWER) ? 'd-flex' : 'd-none';
 
         return (
-            <AppBar
-                className={`app-main-header ${(navigationStyle === HORIZONTAL_NAVIGATION && horizontalNavPosition === BELOW_THE_HEADER) ? 'app-main-header-top' : ''}`}>
-                <Toolbar className="app-toolbar" disableGutters={false}>
-                    {navigationStyle === HORIZONTAL_NAVIGATION ?
-                        <div className="d-block d-md-none pointer mr-3" onClick={this.onToggleCollapsedNav}>
-                            <span className="jr-menu-icon">
-                              <span className="menu-icon"/>
-                            </span>
+            <div className="app-main-header">
+                <div className="d-flex app-toolbar align-items-center">
+                    {navigationStyle === HORIZONTAL_NAVIGATION  ?
+                        <div className="app-logo-bl">
+                            <div className="d-block d-md-none">
+                                <span className="jr-menu-icon"
+                                      onClick={this.onToggleCollapsedNav}>
+                                    <span className="menu-icon"/>
+                                </span>
+                            </div>
+                            <div className="app-logo pointer d-none d-md-block">
+                                <img className="d-none d-lg-block" alt='...' src='http://via.placeholder.com/105x36'/>
+                                <img className="d-block d-lg-none mr-3" alt='...' src='http://via.placeholder.com/32x32'/>
+                            </div>
                         </div>
                         :
-                        <IconButton className={`jr-menu-icon mr-3 ${drawerStyle}`} aria-label="Menu"
-                                    onClick={this.onToggleCollapsedNav}>
+                        <span className={`jr-menu-icon pointer ${drawerStyle}`}
+                              onClick={this.onToggleCollapsedNav}>
                             <span className="menu-icon"/>
-                        </IconButton>
+                        </span>
                     }
 
-                    <Link className="app-logo mr-2 d-none d-sm-block" to="/">
-                        <img src="http://via.placeholder.com/177x65" alt="Jambo" title="Jambo"/>
-                    </Link>
-
-
-                    <SearchBox styleName="d-none d-lg-block" placeholder=""
+                    <SearchBox styleName="d-none d-lg-block"
                                onChange={this.updateSearchText.bind(this)}
                                value={this.state.searchText}/>
                     {(navigationStyle === HORIZONTAL_NAVIGATION && horizontalNavPosition === INSIDE_THE_HEADER) &&
@@ -128,9 +114,9 @@ class Header extends React.Component {
                                     className="d-inline-block"
                                     tag="span"
                                     data-toggle="dropdown">
-                                    <IconButton className="icon-btn size-30">
+                                    <span className="icon-btn size-30">
                                         <i className="zmdi zmdi-search zmdi-hc-fw"/>
-                                    </IconButton>
+                                    </span>
                                 </DropdownToggle>
 
                                 <DropdownMenu right className="p-0">
@@ -150,7 +136,7 @@ class Header extends React.Component {
                                     className="d-inline-block"
                                     tag="span"
                                     data-toggle="dropdown">
-                                    <div className="d-flex align-items-center pointer pt-1">
+                                    <div className="d-flex align-items-center pointer">
                                         <i className={`flag flag-24 flag-${locale.icon}`}/>
                                     </div>
                                 </DropdownToggle>
@@ -173,9 +159,9 @@ class Header extends React.Component {
                                     className="d-inline-block"
                                     tag="span"
                                     data-toggle="dropdown">
-                                    <IconButton className="icon-btn size-20 font-size-20">
-                                        <i className="zmdi zmdi-notifications-active icon-alert animated infinite wobble"/>
-                                    </IconButton>
+                                    <span className="icon-btn size-20 font-size-16">
+                                        <i className="zmdi zmdi-notifications-active zmdi-hc-lg icon-alert"/>
+                                    </span>
                                 </DropdownToggle>
 
                                 <DropdownMenu right>
@@ -196,9 +182,9 @@ class Header extends React.Component {
                                     tag="span"
                                     data-toggle="dropdown">
 
-                                    <IconButton className="icon-btn size-20 font-size-20">
-                                        <i className="zmdi zmdi-comment-alt-text icon-alert zmdi-hc-fw"/>
-                                    </IconButton>
+                                    <span className="icon-btn size-20 font-size-16">
+                                        <i className="zmdi zmdi-comment-alt-text icon-alert zmdi-hc-lg"/>
+                                    </span>
                                 </DropdownToggle>
 
 
@@ -209,8 +195,6 @@ class Header extends React.Component {
                                 </DropdownMenu>
                             </Dropdown>
                         </li>
-
-                        {navigationStyle === HORIZONTAL_NAVIGATION &&
                         <li className="list-inline-item user-nav">
                             <Dropdown
                                 className="quick-menu"
@@ -221,23 +205,22 @@ class Header extends React.Component {
                                     className="d-inline-block"
                                     tag="span"
                                     data-toggle="dropdown">
-                                    <IconButton className="icon-btn size-30">
-                                        <Avatar
-                                            alt='...'
-                                            src='http://via.placeholder.com/150x150'
-                                            className="size-30"
-                                        />
-                                    </IconButton>
+                                    <img
+                                        alt='...'
+                                        src='http://via.placeholder.com/150x150'
+                                        className="pointer user-avatar size-30"/>
                                 </DropdownToggle>
 
                                 <DropdownMenu right>
-                                    <UserInfoPopup/>
+
+                                    <UserInfo/>
                                 </DropdownMenu>
                             </Dropdown>
-                        </li>}
+
+                        </li>
                     </ul>
-                </Toolbar>
-            </AppBar>
+                </div>
+            </div>
         );
     }
 

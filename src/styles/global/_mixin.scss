@@ -32,6 +32,7 @@
     clear: both;
   }
 }
+
 // Transitions
 @mixin transition($transition...) {
   -webkit-transition: $transition;
@@ -45,6 +46,7 @@
   -o-transform: rotate($degrees);
   transform: rotate($degrees);
 }
+
 //Background Image
 @mixin background($imgpath,$position:0 0,$repeat: no-repeat,$size: cover) {
   background: {
@@ -142,7 +144,6 @@
   }
   //  }
 }
-
 
 @mixin hover-focus {
   @if $enable-hover-media-query {

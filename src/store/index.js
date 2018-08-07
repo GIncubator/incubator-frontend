@@ -4,7 +4,7 @@ import createHistory from 'history/createHashHistory'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from '../sagas/index'
 import {routerMiddleware} from 'react-router-redux'
-import logger from "redux-logger"
+import logger from 'redux-logger'
 
 const history = createHistory()
 const routeMiddleware = routerMiddleware(history)
@@ -12,7 +12,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const middlewares = [sagaMiddleware, routeMiddleware, logger]
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
+//(__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)use only for  development time
 
 export default function configureStore(initialState) {
     const store = createStore(reducers, initialState,

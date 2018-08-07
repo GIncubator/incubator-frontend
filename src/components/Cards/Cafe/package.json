@@ -4,7 +4,6 @@
   "private": true,
   "main": "./index.js",
   "dependencies": {
-    "material-ui": "next"
-
+    "reactstrap": "next"
   }
 }

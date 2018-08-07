@@ -32,7 +32,7 @@ const galleryData = [
         title: 'Water plant',
     },
     {
-        img: 'http://via.placeholder.com/600x400',
+        img: 'http://via.placeholder.com/500x330',
         title: 'Mushrooms',
     },
     {

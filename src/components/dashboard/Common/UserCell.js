@@ -1,15 +1,14 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 
 const UserCell = ({user}) => {
     const {id, title, image, desc} = user;
     return (
 
         <div key={id} className="user-profile d-flex flex-row align-items-center">
-            <Avatar
+            <img
                 alt={title}
                 src={image}
-                className="user-avatar"
+                className="user-avatar rounded-circle mr-2"
             />
             <div className="user-detail">
                 <h5 className="text-muted text-uppercase mb-0">

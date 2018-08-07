@@ -1,15 +1,19 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton'
 import {Dropdown, DropdownMenu, DropdownToggle, Popover} from 'reactstrap';
 import SearchBox from 'components/SearchBox';
 
 
 class AppModuleHeader extends React.Component {
 
+    onSearchBoxSelect = () => {
+        this.setState({
+            searchBox: !this.state.searchBox
+        })
+    };
+
     constructor() {
         super();
         this.state = {
-            anchorEl: undefined,
             searchBox: false,
             popoverOpen: false
         };
@@ -22,13 +26,6 @@ class AppModuleHeader extends React.Component {
             popoverOpen: !this.state.popoverOpen
         });
     }
-
-
-    onSearchBoxSelect = () => {
-        this.setState({
-            searchBox: !this.state.searchBox
-        })
-    };
 
     render() {
         const {styleName, placeholder, onChange, value, user, notification, apps} = this.props;
@@ -60,9 +57,9 @@ class AppModuleHeader extends React.Component {
                             className="d-inline-block"
                             tag="span"
                             data-toggle="dropdown">
-                            <IconButton className="icon-btn size-40">
+                            <span className="icon-btn">
                                 <i className="zmdi zmdi-search zmdi-hc-fw text-grey"/>
-                            </IconButton>
+                            </span>
                         </DropdownToggle>
 
                         <DropdownMenu className="p-0">
@@ -74,12 +71,12 @@ class AppModuleHeader extends React.Component {
                 </div>
 
                 <div className="module-box-header-right">
-                    {apps && <IconButton className="size-40" aria-label="Menu">
-                        <i className="zmdi zmdi-apps"/>
-                    </IconButton>}
-                    {notification && <IconButton className="size-40" aria-label="Menu">
-                        <i className="zmdi zmdi-notifications-none"/>
-                    </IconButton>}
+                    {apps && <span className="icon-btn ">
+                        <i className="zmdi zmdi-apps zmdi-hc-lg "/>
+                    </span>}
+                    {notification && <span className="icon-btn ">
+                        <i className="zmdi zmdi-notifications-none zmdi-hc-lg "/>
+                    </span>}
 
                     <img className="ml-2 rounded-circle size-40 pointer" id="Popover1" alt={user.name}
                          onMouseEnter={this.toggle}

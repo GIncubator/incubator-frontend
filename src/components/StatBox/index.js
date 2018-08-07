@@ -2,7 +2,7 @@ import React from 'react';
 
 const Statbox = (props) => {
     return (
-        <div className="card shadow">
+        <div className="card">
             <div className="box box-default">
                 <div className="box-top">
                     {props.children[0]}

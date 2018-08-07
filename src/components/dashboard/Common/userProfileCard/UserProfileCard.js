@@ -1,24 +1,24 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
+
 
 const UserProfileCard = ({headerStyle}) => {
     return (
-        <div className="jr-card text-center">
+        <div className="jr-card jr-card-full-height text-center overflow-hidden">
 
             <div className={`jr-card-header-color ${headerStyle}`}>
-                <div className="jr-card-header-top">
-                    <IconButton className="jr-menu-icon mr-auto" aria-label="Menu">
-                        <span className="menu-icon bg-white"/>
-                    </IconButton>
-                    <IconButton><i className="zmdi zmdi-more-vert text-white"/></IconButton>
+                <div className="jr-card-header-top mr-0 mb-2">
+                    <span className="jr-menu-icon mr-auto">
+                        <span className="menu-icon"/>
+                    </span>
+                    <span className="icon-btn size-30"><i className="zmdi zmdi-more-vert zmdi-hc-lg"/></span>
                 </div>
 
-                <img className="rounded-circle size-100 avatar-shadow mb-3"
+                <img className="rounded-circle size-80 mb-3"
                      src="http://via.placeholder.com/150x150" alt="Team Member"/>
 
-                <div className="jr-card-hd-content text-white">
-                    <h4 className="mb-0">Dom Harris</h4>
-                    <p className="mb-0">Graphic Designer</p>
+                <div className="jr-card-hd-content">
+                    <h4 className="mb-0">Chris Harris</h4>
+                    <p className="sub-heading mb-0">Graphic Designer</p>
                 </div>
             </div>
             <div className="jr-card-body">
@@ -29,4 +29,7 @@ const UserProfileCard = ({headerStyle}) => {
 };
 
 export default UserProfileCard;
+UserProfileCard.defaultProps = {
+    headerStyle: ''
+};
 

@@ -1,23 +1,29 @@
 import {
+    ABOVE_THE_HEADER,
     CHANGE_DIRECTION,
     CHANGE_NAVIGATION_STYLE,
+    DARK_THEME,
+    DRAWER_TYPE,
     FIXED_DRAWER,
     HORIZONTAL_MENU_POSITION,
-    INSIDE_THE_HEADER,
     SWITCH_LANGUAGE,
+    THEME_COLOR,
     TOGGLE_COLLAPSED_NAV,
     VERTICAL_NAVIGATION,
     WINDOW_WIDTH
 } from 'constants/ActionTypes';
+import {INDIGO} from 'constants/ThemeColors';
 
 const rltLocale = ['ar'];
 const initialSettings = {
     navCollapsed: false,
     drawerType: FIXED_DRAWER,
+    themeColor: INDIGO,
+    darkTheme: false,
     width: window.innerWidth,
     isDirectionRTL: false,
     navigationStyle: VERTICAL_NAVIGATION,
-    horizontalNavPosition: INSIDE_THE_HEADER,
+    horizontalNavPosition: ABOVE_THE_HEADER,
     locale: {
         languageId: 'english',
         locale: 'en',
@@ -38,12 +44,29 @@ const settings = (state = initialSettings, action) => {
                 ...state,
                 navCollapsed: action.isNavCollapsed
             };
+        case DRAWER_TYPE:
+            return {
+                ...state,
+                drawerType: action.drawerType
+            };
         case WINDOW_WIDTH:
             return {
                 ...state,
                 width: action.width
             };
+        case THEME_COLOR:
+            return {
+                ...state,
+                darkTheme: false,
+                themeColor: action.color
+            };
+        case DARK_THEME:
+            return {
+                ...state,
+                darkTheme: !state.darkTheme
+            };
         case SWITCH_LANGUAGE:
+
             return {
                 ...state,
                 locale: action.payload,

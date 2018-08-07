@@ -1,15 +1,14 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
+
 
 const NotificationItem = ({notification}) => {
     const {image, badge, name, time, message} = notification;
     return (
         <li className="media">
-            <div className="user-avatar">
-                <Avatar
-                    alt={name}
-                    src={image}
+            <div className="user-thumb mr-3">
+                <img className="rounded-circle avatar-sm"
+                     alt={name}
+                     src={image}
                 />
                 <span className="badge badge-danger rounded-circle">{badge}</span>
             </div>
@@ -19,8 +18,9 @@ const NotificationItem = ({notification}) => {
                     <span className="meta-date"><small>{time}</small></span>
                 </div>
                 <p className="sub-heading">{message}</p>
-                <Button className="jr-btn jr-btn-xs text-muted"><i className="zmdi zmdi-mail-reply"/><span>Reply</span></Button>
-                <Button className="jr-btn jr-btn-xs text-muted"><i className="zmdi zmdi-eye"/><span>Read</span></Button>
+                <span className="jr-btn jr-btn-xs text-muted"><i
+                    className="zmdi zmdi-mail-reply"/><span>Reply</span></span>
+                <span className="jr-btn jr-btn-xs text-muted"><i className="zmdi zmdi-eye"/><span>Read</span></span>
             </div>
         </li>
     );

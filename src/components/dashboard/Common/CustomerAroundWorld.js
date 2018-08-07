@@ -21,10 +21,10 @@ const CustomerAroundWorld = () => {
                 <div className="col-lg-8 col-12">
                     <div className="row">
                         <div className="col-sm-6 col-12">
-                            {countryList1.map((country, index) => <CountryListItem key={index} country={country} />)}
+                            {countryList1.map((country, index) => <CountryListItem key={index} country={country}/>)}
                         </div>
                         <div className="col-sm-6 col-12 mb-5 mb-md-1">
-                            {countryList2.map((country, index) => <CountryListItem key={index} country={country} />)}
+                            {countryList2.map((country, index) => <CountryListItem key={index} country={country}/>)}
                         </div>
                     </div>
                 </div>
@@ -34,10 +34,10 @@ const CustomerAroundWorld = () => {
                         <AreaChart data={chartData}>
                             <Area type="monotone" dataKey="pv" stroke="rgba(255,255,255,0.5)"
                                   fillOpacity={.8}
-                                  fill="#3367d6" />
+                                  fill="#3367d6"/>
                             <Area type="monotone" dataKey="uv" stroke="rgba(255,255,255,0.5)"
                                   fillOpacity={.8}
-                                  fill="#f3b439" />
+                                  fill="#f3b439"/>
                         </AreaChart>
                     </ResponsiveContainer>
                 </div>

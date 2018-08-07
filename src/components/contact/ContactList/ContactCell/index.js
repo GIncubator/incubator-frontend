@@ -1,17 +1,13 @@
 import React from 'react';
-import Checkbox from '@material-ui/core/Checkbox'
-import IconButton from '@material-ui/core/IconButton'
-import Menu from '@material-ui/core/Menu';import MenuItem from '@material-ui/core/MenuItem';
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import AddContact from '../../AddContact/index';
 
 class ContactCell extends React.Component {
 
-    onContactOptionSelect = event => {
-        this.setState({menuState: true, anchorEl: event.currentTarget});
+    onContactOptionToggle = event => {
+        this.setState({menuState: !this.state.menuState});
     };
-    handleRequestClose = () => {
-        this.setState({menuState: false});
-    };
+
     onContactClose = () => {
         this.setState({addContactState: false});
     };
@@ -26,7 +22,6 @@ class ContactCell extends React.Component {
     constructor() {
         super();
         this.state = {
-            anchorEl: undefined,
             menuState: false,
             addContactState: false,
         }
@@ -34,9 +29,8 @@ class ContactCell extends React.Component {
 
     render() {
         const {contact, addFavourite, onContactSelect, onSaveContact} = this.props;
-        const {menuState, anchorEl, addContactState} = this.state;
+        const {menuState, addContactState} = this.state;
         const {name, thumb, email, phone, designation, starred} = contact;
-
         const options = [
             'Edit',
             'Delete',
@@ -45,19 +39,28 @@ class ContactCell extends React.Component {
 
             <div className="contact-item">
 
-                <Checkbox color="primary"
-                          checked={contact.selected}
-                          value="checkedF"
-                          onClick={() => {
-                              onContactSelect(contact)
-                          }}
-                />
+                <div className="form-control-checkbox d-flex">
+                    <div className="form-checkbox">
+                        <input type="checkbox"
+                               checked={contact.selected}
+                               value="checked"
+                               onClick={() => {
+                                   onContactSelect(contact)
+                               }}
+                        />
+
+                        <span className="check">
+                            <i className="zmdi zmdi-check zmdi-hc-lg"/>
+                        </span>
+                    </div>
+                </div>
+
                 <div className="col-auto px-1 actions d-none d-xs-flex">
-                    <IconButton className="size-30" onClick={() => {
+                    <span className="icon-btn" onClick={() => {
                         addFavourite(contact)
                     }}>
-                        {starred ? <i className="zmdi zmdi-star"/> : <i className="zmdi zmdi-star-outline"/>}
-                    </IconButton>
+                      {starred ? <i className="zmdi zmdi-star"/> : <i className="zmdi zmdi-star-outline"/>}
+                    </span>
                 </div>
                 {(thumb === null || thumb === '') ?
                     <div className="rounded-circle size-40 bg-blue text-center text-white mx-1 mx-md-3"
@@ -79,10 +82,9 @@ class ContactCell extends React.Component {
 
                     <div className="text-muted">
                         <span className="email d-inline-block mr-2">
-                            {email},
+                            {email}
                         </span>
-
-                            <span className="phone d-inline-block">
+                        <span className="phone d-inline-block">
                             {phone}
                         </span>
                     </div>
@@ -90,34 +92,33 @@ class ContactCell extends React.Component {
 
 
                 <div className="col-auto px-1 actions d-none d-sm-flex">
-                    <IconButton className="size-30" onClick={this.onContactOptionSelect}>
-                        <i className="zmdi zmdi-more-vert"/>
-                    </IconButton>
 
-                    <Menu id="long-menu"
-                          anchorEl={anchorEl}
-                          open={menuState}
-                          onClose={this.handleRequestClose}
 
-                          MenuListProps={{
-                              style: {
-                                  width: 100,
-                              },
-                          }}>
-                        {options.map(option =>
-                            <MenuItem key={option} onClick={() => {
-                                if (option === 'Edit') {
-                                    this.onEditContact()
-                                } else {
-                                    this.handleRequestClose();
-                                    this.onDeleteContact(contact)
+                    <Dropdown isOpen={menuState}
+                              toggle={this.onContactOptionToggle.bind(this)}>
+                        <DropdownToggle tag="span">
+                            <span className="icon-btn text-grey pointer">
+                                <i className="zmdi zmdi-more-vert zmdi-hc-lg"/>
+                            </span>
+                        </DropdownToggle>
+
+                        <DropdownMenu>
+                            {options.map(option =>
+                                <DropdownItem key={option} onClick={() => {
+                                    if (option === 'Edit') {
+                                        this.onEditContact()
+                                    } else {
+                                        this.onDeleteContact(contact)
+                                    }
                                 }
-                            }
-                            }>
-                                {option}
-                            </MenuItem>,
-                        )}
-                    </Menu>
+                                }>
+                                    {option}
+                                </DropdownItem>,
+                            )}
+                        </DropdownMenu>
+
+                    </Dropdown>
+
                     {addContactState &&
                     <AddContact open={addContactState} contact={contact} onSaveContact={onSaveContact}
                                 onContactClose={this.onContactClose} onDeleteContact={this.onDeleteContact}/>}

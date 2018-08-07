@@ -2,7 +2,7 @@ import React from 'react';
 
 const ChartContainer = ({styleName, children}) => {
     return (
-        <div className={`card shadow ${styleName}`}>
+        <div className={`card ${styleName}`}>
             <div className="chart-header border-bottom-1">
                 <span className="title float-left">
                     {children[0]}

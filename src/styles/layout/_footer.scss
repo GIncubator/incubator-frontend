@@ -1,15 +1,12 @@
 /*Footer Styles*/
 
 .app-footer {
-  padding: 0 24px;
-
-  @include box-shadow(0 -1px 4px 0 rgba(0, 0, 0, 0.15));
+  padding: 0 40px;
+  border-top: solid 1px darken($body-bg, 10%);
   background-color: $body-bg;
   color: $sidebar-text-color;
   line-height: $footer-height;
   min-height: $footer-height;
-  height: $footer-height;
-  max-height: $footer-height;
 
   & a {
     color: $sidebar-text-color;
@@ -18,8 +15,11 @@
     }
   }
 
-  @media screen and (max-width: 400px){
+  @media screen and (max-width: 575px) {
+    padding: 20px;
+  }
+
+  @media screen and (max-width: 400px) {
     font-size: 12px;
-    padding: 0 20px;
   }
 }

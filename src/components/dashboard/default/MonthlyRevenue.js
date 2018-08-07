@@ -15,8 +15,8 @@ const MonthlyRevenue = ({chartData}) => (
                 }}
             />
             <Tooltip/>
-            <Area type="monotone" dataKey="Expanse" stroke="#f3b439" fillOpacity={0.8} fill="#f3b439"/>
-            <Area type="monotone" dataKey="Income" stroke="#03275b" fillOpacity={0.8} fill="#3367d6"/>
+            <Area type="monotone" dataKey="Expanse" stroke="#f3b439" fillOpacity={0.8} fill="#fbdd67"/>
+            <Area type="monotone" dataKey="Income" stroke="#03275b" fillOpacity={0.8} fill="#91bced"/>
         </AreaChart>
     </ResponsiveContainer>
 );

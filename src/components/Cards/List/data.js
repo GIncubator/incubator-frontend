@@ -1,4 +1,3 @@
-
 export const post = [
     {
         image: 'http://via.placeholder.com/500x330',
