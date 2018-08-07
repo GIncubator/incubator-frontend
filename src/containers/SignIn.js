@@ -34,6 +34,12 @@ class SignIn extends Component {
   }
 
   async handleSignIn() {
+    const {email, password} = this.state
+    this.props.showAuthLoader()
+    this.props.userSignIn({email, password})
+  }
+
+  async handleGoogleSignIn() {
     this.props.showAuthLoader()
     await this.props.userGoogleSignIn()
   }
@@ -62,13 +68,13 @@ class SignIn extends Component {
             <div className="app-login-form">
               <form>
                 <fieldset>
-                  <TextField label={<IntlMessages id="appModule.email" />} fullWidth onChange={(event) => this.setState({email: event.target.value})} defaultValue={email} margin="normal"
+                  <TextField label={<IntlMessages id="appModule.email" />} fullWidth onChange={(event) => this.setState({email: event.target.value})}  margin="normal"
                   className="mt-1 my-sm-3" />
-                  <TextField type="password" label={<IntlMessages id="appModule.password" />} fullWidth onChange={(event) => this.setState({password: event.target.value})} defaultValue={password} margin="normal"
+                  <TextField type="password" label={<IntlMessages id="appModule.password" />} fullWidth onChange={(event) => this.setState({password: event.target.value})} margin="normal"
                   className="mt-1 my-sm-3" />
 
                   <div className="mb-3 d-flex align-items-center justify-content-between">
-                    <Button onClick={() => { this.props.showAuthLoader(); this.props.userSignIn({email, password}) }} variant="raised" color="primary">
+                    <Button onClick={this.handleSignIn.bind(this)} variant="raised" color="primary">
                       <IntlMessages id="appModule.signIn" />
                     </Button>
 
@@ -77,18 +83,18 @@ class SignIn extends Component {
                     </Link>
                   </div>
 
-                  <div className="app-social-block my-1 my-sm-3">
+                  {/* <div className="app-social-block my-1 my-sm-3">
                     <IntlMessages id="signIn.connectWith" />
                     <ul className="social-link">
 
                       <li>
-                        <IconButton className="icon" onClick={this.handleSignIn.bind(this)}>
+                        <IconButton className="icon" onClick={this.handleGoogleSignIn.bind(this)}>
                           <i className="zmdi zmdi-google-plus" />
                         </IconButton>
                       </li>
 
                     </ul>
-                  </div>
+                  </div> */}
 
                 </fieldset>
               </form>

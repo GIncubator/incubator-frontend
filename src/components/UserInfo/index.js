@@ -23,11 +23,6 @@ class UserInfo extends React.Component {
   render() {
     return (
       <div className="user-profile d-flex flex-row align-items-center">
-        <Avatar
-          alt="..."
-          src={this.props.authUser.picture}
-          className="user-avatar"
-        />
         <div className="user-detail">
           <h4 className="user-name" onClick={this.handleClick}>
             {this.props.authUser.displayName}

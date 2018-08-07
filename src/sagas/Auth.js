@@ -1,5 +1,5 @@
-import {all, call, fork, put, takeEvery} from "redux-saga/effects"
-import {auth, facebookAuthProvider, githubAuthProvider, googleAuthProvider, twitterAuthProvider} from "firebase/firebase"
+import {all, call, fork, put, takeEvery} from 'redux-saga/effects'
+import {auth, facebookAuthProvider, githubAuthProvider, googleAuthProvider, twitterAuthProvider} from 'firebase/firebase'
 import {registerUser, loginUser} from '../services/auth-service'
 import {
   SIGNIN_FACEBOOK_USER,
@@ -9,20 +9,20 @@ import {
   SIGNIN_USER,
   SIGNOUT_USER,
   SIGNUP_USER
-} from "constants/ActionTypes"
+} from 'constants/ActionTypes'
 import {
   showAuthMessage,
   userSignInSuccess,
   userSignOutSuccess,
   userSignUpSuccess
-} from "actions/Auth"
+} from '../actions/Auth'
 import {
   userFacebookSignInSuccess,
   userGithubSignInSuccess,
   userGoogleSignInSuccess,
   userTwitterSignInSuccess
-} from "../actions/Auth"
-import {fireBaseGoogleToDBUserModel} from './../transform'
+} from '../actions/Auth'
+import {fireBasePasswordToDBUserModel, fireBaseGoogleToDBUserModel} from './../transform'
 import * as Api from './../api'
 
 // const createUserWithEmailPasswordRequest = async (name, email, password) =>
@@ -79,37 +79,21 @@ const signInUserWithTwitterRequest = async () =>
   .then(authUser => authUser)
   .catch(error => error)
 
-// function* createUserWithEmailPassword({
-//   payload
-// }) {
-//   const {
-//     name,
-//     email,
-//     password
-//   } = payload
-//   try {
-//     const signUpUser = yield call(createUserWithEmailPasswordRequest, name, email, password)
-//     if (signUpUser.data.error) {
-//       yield put(showAuthMessage(signUpUser.data.error))
-//     } else if (!signUpUser.data.error) {
-//       localStorage.setItem('user', JSON.stringify(signUpUser.data.user))
-//       localStorage.setItem('token', signUpUser.data.token)
-//       yield put(userSignInSuccess(signUpUser.data.user))
-//     }
-//   } catch (error) {
-//     yield put(showAuthMessage(error))
-//   }
-// }
-
 function* createUserWithEmailPassword({payload}) {
-  const {email, password} = payload
+  const {name, email, password} = payload
   try {
       const signUpUser = yield call(createUserWithEmailPasswordRequest, email, password)
       if (signUpUser.message) {
-          yield put(showAuthMessage(signUpUser.message))
+        yield put(showAuthMessage(signUpUser.message))
       } else {
-          localStorage.setItem('user_id', signUpUser.user.uid)
-          yield put(userSignUpSuccess(signUpUser.user.uid))
+        const response = yield call(Api.getUser, {filter: `?passwordUid=${signUpUser.user.uid}`})
+
+        const userModel = fireBasePasswordToDBUserModel(name, signUpUser)
+        if (response.data.length === 0) {
+          yield call(Api.createUser, userModel)
+          localStorage.setItem('user', JSON.stringify(userModel))
+        }
+        yield put(userSignUpSuccess(userModel))
       }
   } catch (error) {
       yield put(showAuthMessage(error))
@@ -182,24 +166,20 @@ function* signInUserWithTwitter() {
   }
 }
 
-function* signInUserWithEmailPassword({
-  payload
-}) {
-  const {
-    email,
-    password
-  } = payload
+function* signInUserWithEmailPassword({payload}) {
+  const {email, password} = payload
   try {
     const signInUser = yield call(signInUserWithEmailPasswordRequest, email, password)
-    if (signInUser.data.error) {
-      yield put(showAuthMessage(signInUser.data.error))
-    } else if (!signInUser.data.error) {
-      localStorage.setItem('user', JSON.stringify(signInUser.data.user))
-      localStorage.setItem('token', signInUser.data.token)
-      yield put(userSignInSuccess(signInUser.data.user))
+    if (signInUser.message) {
+      yield put(showAuthMessage(signInUser.message))
+    } else {
+      const response = yield call(Api.getUser, {filter: `?passwordUid=${signInUser.user.uid}`})
+      const userModel = fireBasePasswordToDBUserModel(response.data.displayName, signInUser)
+      localStorage.setItem('user', JSON.stringify(userModel))
+      yield put(userSignInSuccess(userModel))
     }
   } catch (error) {
-    yield put(showAuthMessage(error))
+      yield put(showAuthMessage(error))
   }
 }
 
