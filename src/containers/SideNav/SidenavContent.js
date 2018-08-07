@@ -92,6 +92,12 @@ class SidenavContent extends Component {
                 <IntlMessages id="pages.samplePage" />{" "}
               </span>
             </NavLink>
+            <NavLink to="/app/startups">
+              <i className="zmdi zmdi-view-dashboard" />
+              <span className="nav-text">
+                Startups
+              </span>
+            </NavLink>
           </li>
         </ul>
       </CustomScrollbars>
