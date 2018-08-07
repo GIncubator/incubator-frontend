@@ -1,12 +1,14 @@
 import React from 'react';
 import ContainerHeader from 'components/ContainerHeader/index';
 import Startup from '../Startup';
+import {connect} from 'react-redux';
+import { getStartupListDetails } from 'actions/Auth';
 
 class StartupInfoList extends React.Component {
     constructor() {
         super();
         this.state = {
-            data: [
+            startupInfoList: [
                 {
                    name: 'Flipkart',
                    raisedFunds: '20M',
@@ -37,16 +39,18 @@ class StartupInfoList extends React.Component {
             ]
         };
     }
+
     componentDidMount() {
-    
+        this.props.getStartupListDetails();
     }
+    
     render() {
         return (
             <div className="app-wrapper">
                 <ContainerHeader match={this.props.match} title={<span>Startup Applications</span>}/>
                 <div className="d-flex">
                     {
-                        this.state.data.map((d, i) => {
+                        this.state.startupInfoList.map((d, i) => {
                             return (<Startup key={i} props={d} />)
                         })
                     }
@@ -57,4 +61,13 @@ class StartupInfoList extends React.Component {
     }
 }
 
-export default StartupInfoList;
+
+const mapStateToProps = ({auth}) => {
+    console.log(auth);
+    const { startupInfoList } = auth
+    return { startupInfoList }
+}
+  
+  export default connect(mapStateToProps, {
+    getStartupListDetails
+  })(StartupInfoList)

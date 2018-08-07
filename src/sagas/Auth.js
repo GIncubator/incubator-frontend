@@ -1,6 +1,6 @@
 import {all, call, fork, put, takeEvery} from "redux-saga/effects"
 import {auth, facebookAuthProvider, githubAuthProvider, googleAuthProvider, twitterAuthProvider} from "firebase/firebase"
-import {startupInfo} from '../services'
+import { startupInfo, startupInfoList } from '../services'
 import {
   SIGNIN_FACEBOOK_USER,
   SIGNIN_GITHUB_USER,
@@ -16,7 +16,8 @@ import {
   userSignInSuccess,
   userSignOutSuccess,
   userSignUpSuccess,
-  submitStartupInfoDone
+  submitStartupInfoDone,
+  getStartupListDetailsDone
 } from '../actions/Auth'
 import {
   userFacebookSignInSuccess,
@@ -198,7 +199,6 @@ const submitStartupInfoRequest = async (payload) =>
 function* submitStartupInfoData({payload}) {
   try {
     const startup = yield call(submitStartupInfoRequest, payload);
-    console.log(startup)
     if(startup.data.error) {
         yield put(showAuthMessage(startup.data.error))
     } else {
@@ -207,6 +207,16 @@ function* submitStartupInfoData({payload}) {
   } catch(error) {
     yield put(showAuthMessage(error))
   }
+}
+
+const fetchStartupDetails = async () =>
+  await startupInfoList()
+    .then(data => data)
+    .catch(error => error);
+
+function* fetchStartupInfoListRequest() {
+    const startupList = yield call(fetchStartupDetails);
+    yield put(getStartupListDetailsDone(startupList));
 }
 
 export function* createUserAccount() {
@@ -241,6 +251,10 @@ export function* submitStartupInfo() {
   yield takeEvery(ON_STARTUP_INFO_SUBMIT, submitStartupInfoData);
 }
 
+export function* fetchStartupInfoList() {
+  yield takeEvery(ON_STARTUP_INFO_SUBMIT, fetchStartupInfoListRequest);
+}
+
 export default function* rootSaga() {
   yield all([fork(signInUser),
     fork(createUserAccount),
@@ -249,6 +263,7 @@ export default function* rootSaga() {
     fork(signInWithTwitter),
     fork(signInWithGithub),
     fork(signOutUser),
-    fork(submitStartupInfo)
+    fork(submitStartupInfo),
+    fork(fetchStartupInfoList)
   ])
 }

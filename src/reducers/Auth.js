@@ -12,7 +12,9 @@ import {
     SIGNOUT_USER_SUCCESS,
     SIGNUP_USER_SUCCESS,
     ON_STARTUP_INFO_SUBMIT,
-    ON_STARTUP_INFO_SUBMIT_DONE
+    ON_STARTUP_INFO_SUBMIT_DONE,
+    ON_STARTUP_INFO_FETCH,
+    ON_STARTUP_INFO_FETCH_DONE
 } from "constants/ActionTypes";
 
 const INIT_STATE = {
@@ -22,6 +24,7 @@ const INIT_STATE = {
     initURL: '',
     authUser: JSON.parse(localStorage.getItem('user')),
     token: localStorage.getItem('token'),
+    startupInfoList: []
 };
 
 
@@ -123,6 +126,24 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 loader: false,
+            }
+        }
+        case ON_STARTUP_INFO_SUBMIT_DONE: {
+            return {
+                ...state,
+                loader: false,
+            }
+        }
+        case ON_STARTUP_INFO_FETCH: {
+            return {
+                ...state,
+                // startupInfoList: action.payload
+            }
+        }
+        case ON_STARTUP_INFO_FETCH_DONE: {
+            return {
+                ...state,
+                startupInfoList: action.payload
             }
         }
         default:

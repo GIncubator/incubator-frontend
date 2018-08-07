@@ -19,7 +19,9 @@ import {
 	SIGNUP_USER,
 	SIGNUP_USER_SUCCESS,
 	ON_STARTUP_INFO_SUBMIT,
-	ON_STARTUP_INFO_SUBMIT_DONE
+	ON_STARTUP_INFO_SUBMIT_DONE,
+	ON_STARTUP_INFO_FETCH,
+	ON_STARTUP_INFO_FETCH_DONE
 } from 'constants/ActionTypes';
 
 export const userSignUp = (user) => {
@@ -143,5 +145,18 @@ export const submitStartupInfo = (startupInfo) => {
 export const submitStartupInfoDone = () => {
 	return {
 		type: ON_STARTUP_INFO_SUBMIT_DONE
+	}
+}
+
+export const getStartupListDetails = () => {
+	return {
+		type: ON_STARTUP_INFO_FETCH
+	}
+}
+
+export const getStartupListDetailsDone = (startupInfoList) => {
+	return {
+		type: ON_STARTUP_INFO_FETCH_DONE,
+		payload: startupInfoList
 	}
 }
