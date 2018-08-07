@@ -15,6 +15,8 @@ import AppLocale from '../lngProvider';
 import MainApp from 'app/index';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import StartupInfo from './StartupInfo';
+
 import {setInitUrl} from '../actions/Auth';
 import RTL from 'util/RTL';
 import asyncComponent from 'util/asyncComponent';
@@ -70,6 +72,8 @@ class App extends Component {
                                                      component={MainApp}/>
                                     <Route path='/signin' component={SignIn}/>
                                     <Route path='/signup' component={SignUp}/>
+                                    <Route path='/startupinfo' component={StartupInfo}/>
+
                                     <Route
                                         component={asyncComponent(() => import('components/Error404'))}/>
                                 </Switch>

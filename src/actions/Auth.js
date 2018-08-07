@@ -17,7 +17,9 @@ import {
   SIGNOUT_USER,
   SIGNOUT_USER_SUCCESS,
   SIGNUP_USER,
-  SIGNUP_USER_SUCCESS
+  SIGNUP_USER_SUCCESS,
+	ON_STARTUP_INFO_SUBMIT,
+	ON_STARTUP_INFO_SUBMIT_DONE
 } from 'constants/ActionTypes'
 
 export const userSignUp = (user) => {
@@ -128,4 +130,15 @@ export const hideAuthLoader = () => {
   return {
     type: ON_HIDE_LOADER,
   }
+}
+export const submitStartupInfo = (startupInfo) => {
+	return {
+		type: ON_STARTUP_INFO_SUBMIT,
+		payload: startupInfo
+	}
+}
+export const submitStartupInfoDone = () => {
+	return {
+		type: ON_STARTUP_INFO_SUBMIT_DONE
+	}
 }

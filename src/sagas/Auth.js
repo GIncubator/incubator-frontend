@@ -1,6 +1,10 @@
 import {all, call, fork, put, takeEvery} from 'redux-saga/effects'
 import {auth, facebookAuthProvider, githubAuthProvider, googleAuthProvider, twitterAuthProvider} from 'firebase/firebase'
-import {registerUser, loginUser} from '../services/auth-service'
+import {
+  registerUser,
+  loginUser,
+  startupInfo
+} from '../services'
 import {
   SIGNIN_FACEBOOK_USER,
   SIGNIN_GITHUB_USER,
@@ -8,13 +12,15 @@ import {
   SIGNIN_TWITTER_USER,
   SIGNIN_USER,
   SIGNOUT_USER,
-  SIGNUP_USER
+  SIGNUP_USER,
+  ON_STARTUP_INFO_SUBMIT
 } from 'constants/ActionTypes'
 import {
   showAuthMessage,
   userSignInSuccess,
   userSignOutSuccess,
-  userSignUpSuccess
+  userSignUpSuccess,
+  submitStartupInfoDone
 } from '../actions/Auth'
 import {
   userFacebookSignInSuccess,
@@ -198,6 +204,25 @@ function* signOut() {
   }
 }
 
+const submitStartupInfoRequest = async (payload) =>
+  await startupInfo(payload)
+    .then(data => data)
+    .catch(error => error);
+
+function* submitStartupInfoData({payload}) {
+  try {
+    const startup = yield call(submitStartupInfoRequest, payload);
+    console.log(startup)
+    if(startup.data.error) {
+        yield put(showAuthMessage(startup.data.error))
+    } else {
+        yield put(submitStartupInfoDone())
+    }
+  } catch(error) {
+    yield put(showAuthMessage(error))
+  }
+}
+
 export function* createUserAccount() {
   yield takeEvery(SIGNUP_USER, createUserWithEmailPassword)
 }
@@ -226,6 +251,10 @@ export function* signOutUser() {
   yield takeEvery(SIGNOUT_USER, signOut)
 }
 
+export function* submitStartupInfo() {
+  yield takeEvery(ON_STARTUP_INFO_SUBMIT, submitStartupInfoData);
+}
+
 export default function* rootSaga() {
   yield all([fork(signInUser),
     fork(createUserAccount),
@@ -233,6 +262,7 @@ export default function* rootSaga() {
     fork(signInWithFacebook),
     fork(signInWithTwitter),
     fork(signInWithGithub),
-    fork(signOutUser)
+    fork(signOutUser),
+    fork(submitStartupInfo)
   ])
 }

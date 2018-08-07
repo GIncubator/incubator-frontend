@@ -3,7 +3,7 @@ import Avatar from "@material-ui/core/Avatar"
 import { connect } from "react-redux"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
-import { userSignOut } from "actions/Auth"
+import { userSignOut } from "../../actions/Auth"
 import IntlMessages from "util/IntlMessages"
 
 class UserInfo extends React.Component {
