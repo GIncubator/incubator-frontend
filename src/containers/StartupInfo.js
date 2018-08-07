@@ -67,9 +67,6 @@ class StartupInfo extends React.Component {
                 this.props.hideMessage();
             }, 3000);
         }
-        if (this.props.authUser !== null) {
-            this.props.history.push('/');
-        }
     }
 
     handleCofounderNameChange(idx) { 
@@ -507,8 +504,8 @@ class StartupInfo extends React.Component {
 }
 
 const mapStateToProps = ({auth}) => {
-    const {loader, alertMessage, showMessage, authUser} = auth;
-    return {loader, alertMessage, showMessage, authUser}
+    const {loader, alertMessage, showMessage} = auth;
+    return {loader, alertMessage, showMessage}
 };
 
 export default connect(mapStateToProps, {
