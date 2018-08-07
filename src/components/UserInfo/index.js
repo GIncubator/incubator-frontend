@@ -3,7 +3,7 @@ import Avatar from "@material-ui/core/Avatar"
 import { connect } from "react-redux"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
-import { userSignOut } from "actions/Auth"
+import { userSignOut } from "../../actions/Auth"
 import IntlMessages from "util/IntlMessages"
 
 class UserInfo extends React.Component {
@@ -23,11 +23,6 @@ class UserInfo extends React.Component {
   render() {
     return (
       <div className="user-profile d-flex flex-row align-items-center">
-        <Avatar
-          alt="..."
-          src={this.props.authUser.picture}
-          className="user-avatar"
-        />
         <div className="user-detail">
           <h4 className="user-name" onClick={this.handleClick}>
             {this.props.authUser.displayName}

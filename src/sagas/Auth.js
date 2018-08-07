@@ -8,41 +8,24 @@ import {
   SIGNIN_TWITTER_USER,
   SIGNIN_USER,
   SIGNOUT_USER,
-  SIGNUP_USER
-} from "constants/ActionTypes"
+  SIGNUP_USER,
+  ON_STARTUP_INFO_SUBMIT
+} from 'constants/ActionTypes'
 import {
   showAuthMessage,
   userSignInSuccess,
   userSignOutSuccess,
-  userSignUpSuccess
-} from "actions/Auth"
+  userSignUpSuccess,
+  submitStartupInfoDone
+} from '../actions/Auth'
 import {
   userFacebookSignInSuccess,
   userGithubSignInSuccess,
   userGoogleSignInSuccess,
   userTwitterSignInSuccess
-} from "../actions/Auth"
-import {fireBaseGoogleToDBUserModel} from './../transform'
+} from '../actions/Auth'
+import {fireBasePasswordToDBUserModel, fireBaseGoogleToDBUserModel} from './../transform'
 import * as Api from './../api'
-
-const submitStartupInfoRequest = async (payload) => 
-    await startupInfo(payload)
-        .then(data => data)
-        .catch(error => error);
-
-function* submitStartupInfoData({payload}) {
-    try {
-        const startup = yield call(submitStartupInfoRequest, payload);
-        console.log(startup)
-        if(startup.data.error) {
-            yield put(showAuthMessage(startup.data.error))
-        } else {
-            yield put(submitStartupInfoDone())
-        }
-    } catch(error) {
-        yield put(showAuthMessage(error))
-    }
-}
 
 const createUserWithEmailPasswordRequest = async (email, password) =>
   await auth.createUserWithEmailAndPassword(email, password)
@@ -88,16 +71,21 @@ const signInUserWithTwitterRequest = async () =>
   .then(authUser => authUser)
   .catch(error => error)
 
-
 function* createUserWithEmailPassword({payload}) {
-  const {email, password} = payload
+  const {name, email, password} = payload
   try {
       const signUpUser = yield call(createUserWithEmailPasswordRequest, email, password)
       if (signUpUser.message) {
-          yield put(showAuthMessage(signUpUser.message))
+        yield put(showAuthMessage(signUpUser.message))
       } else {
-          localStorage.setItem('user_id', signUpUser.user.uid)
-          yield put(userSignUpSuccess(signUpUser.user.uid))
+        const response = yield call(Api.getUser, {filter: `?passwordUid=${signUpUser.user.uid}`})
+
+        const userModel = fireBasePasswordToDBUserModel(name, signUpUser)
+        if (response.data.length === 0) {
+          yield call(Api.createUser, userModel)
+          localStorage.setItem('user', JSON.stringify(userModel))
+        }
+        yield put(userSignUpSuccess(userModel))
       }
   } catch (error) {
       yield put(showAuthMessage(error))
@@ -170,24 +158,20 @@ function* signInUserWithTwitter() {
   }
 }
 
-function* signInUserWithEmailPassword({
-  payload
-}) {
-  const {
-    email,
-    password
-  } = payload
+function* signInUserWithEmailPassword({payload}) {
+  const {email, password} = payload
   try {
     const signInUser = yield call(signInUserWithEmailPasswordRequest, email, password)
-    if (signInUser.data.error) {
-      yield put(showAuthMessage(signInUser.data.error))
-    } else if (!signInUser.data.error) {
-      localStorage.setItem('user', JSON.stringify(signInUser.data.user))
-      localStorage.setItem('token', signInUser.data.token)
-      yield put(userSignInSuccess(signInUser.data.user))
+    if (signInUser.message) {
+      yield put(showAuthMessage(signInUser.message))
+    } else {
+      const response = yield call(Api.getUser, {filter: `?passwordUid=${signInUser.user.uid}`})
+      const userModel = fireBasePasswordToDBUserModel(response.data.displayName, signInUser)
+      localStorage.setItem('user', JSON.stringify(userModel))
+      yield put(userSignInSuccess(userModel))
     }
   } catch (error) {
-    yield put(showAuthMessage(error))
+      yield put(showAuthMessage(error))
   }
 }
 
@@ -202,6 +186,25 @@ function* signOut() {
       yield put(showAuthMessage(signOutUser.message))
     }
   } catch (error) {
+    yield put(showAuthMessage(error))
+  }
+}
+
+const submitStartupInfoRequest = async (payload) =>
+  await startupInfo(payload)
+    .then(data => data)
+    .catch(error => error);
+
+function* submitStartupInfoData({payload}) {
+  try {
+    const startup = yield call(submitStartupInfoRequest, payload);
+    console.log(startup)
+    if(startup.data.error) {
+        yield put(showAuthMessage(startup.data.error))
+    } else {
+        yield put(submitStartupInfoDone())
+    }
+  } catch(error) {
     yield put(showAuthMessage(error))
   }
 }
@@ -234,6 +237,10 @@ export function* signOutUser() {
   yield takeEvery(SIGNOUT_USER, signOut)
 }
 
+export function* submitStartupInfo() {
+  yield takeEvery(ON_STARTUP_INFO_SUBMIT, submitStartupInfoData);
+}
+
 export default function* rootSaga() {
   yield all([fork(signInUser),
     fork(createUserAccount),
@@ -241,6 +248,7 @@ export default function* rootSaga() {
     fork(signInWithFacebook),
     fork(signInWithTwitter),
     fork(signInWithGithub),
-    fork(signOutUser)
+    fork(signOutUser),
+    fork(submitStartupInfo)
   ])
 }
