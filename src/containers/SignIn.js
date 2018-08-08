@@ -61,7 +61,7 @@ class SignIn extends Component {
           <div className="app-login-content">
             <div className="app-login-header mb-4">
               <h1>
-                <IntlMessages id="appModule.email" />
+                Sign in
               </h1>
             </div>
 

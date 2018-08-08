@@ -24,7 +24,8 @@ const INIT_STATE = {
     initURL: '',
     authUser: JSON.parse(localStorage.getItem('user')),
     token: localStorage.getItem('token'),
-    startupInfoList: []
+    startupInfoList: [],
+    showDoneMessage: false
 };
 
 
@@ -54,7 +55,7 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 authUser: null,
-                initURL: '/app/sample-page',
+                initURL: '/app/dashboard',
                 loader: false
             }
         }
@@ -119,6 +120,7 @@ export default (state = INIT_STATE, action) => {
         case ON_STARTUP_INFO_SUBMIT: {
             return {
                 ...state,
+                showDoneMessage: false,
                 loader: true,
             }
         }
@@ -126,18 +128,13 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 loader: false,
-            }
-        }
-        case ON_STARTUP_INFO_SUBMIT_DONE: {
-            return {
-                ...state,
-                loader: false,
+                showDoneMessage: true,
+                alertMessage: action.payload
             }
         }
         case ON_STARTUP_INFO_FETCH: {
             return {
-                ...state,
-                // startupInfoList: action.payload
+                ...state
             }
         }
         case ON_STARTUP_INFO_FETCH_DONE: {

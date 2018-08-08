@@ -43,7 +43,7 @@ class App extends Component {
             if (authUser === null) {
                 return ( <Redirect to={'/signin'}/> );
             } else if (initURL === '' || initURL === '/' || initURL === '/signin') {
-                return ( <Redirect to={'/app/sample-page'}/> );
+                return ( <Redirect to={'/app/dashboard'}/> );
             } else {
                 return ( <Redirect to={initURL}/> );
             }
@@ -72,7 +72,7 @@ class App extends Component {
                                                      component={MainApp}/>
                                     <Route path='/signin' component={SignIn}/>
                                     <Route path='/signup' component={SignUp}/>
-                                    <Route path='/startupinfo' component={StartupInfo}/>
+                                    <Route path='/startup-application' component={StartupInfo}/>
 
                                     <Route
                                         component={asyncComponent(() => import('components/Error404'))}/>
