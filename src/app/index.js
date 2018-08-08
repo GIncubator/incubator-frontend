@@ -31,8 +31,6 @@ class App extends React.Component {
         }
         return (
             <div className={`app-container ${drawerStyle}`}>
-                <Tour/>
-
                 <Sidebar/>
                 <div className="app-main-container">
                     <div
@@ -48,7 +46,9 @@ class App extends React.Component {
                         <div className="app-main-content">
                             <Switch>
                                 <Route path={`${match.url}/sample-page`}
-                                       component={asyncComponent(() => import('./routes/SamplePage'))}/>             
+                                       component={asyncComponent(() => import('./routes/SamplePage'))}/> 
+                                      <Route path={`${match.url}/startups`}
+                                       component={asyncComponent(() => import('./routes/StartupInfoList'))}/> 
                             <Route
                                 component={asyncComponent(() => import('components/Error404'))}/>
                             </Switch>

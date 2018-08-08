@@ -142,5 +142,8 @@ export const UPDATE_SEARCH = 'update_search';
 
 export const ON_STARTUP_INFO_SUBMIT = 'on_startup_info_submit';
 export const ON_STARTUP_INFO_SUBMIT_DONE = 'on_startup_info_submit_done';
+export const ON_STARTUP_INFO_FETCH = 'on_startup_info_fetch';
+export const ON_STARTUP_INFO_FETCH_DONE = 'on_startup_info_fetch_done';
+
 
 

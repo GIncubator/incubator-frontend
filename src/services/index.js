@@ -17,9 +17,12 @@ let axiosConfig = {
 const registerUser = (name, email, password) => axios.post(CREATE_USER_URL, { name, email, password });
 const loginUser = (email, password) => axios.post(LOGIN_USER_URL, { email, password });
 const startupInfo = (startup) => axios.post(STARTUP_INFO_URL, startup, axiosConfig);
+const startupInfoList = () => axios.get(STARTUP_INFO_URL, axiosConfig);
+
 
 export {
   registerUser,
   loginUser,
-  startupInfo
+  startupInfo,
+  startupInfoList
 }
