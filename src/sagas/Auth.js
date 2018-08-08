@@ -9,7 +9,8 @@ import {
   SIGNIN_USER,
   SIGNOUT_USER,
   SIGNUP_USER,
-  ON_STARTUP_INFO_SUBMIT
+  ON_STARTUP_INFO_SUBMIT,
+  ON_STARTUP_INFO_FETCH
 } from 'constants/ActionTypes'
 import {
   showAuthMessage,
@@ -211,7 +212,7 @@ function* submitStartupInfoData({payload}) {
 
 const fetchStartupDetails = async () =>
   await startupInfoList()
-    .then(data => data)
+    .then(data => data.data.data)
     .catch(error => error);
 
 function* fetchStartupInfoListRequest() {
@@ -252,7 +253,7 @@ export function* submitStartupInfo() {
 }
 
 export function* fetchStartupInfoList() {
-  yield takeEvery(ON_STARTUP_INFO_SUBMIT, fetchStartupInfoListRequest);
+  yield takeEvery(ON_STARTUP_INFO_FETCH, fetchStartupInfoListRequest);
 }
 
 export default function* rootSaga() {

@@ -31,8 +31,6 @@ class App extends React.Component {
         }
         return (
             <div className={`app-container ${drawerStyle}`}>
-                <Tour/>
-
                 <Sidebar/>
                 <div className="app-main-container">
                     <div
