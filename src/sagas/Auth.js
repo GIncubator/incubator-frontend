@@ -1,6 +1,6 @@
 import {all, call, fork, put, takeEvery} from "redux-saga/effects"
 import {auth, facebookAuthProvider, githubAuthProvider, googleAuthProvider, twitterAuthProvider} from "firebase/firebase"
-import { startupInfo, startupInfoList } from '../services'
+import { startupInfo, startupInfoList, getStartupInfo } from '../services'
 import {
   SIGNIN_FACEBOOK_USER,
   SIGNIN_GITHUB_USER,
@@ -10,7 +10,8 @@ import {
   SIGNOUT_USER,
   SIGNUP_USER,
   ON_STARTUP_INFO_SUBMIT,
-  ON_STARTUP_INFO_FETCH
+  ON_STARTUP_INFO_FETCH,
+  ON_SINGLE_STARTUP_INFO_FETCH
 } from 'constants/ActionTypes'
 import {
   showAuthMessage,
@@ -18,7 +19,8 @@ import {
   userSignOutSuccess,
   userSignUpSuccess,
   submitStartupInfoDone,
-  getStartupListDetailsDone
+  getStartupListDetailsDone,
+  getSingleStartupDetailsDone
 } from '../actions/Auth'
 import {
   userFacebookSignInSuccess,
@@ -223,6 +225,17 @@ function* fetchStartupInfoListRequest() {
     yield put(getStartupListDetailsDone(startupList));
 }
 
+const fetchSingleStartupDetails = async (id) =>
+  await getStartupInfo(id)
+    .then(data => data.data.data)
+    .catch(error => error);
+
+function* fetchSingleStartupInfoRequest({payload}) {
+    console.log(payload);
+    const startup = yield call(fetchSingleStartupDetails, payload);
+    yield put(getSingleStartupDetailsDone(startup));
+}
+
 export function* createUserAccount() {
   yield takeEvery(SIGNUP_USER, createUserWithEmailPassword)
 }
@@ -259,6 +272,9 @@ export function* fetchStartupInfoList() {
   yield takeEvery(ON_STARTUP_INFO_FETCH, fetchStartupInfoListRequest);
 }
 
+export function* fetchSingleStartupInfo() {
+  yield takeEvery(ON_SINGLE_STARTUP_INFO_FETCH, fetchSingleStartupInfoRequest);
+}
 export default function* rootSaga() {
   yield all([fork(signInUser),
     fork(createUserAccount),
@@ -268,6 +284,7 @@ export default function* rootSaga() {
     fork(signInWithGithub),
     fork(signOutUser),
     fork(submitStartupInfo),
-    fork(fetchStartupInfoList)
+    fork(fetchStartupInfoList),
+    fork(fetchSingleStartupInfo)
   ])
 }

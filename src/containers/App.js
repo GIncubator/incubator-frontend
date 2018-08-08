@@ -16,6 +16,8 @@ import MainApp from 'app/index';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import StartupInfo from './StartupInfo';
+import StartupInfoTracker from './StartupInfoTracker';
+
 
 import {setInitUrl} from '../actions/Auth';
 import RTL from 'util/RTL';
@@ -73,7 +75,7 @@ class App extends Component {
                                     <Route path='/signin' component={SignIn}/>
                                     <Route path='/signup' component={SignUp}/>
                                     <Route path='/startup-application' component={StartupInfo}/>
-
+                                    <Route path='/application' component={StartupInfoTracker}/>
                                     <Route
                                         component={asyncComponent(() => import('components/Error404'))}/>
                                 </Switch>

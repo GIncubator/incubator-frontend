@@ -21,7 +21,9 @@ import {
 	ON_STARTUP_INFO_SUBMIT,
 	ON_STARTUP_INFO_SUBMIT_DONE,
 	ON_STARTUP_INFO_FETCH,
-	ON_STARTUP_INFO_FETCH_DONE
+	ON_STARTUP_INFO_FETCH_DONE,
+	ON_SINGLE_STARTUP_INFO_FETCH,
+	ON_SINGLE_STARTUP_INFO_FETCH_DONE,
 } from 'constants/ActionTypes';
 
 export const userSignUp = (user) => {
@@ -159,5 +161,19 @@ export const getStartupListDetailsDone = (startupInfoList) => {
 	return {
 		type: ON_STARTUP_INFO_FETCH_DONE,
 		payload: startupInfoList
+	}
+}
+
+export const getSingleStartupDetails = (id) => {
+	return {
+		type: ON_SINGLE_STARTUP_INFO_FETCH,
+		payload: id
+	}
+}
+
+export const getSingleStartupDetailsDone = (startupInfo) => {
+	return {
+		type: ON_SINGLE_STARTUP_INFO_FETCH_DONE,
+		payload: startupInfo
 	}
 }

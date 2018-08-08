@@ -22,6 +22,7 @@ import {
 const formStyle = {
     width: '800px'
 }
+
 class StartupInfo extends React.Component {
     constructor() {
         super();
@@ -71,6 +72,8 @@ class StartupInfo extends React.Component {
             gusecPremisesAccess: ''
         }
     }
+
+   
 
     submitApplication() {
         this.props.showAuthLoader();
@@ -145,7 +148,6 @@ class StartupInfo extends React.Component {
     }
 
     addLegalEntityMember() {
-        console.log(this)
         this.setState({
             legalEntityMembers: this.state.legalEntityMembers.concat([{ name: '', designation: '' }])
         })
@@ -219,7 +221,6 @@ class StartupInfo extends React.Component {
                                     defaultValue={name}
                                     margin="normal"
                                     className="mt-0 mb-2"
-                                    required
                                 />
 
                                 <TextField
