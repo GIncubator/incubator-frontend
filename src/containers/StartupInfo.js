@@ -4,7 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox'
-
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
 
 import Button from '@material-ui/core/Button';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
@@ -59,9 +60,25 @@ class StartupInfo extends React.Component {
             bankAccountNumber: '',
             bankName: '',
             bankIFSC: '',
-            facilitiesNeededFromGUSEC: '',
+            facilitiesNeededFromGUSEC: {
+                mentorship: false,
+                support_in_fundraising: false,
+                gusec_id_card: false,
+                coworking_access: false,
+                desktop_computer_access: false,
+                dedicated_silent_zone: false,
+                gusec_email_address: false
+            },
             gusecPremisesAccess: ''
         }
+    }
+
+    handleCheckBoxChange(name) { 
+        return (event) => {
+        let facilitiesNeededFromGUSEC = this.state.facilitiesNeededFromGUSEC;
+        facilitiesNeededFromGUSEC[name] = !facilitiesNeededFromGUSEC[name];
+        this.setState({facilitiesNeededFromGUSEC});
+      }
     }
 
     componentDidUpdate() {
@@ -533,21 +550,65 @@ If your startup is not incorporated, please mention "Not incorporated" and if yo
 </div>
 <div className="jr-card">
                             <h3 className="mb-0">
-                                    GUSEC Section
+                            Facilities Needed From GUSEC
                                 </h3>
 
-                                <TextField
-                                    type="text"
-                                    label="Facilities Needed From GUSEC"
-                                    onChange={(event) => this.setState({facilitiesNeededFromGUSEC: event.target.value})}
-                                    fullWidth
-                                    defaultValue={facilitiesNeededFromGUSEC}
-                                    margin="normal"
-                                    className="mt-0 mb-2"
-                                />
+                              
 
-
-                                <TextField
+                                    <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox checked={this.state.facilitiesNeededFromGUSEC['mentorship']} onChange={this.handleCheckBoxChange('mentorship')} value="mentorship" />
+              }
+              label="Mentorship"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={this.state.facilitiesNeededFromGUSEC['support_in_fundraising']} onChange={this.handleCheckBoxChange('support_in_fundraising')} value="support_in_fundraising" />
+              }
+              label="Support in fundraising"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={this.state.facilitiesNeededFromGUSEC['gusec_id_card']} onChange={this.handleCheckBoxChange('gusec_id_card')} value="gusec_id_card"
+                />
+              }
+              label="GUSEC ID card"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={this.state.facilitiesNeededFromGUSEC['dedicated_silent_zone']} onChange={this.handleCheckBoxChange('dedicated_silent_zone')} value="dedicated_silent_zone"
+                />
+              }
+              label="Dedicated quiet / silent zone"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={this.state.facilitiesNeededFromGUSEC['desktop_computer_access']} onChange={this.handleCheckBoxChange('desktop_computer_access')} value="desktop_computer_access"
+                />
+              }
+              label="Desktop computer access"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={this.state.facilitiesNeededFromGUSEC['gusec_email_address']} onChange={this.handleCheckBoxChange('gusec_email_address')} value="gusec_email_address"
+                />
+              }
+              label="A @gusec.edu.in email address"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={this.state.facilitiesNeededFromGUSEC['coworking_access']} onChange={this.handleCheckBoxChange('coworking_access')} value="coworking_access"
+                />
+              }
+              label="24x7 co-working access"
+            />
+          </FormGroup>
+<hr/>
+<h3 className="mb-0">
+GUSEC Premises Access
+                                </h3>
+                                <Select
                                     type="text"
                                     label="GUSEC Premises Access"
                                     onChange={(event) => this.setState({gusecPremisesAccess: event.target.value})}
@@ -555,10 +616,14 @@ If your startup is not incorporated, please mention "Not incorporated" and if yo
                                     defaultValue={gusecPremisesAccess}
                                     margin="normal"
                                     className="mt-0 mb-2"
-                                />
-
-                           
-                                                      
+                                >
+                                <MenuItem value={'Everyday'}>Everyday</MenuItem>
+                                <MenuItem value={'2 to 3 times in a week'}>2 to 3 times in a week</MenuItem>
+                                <MenuItem value={'Less than once a week'}>Less than once a week</MenuItem>
+                                <MenuItem value={'Once or twice in a month'}>Once or twice in a month</MenuItem>
+                               
+                                </Select>
+                                  
                                     <Button variant="raised" onClick={() => {
                                         this.props.showAuthLoader();
                                         this.props.submitStartupInfo(this.state);
