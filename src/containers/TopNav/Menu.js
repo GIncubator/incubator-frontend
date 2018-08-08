@@ -86,11 +86,20 @@ class Menu extends Component {
             <div className="app-main-menu d-none d-md-block">
                 <ul className="navbar-nav navbar-nav-mega">
                     <li className="nav-item">
-                        <NavLink to="/app/sample-page">
-                            <span className="nav-text"><IntlMessages id="pages.samplePage"/> </span>
+                        <NavLink to="/app/startup-application">
+                            <span className="nav-text">Startup Application</span>
                         </NavLink>
                     </li>
-
+                    <li className="nav-item">
+                        <NavLink to="/app/signin">
+                            <span className="nav-text">Sign In</span>
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to="/app/signup">
+                            <span className="nav-text">Sign Up</span>
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
         );

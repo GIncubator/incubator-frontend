@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import Header from "components/Header/index"
 import Sidebar from "containers/SideNav/index"
 import Footer from "components/Footer"
-import Tour from "../components/Tour/index"
 import {
   ABOVE_THE_HEADER,
   BELOW_THE_HEADER,

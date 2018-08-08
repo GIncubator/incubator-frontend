@@ -45,7 +45,6 @@ class SignIn extends Component {
   }
 
   render() {
-    const {email, password} = this.state
     const {showMessage, loader, alertMessage} = this.props
 
     return (

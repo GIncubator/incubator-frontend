@@ -10,8 +10,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Card from '@material-ui/core/Card';
-
+import TopNav from "./TopNav"
 
 import {
     hideMessage,
@@ -190,6 +189,7 @@ class StartupInfo extends React.Component {
         return (
             <div className="app-container mini-drawer">
                 <div className="app-main-container">
+                    <TopNav />
                     <main className="app-main-content-wrapper">
                         <div className="app-main-content">
                         <div className="app-wrapper d-flex justify-content-center align-items-center">
