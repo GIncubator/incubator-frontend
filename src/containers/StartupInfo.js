@@ -72,6 +72,11 @@ class StartupInfo extends React.Component {
         }
     }
 
+    submitApplication() {
+        this.props.showAuthLoader();
+        this.props.submitStartupInfo(this.state);
+    }
+
     handleCheckBoxChange(name) { 
         return (event) => {
         let facilitiesNeededFromGUSEC = this.state.facilitiesNeededFromGUSEC;
@@ -168,7 +173,6 @@ class StartupInfo extends React.Component {
             name,
             founderName,
             totalMemberCount,
-            typeOfIncorporation,
             legalEntityName,
             raisedFunds,
             expectedFund,
@@ -215,6 +219,7 @@ class StartupInfo extends React.Component {
                                     defaultValue={name}
                                     margin="normal"
                                     className="mt-0 mb-2"
+                                    required
                                 />
 
                                 <TextField
@@ -621,10 +626,7 @@ GUSEC Premises Access
                                
                                 </Select>
                                   
-                                    <Button variant="raised" onClick={() => {
-                                        this.props.showAuthLoader();
-                                        this.props.submitStartupInfo(this.state);
-                                    }} color="primary">
+                                    <Button variant="raised" onClick={this.submitApplication.bind(this)} color="primary">
                                         Submit Application
                                     </Button>
                                    
