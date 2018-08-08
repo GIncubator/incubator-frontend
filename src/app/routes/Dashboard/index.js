@@ -2,7 +2,7 @@ import React from 'react';
 import ContainerHeader from 'components/ContainerHeader/index';
 import IntlMessages from 'util/IntlMessages';
 
-class SamplePage extends React.Component {
+class Dashboard extends React.Component {
     
     componentDidMount() {
         let href = window.location.href;
@@ -11,11 +11,11 @@ class SamplePage extends React.Component {
     render() {
         return (
             <div className="app-wrapper">
-                <ContainerHeader match={this.props.match} title={<IntlMessages id="pages.samplePage"/>}/>
+                <ContainerHeader match={this.props.match} title={'Dashboard'}/>
                 
             </div>
         );
     }
 }
 
-export default SamplePage;
+export default Dashboard;

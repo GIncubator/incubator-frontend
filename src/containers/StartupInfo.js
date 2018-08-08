@@ -21,7 +21,7 @@ import {
 } from 'actions/Auth';
 
 const formStyle = {
-    width: '700px'
+    width: '800px'
 }
 class StartupInfo extends React.Component {
     constructor() {
