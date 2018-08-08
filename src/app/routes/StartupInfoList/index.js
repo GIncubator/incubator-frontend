@@ -29,7 +29,6 @@ class StartupInfoList extends React.Component {
 
 
 const mapStateToProps = ({auth}) => {
-    console.log(auth);
     const { startupInfoList } = auth
     return { startupInfoList }
 }

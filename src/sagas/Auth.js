@@ -206,7 +206,7 @@ function* submitStartupInfoData({payload}) {
     if(startup.data.error) {
         yield put(showAuthMessage(startup.data.error))
     } else {
-        yield put(submitStartupInfoDone())
+        yield put(submitStartupInfoDone(startup.data.message))
     }
   } catch(error) {
     yield put(showAuthMessage(error))

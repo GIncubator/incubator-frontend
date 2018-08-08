@@ -142,9 +142,10 @@ export const submitStartupInfo = (startupInfo) => {
 	}
 }
 
-export const submitStartupInfoDone = () => {
+export const submitStartupInfoDone = (message) => {
 	return {
-		type: ON_STARTUP_INFO_SUBMIT_DONE
+		type: ON_STARTUP_INFO_SUBMIT_DONE,
+		payload: message
 	}
 }
 

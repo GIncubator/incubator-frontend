@@ -184,11 +184,9 @@ class StartupInfo extends React.Component {
             startupPAN,
             bankAccountNumber,
             bankName,
-            bankIFSC,
-            facilitiesNeededFromGUSEC,
-            gusecPremisesAccess,
+            bankIFSC
         } = this.state;
-        const {showMessage, loader, alertMessage} = this.props;
+        const {showMessage, loader, alertMessage, showDoneMessage } = this.props;
         return (
             <div className="app-container mini-drawer">
                 <div className="app-main-container">
@@ -281,9 +279,8 @@ class StartupInfo extends React.Component {
                                     label="Type Of Incorporation"
                                     onChange={(event) => this.setState({typeOfIncorporation: event.target.value})}
                                     fullWidth
-                                    defaultValue={typeOfIncorporation}
                                     value={this.state.typeOfIncorporation}
-                                    margin="normal"
+                                    margin="dense"
                                     className="mt-0 mb-2"
                                 >
                                 <MenuItem value="No incorporation">
@@ -548,7 +545,7 @@ If your startup is not incorporated, please mention "Not incorporated" and if yo
                                     className="mt-0 mb-2"
                                 />
 </div>
-<div className="jr-card">
+<div className="jr-card  align-items-center">
                             <h3 className="mb-0">
                             Facilities Needed From GUSEC
                                 </h3>
@@ -610,11 +607,11 @@ GUSEC Premises Access
                                 </h3>
                                 <Select
                                     type="text"
+                                    value={this.state.gusecPremisesAccess}
                                     label="GUSEC Premises Access"
                                     onChange={(event) => this.setState({gusecPremisesAccess: event.target.value})}
                                     fullWidth
-                                    defaultValue={gusecPremisesAccess}
-                                    margin="normal"
+                                    margin="dense"
                                     className="mt-0 mb-2"
                                 >
                                 <MenuItem value={'Everyday'}>Everyday</MenuItem>
@@ -639,6 +636,7 @@ GUSEC Premises Access
                                 </div>
                             }
                             {showMessage && NotificationManager.error(alertMessage)}
+                            {showDoneMessage && NotificationManager.success(alertMessage)}
                             <NotificationContainer/>
                             </form>
                             </div>
@@ -653,8 +651,8 @@ GUSEC Premises Access
 }
 
 const mapStateToProps = ({auth}) => {
-    const {loader, alertMessage, showMessage} = auth;
-    return {loader, alertMessage, showMessage}
+    const {loader, alertMessage, showMessage, showDoneMessage } = auth;
+    return {loader, alertMessage, showMessage, showDoneMessage}
 };
 
 export default connect(mapStateToProps, {
