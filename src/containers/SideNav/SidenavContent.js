@@ -93,9 +93,15 @@ class SidenavContent extends Component {
               </span>
             </NavLink> */}
             <NavLink to="/app/startups">
-              <i className="zmdi zmdi-view-dashboard" />
+              <i className="zmdi zmdi-collection-item zmdi-hc-fw" />
               <span className="nav-text">
                 Startups
+              </span>
+            </NavLink>
+            <NavLink to="/app/startup-details">
+              <i className="zmdi zmdi-view-dashboard" />
+              <span className="nav-text">
+                Startup Details
               </span>
             </NavLink>
           </li>
