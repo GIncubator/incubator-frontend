@@ -14,14 +14,14 @@ export const fireBaseGoogleToDBUserModel = (signUpUser) => {
   }
 }
 
-export const fireBasePasswordToDBUserModel = (name, signUpUser) => {
+export const fireBasePasswordToDBUserModel = (response, signInUser) => {
   return {
-    displayName: name,
-    email: signUpUser.user.email,
-    picture: signUpUser.user.photoURL,
+    displayName: response.data.displayName,
+    email: signInUser.user.email,
+    picture: response.data.picture,
     social: {
       password: {
-        uid: signUpUser.user.uid,
+        uid: signInUser.user.uid,
       },
     }
   }

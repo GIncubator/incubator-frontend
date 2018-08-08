@@ -28,6 +28,7 @@ import {
 } from '../actions/Auth'
 import {fireBasePasswordToDBUserModel, fireBaseGoogleToDBUserModel} from './../transform'
 import * as Api from './../api'
+import gravatar from 'gravatar'
 
 const createUserWithEmailPasswordRequest = async (email, password) =>
   await auth.createUserWithEmailAndPassword(email, password)
@@ -84,6 +85,8 @@ function* createUserWithEmailPassword({payload}) {
 
         const userModel = fireBasePasswordToDBUserModel(name, signUpUser)
         if (response.data.length === 0) {
+          const secureUrl = gravatar.url(userModel.email, {s: '100', r: 'x', d: 'identicon'}, true)
+          userModel.picture = secureUrl
           yield call(Api.createUser, userModel)
           localStorage.setItem('user', JSON.stringify(userModel))
         }
@@ -168,7 +171,7 @@ function* signInUserWithEmailPassword({payload}) {
       yield put(showAuthMessage(signInUser.message))
     } else {
       const response = yield call(Api.getUser, {filter: `?passwordUid=${signInUser.user.uid}`})
-      const userModel = fireBasePasswordToDBUserModel(response.data.displayName, signInUser)
+      const userModel = fireBasePasswordToDBUserModel(response, signInUser)
       localStorage.setItem('user', JSON.stringify(userModel))
       yield put(userSignInSuccess(userModel))
     }
