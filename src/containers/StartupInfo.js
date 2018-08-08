@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {Link} from 'react-router-dom';
-import IntlMessages from 'util/IntlMessages';
+import Card from '@material-ui/core/Card';
+
+
 import {
     hideMessage,
     showAuthLoader,
@@ -15,9 +15,7 @@ import {
 } from 'actions/Auth';
 
 const formStyle = {
-    width: '100%',
-    height: '-webkit-fill-available',
-    overflowY: 'scroll'
+    width: '700px'
 }
 class StartupInfo extends React.Component {
     constructor() {
@@ -170,16 +168,20 @@ class StartupInfo extends React.Component {
         } = this.state;
         const {showMessage, loader, alertMessage} = this.props;
         return (
-            <div
-                className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
-                <div className="app-login-main-content">
-                    <div className="app-login-content" style={formStyle}>
-
-                        <div className="app-login-header">
-                            <h1>Information about your startup and its team</h1>
+            <div className="app-container mini-drawer">
+                <div className="app-main-container">
+                    <main className="app-main-content-wrapper">
+                        <div className="app-main-content">
+                        <div className="app-wrapper d-flex justify-content-center align-items-center">
+                        <div className="jr-card" style={formStyle}>
+                        <div className="jr-card-header">
+                            <h3 className="mb-0">
+                            Information about your startup and its team
+                            </h3>
+                            <p className="text-muted">
+                                Startups which successfully clear the interview round of shortlisting procedure to join GUSEC have to fill the Form B that covers basic information about the startup and the team behind it.
+                            </p>
                         </div>
-
-                        <div className="app-login-form">
                             <form method="post" action="/">
                                
                                 <TextField
@@ -222,7 +224,7 @@ class StartupInfo extends React.Component {
                                     className="mt-0 mb-2"
                                     />
                                     </div>)}
-                                    <Button variant="raised" onClick={this.addCofounder.bind(this)} type="button">
+                                    <Button variant="raised" onClick={this.addCofounder.bind(this)} type="button" color="primary">
                                     Add more Cofounder
                                     </Button>
                               
@@ -279,7 +281,7 @@ class StartupInfo extends React.Component {
                                     className="mt-0 mb-2"
                                     />
                                     </div>)}
-                                    <Button variant="raised" onClick={this.addLegalEntityMember.bind(this)} type="button">
+                                    <Button variant="raised" onClick={this.addLegalEntityMember.bind(this)} type="button" color="primary">
                                     Add more Legal Entity Member
                                     </Button>
 
@@ -405,7 +407,7 @@ class StartupInfo extends React.Component {
                                     className="mt-0 mb-2"
                                      />
                                     </div>)}
-                                    <Button variant="raised" onClick={this.addSocialLink.bind(this)} type="button">
+                                    <Button variant="raised" onClick={this.addSocialLink.bind(this)} type="button" color="primary">
                                     Add more link
                                     </Button>
 
@@ -475,7 +477,6 @@ class StartupInfo extends React.Component {
                                 />
 
                                                                 
-                                <div className="mb-3 d-flex align-items-center justify-content-between">
                                     <Button variant="raised" onClick={() => {
                                         this.props.showAuthLoader();
                                         this.props.submitStartupInfo(this.state);
@@ -483,22 +484,23 @@ class StartupInfo extends React.Component {
                                         Submit
                                     </Button>
                                    
+                
+                            {
+                                loader &&
+                                <div className="loader-view">
+                                    <CircularProgress/>
                                 </div>
+                            }
+                            {showMessage && NotificationManager.error(alertMessage)}
+                            <NotificationContainer/>
                             </form>
-                        </div>
-                    </div>
-
-                </div>
-
-                {
-                    loader &&
-                    <div className="loader-view">
-                        <CircularProgress/>
-                    </div>
-                }
-                {showMessage && NotificationManager.error(alertMessage)}
-                <NotificationContainer/>
-            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </main>
+                            </div>
+                            </div>
+           
         )
     }
 }

@@ -14,7 +14,7 @@ class StartupInfoList extends React.Component {
         return (
             <div className="app-wrapper">
                 <ContainerHeader match={this.props.match} title={<span>Startup Applications</span>}/>
-                <div className="d-flex">
+                <div className="row">
                     {
                         this.props.startupInfoList.map((d, i) => {
                             return (<Startup key={i} props={d} />)
