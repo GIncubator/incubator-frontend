@@ -120,6 +120,7 @@ export default (state = INIT_STATE, action) => {
         case ON_STARTUP_INFO_SUBMIT: {
             return {
                 ...state,
+                showDoneMessage: false,
                 loader: true,
             }
         }

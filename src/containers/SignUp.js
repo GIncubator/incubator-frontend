@@ -60,10 +60,7 @@ class SignUp extends React.Component {
                             <h1>Sign Up</h1>
                         </div>
 
-                        <div className="mb-4">
-                            <h2><IntlMessages id="appModule.createAccount"/></h2>
-                        </div>
-
+                    
                         <div className="app-login-form">
                             <form method="post" action="/">
                                 <TextField
@@ -108,7 +105,7 @@ class SignUp extends React.Component {
                                         <IntlMessages id="signUp.alreadyMember"/>
                                     </Link>
                                 </div>
-                                <div className="app-social-block my-1 my-sm-3">
+                                {/* <div className="app-social-block my-1 my-sm-3">
                                     <IntlMessages
                                         id="signIn.connectWith"/>
                                     <ul className="social-link">
@@ -123,7 +120,7 @@ class SignUp extends React.Component {
                                             </IconButton>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> */}
 
                             </form>
                         </div>
