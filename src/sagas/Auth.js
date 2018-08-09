@@ -205,19 +205,15 @@ const submitStartupInfoRequest = async (payload) =>
 function* submitStartupInfoData({payload}) {
   try {
     const startup = yield call(submitStartupInfoRequest, payload);
-    if(startup.data.error) {
-        yield put(showAuthMessage(startup.data.error))
-    } else {
-        yield put(submitStartupInfoDone(startup.data.message))
-    }
+    yield put(submitStartupInfoDone('Application submitted succesfully'))
   } catch(error) {
-    yield put(showAuthMessage(error))
+    yield put(showAuthMessage('Not able to save'))
   }
 }
 
 const fetchStartupDetails = async () =>
   await startupInfoList()
-    .then(data => data.data.data)
+    .then(data => data)
     .catch(error => error);
 
 function* fetchStartupInfoListRequest() {
@@ -231,7 +227,6 @@ const fetchSingleStartupDetails = async (id) =>
     .catch(error => error);
 
 function* fetchSingleStartupInfoRequest({payload}) {
-    console.log(payload);
     const startup = yield call(fetchSingleStartupDetails, payload);
     yield put(getSingleStartupDetailsDone(startup));
 }

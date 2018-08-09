@@ -3,7 +3,6 @@ import Config from './../../config'
 
 // Initialize Firebase
 const config = Config.FireBase
-
 firebase.initializeApp(config)
 const auth = firebase.auth()
 

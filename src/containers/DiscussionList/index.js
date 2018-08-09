@@ -77,9 +77,9 @@ class DiscussionList extends Component {
 					</TableHead>
 					<TableBody>
 						{discussionThreads &&
-							discussionThreads.map(discussionThread => {
+							discussionThreads.map( (discussionThread, index) => {
 								return (
-									<TableRow onClick={event => this.handleClick(event, discussionThread)} className={classes.rowHover}>
+									<TableRow key={index} onClick={event => this.handleClick(event, discussionThread)} className={classes.rowHover}>
 										<TableCell
 											component="th"
 											scope="row"
