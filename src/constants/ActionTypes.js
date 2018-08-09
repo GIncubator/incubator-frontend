@@ -74,6 +74,8 @@ export const USER_INFO_STATE = 'user_info_state';
 export const SUBMIT_COMMENT = 'submit_comment';
 export const UPDATE_MESSAGE_VALUE = 'update_message_value';
 export const UPDATE_SEARCH_CHAT_USER = 'update_search_chat_user';
+export const FETCH_DISCUSSION_THREADS = 'fetch_discussion_threads';
+export const FETCH_DISCUSSION_THREADS_SUCCESS = 'fetch_discussion_threads_success';
 
 //// Mail Module const
 

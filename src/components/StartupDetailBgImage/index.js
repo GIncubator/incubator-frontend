@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles'
 
-const styles = {
+const styles = (theme) => ({
 	card: {
 		marginBottom: 0
 	},
 	bgImage: {
 		maxWidth: '100%',
-		minHeight: 300
+		minHeight: '300px !important'
 	}
-}
+})
 
 class StartupDetailBgImage extends Component {
 	render() {

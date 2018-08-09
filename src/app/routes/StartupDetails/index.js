@@ -7,7 +7,12 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SwipeableViews from "react-swipeable-views";
 import StartupDetailWithBgImage from "components/StartupDetailBgImage";
-import DiscussionList from 'components/DiscussionList'
+import DiscussionList from 'containers/DiscussionList'
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+import classNames from 'classnames';
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
+import ThreadDialog from 'containers/ThreadDialog'
 
 function TabContainer({ children, dir }) {
   return (
@@ -17,9 +22,22 @@ function TabContainer({ children, dir }) {
   );
 }
 
-const styles = {
-	noPadding: {
-		padding: 0
+const styles = (theme) => {
+	return {
+		noPadding: {
+			padding: 0
+		},
+		root: {
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'flex-end',
+		},
+		icon: {
+			margin: theme.spacing.unit,
+		},
+		button: {
+			margin: theme.spacing.unit * 2,
+		}
 	}
 };
 
@@ -28,6 +46,13 @@ class StartupDetails extends Component {
     value: 0
   };
 
+  componentDidMount() {
+    loadCSS(
+      'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+      document.querySelector('#insertion-point-jss'),
+    );
+  }
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -35,6 +60,10 @@ class StartupDetails extends Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
+  handleAddNewThread(event) {
+
+  }
 
   render() {
     const { classes, theme } = this.props;
@@ -65,6 +94,10 @@ class StartupDetails extends Component {
         >
           	<TabContainer dir={theme.direction}>{"Item One"}</TabContainer>
         	<TabContainer dir={theme.direction}>
+				<Button variant="contained" color="default" className={classes.button} onClick={event => this.handleAddNewThread(event)} >
+					NEW THREAD
+					<Icon className={classNames(classes.icon, 'fa fa-plus-circle')} />
+				</Button>
             	<DiscussionList />
           	</TabContainer>
           	<TabContainer dir={theme.direction}>{"Item Three"}</TabContainer>
