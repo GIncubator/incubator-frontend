@@ -223,7 +223,7 @@ function* fetchStartupInfoListRequest() {
 
 const fetchSingleStartupDetails = async (id) =>
   await getStartupInfo(id)
-    .then(data => data.data.data)
+    .then(data => data)
     .catch(error => error);
 
 function* fetchSingleStartupInfoRequest({payload}) {

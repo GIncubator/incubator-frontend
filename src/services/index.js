@@ -16,8 +16,6 @@ let axiosConfig = {
 
 const registerUser = (name, email, password) => axios.post(CREATE_USER_URL, { name, email, password });
 const loginUser = (email, password) => axios.post(LOGIN_USER_URL, { email, password });
-const getStartupInfo = (id) => axios.get(`${STARTUP_INFO_URL}/${id}`, axiosConfig);
-
 
 
 const dbRefStartups = database.ref().child('startups');
@@ -36,6 +34,10 @@ const startupInfoList = async () =>
             return startups;
         })
         .catch(error => error);
+
+const getStartupInfo = async (id) => {
+  return await dbRefStartups.child(id).once('value').then(snapshot => snapshot.val()).catch(error => error);
+}
 
 
 export {
