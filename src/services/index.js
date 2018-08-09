@@ -26,13 +26,7 @@ const startupInfo = (startup) => {
 
 const startupInfoList = async () => 
   await dbRefStartups.once('value')
-        .then((snapshot) => {
-            const startups = [];
-            snapshot.forEach((rawData) => {
-              startups.push(rawData.val());
-            });
-            return startups;
-        })
+        .then((snapshot) => snapshot.val())
         .catch(error => error);
 
 const getStartupInfo = async (id) => {

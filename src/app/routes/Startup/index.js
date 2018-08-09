@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
-const Startup = ({props}) => {
+const Startup = ({props, onClick}) => {
   return (
       <div className="col-md-4">
          <div className="jr-card p-0">
@@ -49,7 +49,7 @@ const Startup = ({props}) => {
                       </span>
                   </li>
               </ul>
-              <Button size="small" color="primary">Details</Button>
+              <Button size="small" color="primary" onClick={() => {onClick(props._startupId)}}>Details</Button>
           </div>
       </div>
       </div>

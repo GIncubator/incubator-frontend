@@ -5,7 +5,26 @@ import { bindActionCreators } from "redux";
 import {connect} from 'react-redux';
 import { getStartupListDetails } from 'actions/Auth';
 
+const DetailView = ({data}) => {
+    return (<h1>Detail View {data} </h1>);
+}
 class StartupInfoList extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            showStartupDetailView: false,
+            selectedStartup: null
+        }
+        this.selectStartup = this.selectStartup.bind(this);
+    }
+
+    selectStartup(key) {
+        this.setState({
+            selectedStartup: key,
+            showStartupDetailView: true
+        })
+    }
+
     componentDidMount() {
         this.props.getStartupListDetails();
     }
@@ -13,14 +32,22 @@ class StartupInfoList extends React.Component {
     render() {
         return (
             <div className="app-wrapper">
-                <ContainerHeader match={this.props.match} title={<span>Startup Applications</span>}/>
-                <div className="row">
-                    {
-                        this.props.startupInfoList.map((d, i) => {
-                            return (<Startup key={i} props={d} />)
-                        })
-                    }
-                </div>
+                { !this.state.showStartupDetailView && <div>
+                    <ContainerHeader match={this.props.match} title={<span>Startup Applications</span>}/>
+                    <div className="row">
+                        {
+                            Object.keys(this.props.startupInfoList).map(key => {
+                                let val = this.props.startupInfoList[key]
+                                val._startupId = key;
+                                return (<Startup key={key} props={val} onClick={this.selectStartup}/>)
+                            })              
+                        }
+                    </div>
+                 </div>
+                }
+                {
+                    this.state.showStartupDetailView && <DetailView data={this.state.selectedStartup}/>
+                }
 
             </div>
         );
