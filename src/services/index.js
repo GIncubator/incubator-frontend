@@ -19,6 +19,8 @@ const loginUser = (email, password) => axios.post(LOGIN_USER_URL, { email, passw
 
 
 const dbRefStartups = database.ref().child('startups');
+const dbRefThreads = database.ref().child('threads');
+
 
 const startupInfo = (startup) => {
   return dbRefStartups.push(startup)

@@ -47,7 +47,12 @@ const styles = (theme) => {
 class StartupDetails extends Component {
   state = {
     value: 0,
-    open: false
+    open: false,
+    threadForm: {
+      name: '',
+      message: '',
+      participants: ''
+    }
   };
 
   componentDidMount() {
@@ -63,8 +68,12 @@ class StartupDetails extends Component {
       this.setState({open: true});
   };
 
-  handleRequestClose = () => {
+  handleRequestClose = (type) => {
       this.setState({open: false});
+      if(type) {
+        
+        this.setState({ threadForm: { name: '', message: '', participants: ''}})
+      }
   };
 
 
@@ -87,28 +96,62 @@ class StartupDetails extends Component {
       <div>
         <Button onClick={this.props.onBackClick} variant="raised" color="primary"> Back </Button>
         <StartupDetailWithBgImage />
-        <Dialog open={this.state.open} onClose={this.handleRequestClose}>
-            <DialogTitle>Subscribe</DialogTitle>
+        <Dialog open={this.state.open} onClose={() => this.handleRequestClose(null)} fullWidth>
+            <DialogTitle>Create new thread</DialogTitle>
             <DialogContent>
-                <DialogContentText>
-                    To subscribe to this website, please enter your email address here. We will send
-                    updates occationally.
-                </DialogContentText>
+              <div className="jr-card">
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="name"
-                    label="Email Address"
-                    type="email"
+                    label="Thread name"
+                    type="text"
+                    onChange={(evt) => this.setState({
+                      threadForm: { ...this.state.threadForm, name: evt.target.value }
+                      })
+                    }
+                    defaultValue={this.state.threadForm.name}
                     fullWidth
+                    required
                 />
+                </div>
+                <div className="jr-card">
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Post content"
+                    type="text"
+                    fullWidth
+                    multiline
+                    required
+                    onChange={(evt) => this.setState({
+                      threadForm: { ...this.state.threadForm, message: evt.target.value }
+                      })
+                    }
+                    defaultValue={this.state.threadForm.message}
+                    rows="2"
+                />
+                </div>
+                <div className="jr-card">
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Add users (emails separted by a comma)"
+                    type="text"
+                    fullWidth
+                    multiline
+                    required
+                    defaultValue={this.state.threadForm.participants}
+                    onChange={(evt) => this.setState({
+                      threadForm: { ...this.state.threadForm, participants: evt.target.value }
+                      })
+                    }
+                    rows="2"
+                />
+                </div>
             </DialogContent>
             <DialogActions>
-                <Button onClick={this.handleRequestClose} color="secondary">
-                    Cancel
-                </Button>
-                <Button onClick={this.handleRequestClose} color="primary">
-                    Subscribe
+                <Button onClick={() => this.handleRequestClose('create')} color="primary">
+                    Create
                 </Button>
             </DialogActions>
         </Dialog>

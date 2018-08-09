@@ -47,15 +47,6 @@ const signOutRequest = async () =>
   .then(authUser => authUser)
   .catch(error => error)
 
-// const signInUserWithGoogleRequest = async () => {
-//     return await Promise.resolve().then(() => {
-//         let newWin = window.open('http://localhost:4000/auth/google/start')
-//         newWin.onmessage = (msg) => {
-//             console.log(msg)
-//         }
-//     })
-// }
-
 const signInUserWithGoogleRequest = async () =>
   await auth.signInWithPopup(googleAuthProvider)
   .then(authUser => authUser)
