@@ -147,5 +147,5 @@ export const ON_STARTUP_INFO_SUBMIT_DONE = 'on_startup_info_submit_done';
 export const ON_STARTUP_INFO_FETCH = 'on_startup_info_fetch';
 export const ON_STARTUP_INFO_FETCH_DONE = 'on_startup_info_fetch_done';
 
-
-
+export const ON_SINGLE_STARTUP_INFO_FETCH = 'on_single_startup_info_fetch';
+export const ON_SINGLE_STARTUP_INFO_FETCH_DONE = 'on_single_startup_info_fetch_done';

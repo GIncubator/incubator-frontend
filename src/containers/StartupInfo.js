@@ -10,8 +10,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Card from '@material-ui/core/Card';
-
+import TopNav from "./TopNav"
 
 import {
     hideMessage,
@@ -23,6 +22,7 @@ import {
 const formStyle = {
     width: '800px'
 }
+
 class StartupInfo extends React.Component {
     constructor() {
         super();
@@ -71,6 +71,13 @@ class StartupInfo extends React.Component {
             },
             gusecPremisesAccess: ''
         }
+    }
+
+   
+
+    submitApplication() {
+        this.props.showAuthLoader();
+        this.props.submitStartupInfo(this.state);
     }
 
     handleCheckBoxChange(name) { 
@@ -141,7 +148,6 @@ class StartupInfo extends React.Component {
     }
 
     addLegalEntityMember() {
-        console.log(this)
         this.setState({
             legalEntityMembers: this.state.legalEntityMembers.concat([{ name: '', designation: '' }])
         })
@@ -169,7 +175,6 @@ class StartupInfo extends React.Component {
             name,
             founderName,
             totalMemberCount,
-            typeOfIncorporation,
             legalEntityName,
             raisedFunds,
             expectedFund,
@@ -190,6 +195,7 @@ class StartupInfo extends React.Component {
         return (
             <div className="app-container mini-drawer">
                 <div className="app-main-container">
+                    <TopNav />
                     <main className="app-main-content-wrapper">
                         <div className="app-main-content">
                         <div className="app-wrapper d-flex justify-content-center align-items-center">
@@ -621,10 +627,7 @@ GUSEC Premises Access
                                
                                 </Select>
                                   
-                                    <Button variant="raised" onClick={() => {
-                                        this.props.showAuthLoader();
-                                        this.props.submitStartupInfo(this.state);
-                                    }} color="primary">
+                                    <Button variant="raised" onClick={this.submitApplication.bind(this)} color="primary">
                                         Submit Application
                                     </Button>
                                    
