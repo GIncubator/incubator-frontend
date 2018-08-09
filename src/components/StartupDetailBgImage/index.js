@@ -17,9 +17,8 @@ class StartupDetailBgImage extends Component {
 		return (
 			<div className={`img-overlay-card shadow ripple-effect ${classes.card}`}>
 				<div className={`center-crop-img ${classes.bgImage}`}>
-					<img src="http://localhost:5050/static/media/course-bg.98599875.png"/>
+					<img src="https://user-images.githubusercontent.com/12299906/43918178-fb2ae0ac-9c2f-11e8-8d9b-b1023c3fab61.jpg"/>
 				</div>
-
 				<div className="jr-cart-ab layer">
 					<div className="row text-center w-100">
 						<div className="col-sm-6 text-truncate">

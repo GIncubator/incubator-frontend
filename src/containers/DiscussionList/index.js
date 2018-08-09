@@ -62,7 +62,6 @@ class DiscussionList extends Component {
 
 	render() {
 		const { classes, discussionThreads } = this.props;
-		console.log(this.props.discussionThreads);
 		return (
 			<Paper className={`${classes.root} ${classes.noElevation}`}>
 				<Table className={classes.table}>
@@ -93,9 +92,10 @@ class DiscussionList extends Component {
 										<TableCell numeric>
 											<div className={classes.row}>
 												{discussionThread.participants.map(
-													user => {
+													(user, i) => {
 														return (
 															<Avatar
+																key={i}
 																alt=""
 																src="https://s.gravatar.com/avatar/3300539243f6973420509d515aef07ed?s=100&r=x&d=identicon"
 															/>

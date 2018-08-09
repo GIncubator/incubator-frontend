@@ -4,10 +4,9 @@ import Startup from '../Startup';
 import { bindActionCreators } from "redux";
 import {connect} from 'react-redux';
 import { getStartupListDetails } from 'actions/Auth';
+import StartupDetails from '../StartupDetails';
 
-const DetailView = ({data}) => {
-    return (<h1>Detail View {data} </h1>);
-}
+
 class StartupInfoList extends React.Component {
     constructor() {
         super()
@@ -16,12 +15,20 @@ class StartupInfoList extends React.Component {
             selectedStartup: null
         }
         this.selectStartup = this.selectStartup.bind(this);
+        this.onBackClick = this.onBackClick.bind(this);
     }
 
     selectStartup(key) {
         this.setState({
             selectedStartup: key,
             showStartupDetailView: true
+        })
+    }
+
+    onBackClick() {
+        this.setState({
+            selectedStartup: null,
+            showStartupDetailView: false
         })
     }
 
@@ -32,7 +39,8 @@ class StartupInfoList extends React.Component {
     render() {
         return (
             <div className="app-wrapper">
-                { !this.state.showStartupDetailView && <div>
+                { !this.state.showStartupDetailView && 
+                <div>
                     <ContainerHeader match={this.props.match} title={<span>Startup Applications</span>}/>
                     <div className="row">
                         {
@@ -46,7 +54,7 @@ class StartupInfoList extends React.Component {
                  </div>
                 }
                 {
-                    this.state.showStartupDetailView && <DetailView data={this.state.selectedStartup}/>
+                    this.state.showStartupDetailView && <StartupDetails onBackClick={this.onBackClick}/>
                 }
 
             </div>
