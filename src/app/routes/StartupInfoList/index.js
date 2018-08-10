@@ -54,7 +54,7 @@ class StartupInfoList extends React.Component {
                  </div>
                 }
                 {
-                    this.state.showStartupDetailView && <StartupDetails onBackClick={this.onBackClick}/>
+                    this.state.showStartupDetailView && <StartupDetails onBackClick={this.onBackClick} selectedStartupDetails={this.props.startupInfoList[this.state.selectedStartup]}/>
                 }
 
             </div>

@@ -5,6 +5,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 
 export default class StartupDisabledFormView extends Component {
+    componentDidMount() {
+        console.log(this);
+    }
   render() {
     const {
             name,
@@ -31,7 +34,7 @@ export default class StartupDisabledFormView extends Component {
             bankIFSC,
             facilitiesNeededFromGUSEC,
             gusecPremisesAccess
-    } = this.props;
+    } = this.props.selectedStartupDetails;
     return (
       <form method="post" action="/">
       <div className="jr-card">

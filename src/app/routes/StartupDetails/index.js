@@ -13,9 +13,10 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
+
+import StartupDisabledFormView from '../StartupDisabledFormView';
 
 function TabContainer({ children, dir }) {
   return (
@@ -166,7 +167,9 @@ class StartupDetails extends Component {
         </AppBar>
 
         <SwipeableViews axis={theme.direction === "rtl" ? "x-reverse" : "x"} index={this.state.value} onChangeIndex={this.handleChangeIndex}>
-          <TabContainer dir={theme.direction}>{"Item One"}</TabContainer>
+          <TabContainer dir={theme.direction}>
+            <StartupDisabledFormView selectedStartupDetails={this.props.selectedStartupDetails}/>
+          </TabContainer>
         	<TabContainer dir={theme.direction}>
               <Button variant="contained" color="default" className={classes.button} onClick={event => this.handleAddNewThread(event)} >
                 NEW THREAD
