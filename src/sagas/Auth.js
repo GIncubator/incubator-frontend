@@ -31,15 +31,43 @@ import {
 import {fireBasePasswordToDBUserModel, fireBaseGoogleToDBUserModel} from './../transform'
 import * as Api from './../api'
 import gravatar from 'gravatar'
+import { database } from '../firebase/firebase';
 
-const createUserWithEmailPasswordRequest = async (email, password) =>
-  await auth.createUserWithEmailAndPassword(email, password)
-  .then(authUser => authUser)
+function fbToUserModel(fbAuthUser) {
+  let {
+    displayName,
+    email,
+    photoURL,
+    emailVerified,
+    uid
+  } = fbAuthUser;
+  console.log('-------------------------', fbAuthUser);
+  return {
+    displayName,
+    email,
+    photoURL,
+    emailVerified,
+    uid
+  }
+}
+
+
+const createUserWithEmailPasswordRequest = async (name, email, password) => {
+  return await auth.createUserWithEmailAndPassword(email, password)
+  .then(() => { 
+    let authUser = auth.currentUser;
+    let photoURL =  gravatar.url(email, {s: '100', r: 'x', d: 'identicon'}, true)
+    return authUser.updateProfile({displayName: name, photoURL});
+  })
+  .then(() => {
+    return auth.currentUser;
+  })
   .catch(error => error)
+}
 
 const signInUserWithEmailPasswordRequest = async (email, password) =>
   await auth.signInWithEmailAndPassword(email, password)
-  .then(authUser => authUser)
+  .then(() => auth.currentUser)
   .catch(error => error)
 
 const signOutRequest = async () =>
@@ -67,24 +95,38 @@ const signInUserWithTwitterRequest = async () =>
   .then(authUser => authUser)
   .catch(error => error)
 
+
+// function* createUserWithEmailPassword({payload}) {
+//   const {name, email, password} = payload
+//   try {
+//       const signUpUser = yield call(createUserWithEmailPasswordRequest, email, password)
+//       if (signUpUser.message) {
+//         yield put(showAuthMessage(signUpUser.message))
+//       } else {
+//         const response = yield call(Api.getUser, {filter: `?passwordUid=${signUpUser.user.uid}`})
+
+//         const userModel = fireBasePasswordToDBUserModel(name, signUpUser)
+//         if (response.data.length === 0) {
+//           const secureUrl = gravatar.url(userModel.email, {s: '100', r: 'x', d: 'identicon'}, true)
+//           userModel.picture = secureUrl
+//           yield call(Api.createUser, userModel)
+//           localStorage.setItem('user', JSON.stringify(userModel))
+//         }
+//         yield put(userSignUpSuccess(userModel))
+//       }
+//   } catch (error) {
+//       yield put(showAuthMessage(error))
+//   }
+// }
+
+
 function* createUserWithEmailPassword({payload}) {
   const {name, email, password} = payload
   try {
-      const signUpUser = yield call(createUserWithEmailPasswordRequest, email, password)
-      if (signUpUser.message) {
-        yield put(showAuthMessage(signUpUser.message))
-      } else {
-        const response = yield call(Api.getUser, {filter: `?passwordUid=${signUpUser.user.uid}`})
-
-        const userModel = fireBasePasswordToDBUserModel(name, signUpUser)
-        if (response.data.length === 0) {
-          const secureUrl = gravatar.url(userModel.email, {s: '100', r: 'x', d: 'identicon'}, true)
-          userModel.picture = secureUrl
-          yield call(Api.createUser, userModel)
-          localStorage.setItem('user', JSON.stringify(userModel))
-        }
-        yield put(userSignUpSuccess(userModel))
-      }
+      const signUpUser = yield call(createUserWithEmailPasswordRequest, name, email, password);
+        let userModel = fbToUserModel(signUpUser);
+        localStorage.setItem('user', JSON.stringify(userModel));
+        yield put(userSignUpSuccess(userModel));
   } catch (error) {
       yield put(showAuthMessage(error))
   }
@@ -160,14 +202,9 @@ function* signInUserWithEmailPassword({payload}) {
   const {email, password} = payload
   try {
     const signInUser = yield call(signInUserWithEmailPasswordRequest, email, password)
-    if (signInUser.message) {
-      yield put(showAuthMessage(signInUser.message))
-    } else {
-      const response = yield call(Api.getUser, {filter: `?passwordUid=${signInUser.user.uid}`})
-      const userModel = fireBasePasswordToDBUserModel(response, signInUser)
-      localStorage.setItem('user', JSON.stringify(userModel))
-      yield put(userSignInSuccess(userModel))
-    }
+    let userModel = fbToUserModel(signInUser);
+    localStorage.setItem('user', JSON.stringify(userModel));
+    yield put(userSignUpSuccess(userModel));
   } catch (error) {
       yield put(showAuthMessage(error))
   }
@@ -178,7 +215,6 @@ function* signOut() {
     const signOutUser = yield call(signOutRequest)
     if (signOutUser === undefined) {
       localStorage.removeItem('user')
-      localStorage.removeItem('token')
       yield put(userSignOutSuccess(signOutUser))
     } else {
       yield put(showAuthMessage(signOutUser.message))
