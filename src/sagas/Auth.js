@@ -1,6 +1,6 @@
 import {all, call, fork, put, takeEvery} from "redux-saga/effects"
 import {auth, facebookAuthProvider, githubAuthProvider, googleAuthProvider, twitterAuthProvider} from "firebase/firebase"
-import { startupInfo, startupInfoList, getStartupInfo } from '../services'
+import { startupInfo, startupInfoList, getStartupInfo, writeUserData } from '../services'
 import {
   SIGNIN_FACEBOOK_USER,
   SIGNIN_GITHUB_USER,
@@ -41,7 +41,6 @@ function fbToUserModel(fbAuthUser) {
     emailVerified,
     uid
   } = fbAuthUser;
-  console.log('-------------------------', fbAuthUser);
   return {
     displayName,
     email,
@@ -63,6 +62,11 @@ const createUserWithEmailPasswordRequest = async (name, email, password) => {
     return auth.currentUser;
   })
   .catch(error => error)
+}
+
+const saveUserModelDataToFb = async (userModel) => {
+  let {email, displayName, uid , photoURL} = userModel;
+  return await writeUserData(email, displayName, uid , photoURL).then(d => d).catch(e => e);
 }
 
 const signInUserWithEmailPasswordRequest = async (email, password) =>
@@ -126,6 +130,7 @@ function* createUserWithEmailPassword({payload}) {
       const signUpUser = yield call(createUserWithEmailPasswordRequest, name, email, password);
         let userModel = fbToUserModel(signUpUser);
         localStorage.setItem('user', JSON.stringify(userModel));
+        const savedUserModelFb = yield call(saveUserModelDataToFb, userModel);
         yield put(userSignUpSuccess(userModel));
   } catch (error) {
       yield put(showAuthMessage(error))
@@ -204,7 +209,7 @@ function* signInUserWithEmailPassword({payload}) {
     const signInUser = yield call(signInUserWithEmailPasswordRequest, email, password)
     let userModel = fbToUserModel(signInUser);
     localStorage.setItem('user', JSON.stringify(userModel));
-    yield put(userSignUpSuccess(userModel));
+    yield put(userSignInSuccess(userModel));
   } catch (error) {
       yield put(showAuthMessage(error))
   }
