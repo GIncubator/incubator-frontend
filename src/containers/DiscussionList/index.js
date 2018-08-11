@@ -98,8 +98,8 @@ class DiscussionList extends Component {
 														return (
 															<Avatar
 																key={i}
-																alt=""
-																src="https://s.gravatar.com/avatar/3300539243f6973420509d515aef07ed?s=100&r=x&d=identicon"
+																alt={user.displayName}
+																src={user.photoURL}
 															/>
 														);
 													}
@@ -114,11 +114,11 @@ class DiscussionList extends Component {
 													avatar={
 														<Avatar
 														alt=""
-														src="https://s.gravatar.com/avatar/3300539243f6973420509d515aef07ed?s=100&r=x&d=identicon"
+														src={discussionThread.comments[discussionThread.comments.length - 1].photoURL}
 														/>
 													}
-													// title={discussionThread.lastActivity.user || 'Dummy Name'}
-													// subheader={discussionThread.lastActivity.sentAt || 'now'}
+													title={discussionThread.comments[discussionThread.comments.length - 1].sentBy.displayName}
+													subheader={discussionThread.comments[discussionThread.comments.length - 1].sentBy.sentAt}
 												/>
 										</TableCell>
 									</TableRow>

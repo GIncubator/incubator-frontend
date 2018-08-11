@@ -73,7 +73,8 @@ function* createChattingThread({payload}) {
     sentBy: {
       email: auth.currentUser.email,
       displayName: auth.currentUser.displayName,
-      photoURL: auth.currentUser.photoURL
+      photoURL: auth.currentUser.photoURL,
+      sentAt: new Date().toISOString()
     }
   }];
 
