@@ -98,7 +98,7 @@ class DiscussionList extends Component {
 										</TableCell>
 										<TableCell numeric>
 											{
-												moment(discussionThread.comments[0].createdAt).format('lll')
+												moment(discussionThread.createdAt).format('lll')
 											}
 										</TableCell>
 										<TableCell numeric>
@@ -117,18 +117,18 @@ class DiscussionList extends Component {
 											</div>
 										</TableCell>
 										<TableCell numeric>
-											{discussionThread.comments.length}
+											{(discussionThread.comments && Object.keys(discussionThread.comments).length) || 0}
 										</TableCell>
 										<TableCell numeric>
 												<CardHeader className={`${classes.noLRPadding} ${classes.xsText}`}
 													avatar={
 														<Avatar
 														alt=""
-														src={discussionThread.comments[discussionThread.comments.length - 1].photoURL}
+														src={discussionThread.lastActivityBy.photoURL}
 														/>
 													}
-													title={discussionThread.comments[discussionThread.comments.length - 1].sentBy.displayName}
-													subheader={moment(discussionThread.comments[discussionThread.comments.length - 1].createdAt).fromNow()}
+													title={discussionThread.lastActivityBy.displayName}
+													subheader={moment(discussionThread.lastActivityBy.createdAt).fromNow()}
 												/>
 										</TableCell>
 									</TableRow>

@@ -6,7 +6,9 @@ import {
 	ON_BACK_CLICK,
 	ON_SELECT_STARTUP,
 	WATCH_ON_COMMENTS,
-	WATCH_ON_COMMENTS_DONE
+	WATCH_ON_COMMENTS_DONE,
+	ON_BACK_CLICK_FROM_CHAT_PANEL,
+	PUSH_COMMENT
 } from 'constants/ActionTypes';
 
 
@@ -61,5 +63,17 @@ export const onSelectStartup = (selectedStartupKey) => {
 	return {
 		type: ON_SELECT_STARTUP,
 		payload: selectedStartupKey
+	}
+}
+
+export const onBackClickFromChatPanel = () => {
+	return {
+		type: ON_BACK_CLICK_FROM_CHAT_PANEL
+	}
+}
+export const pushComment = (payload) => {
+	return {
+		type: PUSH_COMMENT,
+		payload
 	}
 }

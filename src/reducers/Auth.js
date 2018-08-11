@@ -39,7 +39,7 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 loader: false,
-                authUser: action.payload
+                authUser: action.payload.uid ? action.payload : null
             }
         }
         case INIT_URL: {

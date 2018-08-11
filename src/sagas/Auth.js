@@ -53,13 +53,12 @@ export function fbToUserModel(fbAuthUser) {
 
 const createUserWithEmailPasswordRequest = async (name, email, password) => {
   return await auth.createUserWithEmailAndPassword(email, password)
-  .then(() => { 
+  .then((user) => { 
     let authUser = auth.currentUser;
     let photoURL =  gravatar.url(email, {s: '100', r: 'x', d: 'identicon'}, true)
-    return authUser.updateProfile({displayName: name, photoURL});
-  })
-  .then(() => {
-    return auth.currentUser;
+    authUser.updateProfile({displayName: name, photoURL}).then(()=> {
+      return user;
+    })
   })
   .catch(error => error)
 }
@@ -71,7 +70,7 @@ const saveUserModelDataToFb = async (userModel) => {
 
 const signInUserWithEmailPasswordRequest = async (email, password) =>
   await auth.signInWithEmailAndPassword(email, password)
-  .then(() => auth.currentUser)
+  .then(() => { return auth.currentUser} )
   .catch(error => error)
 
 const signOutRequest = async () =>
@@ -128,10 +127,15 @@ function* createUserWithEmailPassword({payload}) {
   const {name, email, password} = payload
   try {
       const signUpUser = yield call(createUserWithEmailPasswordRequest, name, email, password);
-        let userModel = fbToUserModel(signUpUser);
+      console.log(signUpUser);
+      if(!(signUpUser instanceof Error)) {
+        let userModel = fbToUserModel(auth.currentUser);
         localStorage.setItem('user', JSON.stringify(userModel));
         const savedUserModelFb = yield call(saveUserModelDataToFb, userModel);
         yield put(userSignUpSuccess(userModel));
+      } else {
+        yield put(showAuthMessage(signUpUser.message));
+      }
   } catch (error) {
       yield put(showAuthMessage(error))
   }
@@ -206,10 +210,15 @@ function* signInUserWithTwitter() {
 function* signInUserWithEmailPassword({payload}) {
   const {email, password} = payload
   try {
-    const signInUser = yield call(signInUserWithEmailPasswordRequest, email, password)
-    let userModel = fbToUserModel(signInUser);
-    localStorage.setItem('user', JSON.stringify(userModel));
-    yield put(userSignInSuccess(userModel));
+    const signInUser = yield call(signInUserWithEmailPasswordRequest, email, password);
+    if(!(signInUser instanceof Error)) {
+      let userModel = fbToUserModel(signInUser);
+      localStorage.setItem('user', JSON.stringify(userModel));
+      yield put(userSignInSuccess(userModel));
+    } else {
+      yield put(showAuthMessage(signInUser.message));
+    }
+    
   } catch (error) {
       yield put(showAuthMessage(error))
   }

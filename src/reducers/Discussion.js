@@ -8,7 +8,8 @@ import {
     ON_STARTUP_INFO_FETCH,
     ON_STARTUP_INFO_FETCH_DONE,
     WATCH_ON_COMMENTS_DONE,
-    WATCH_ON_COMMENTS
+    WATCH_ON_COMMENTS,
+    ON_BACK_CLICK_FROM_CHAT_PANEL
 } from 'constants/ActionTypes';
 
 const INIT_STATE = {
@@ -77,6 +78,12 @@ export default (state = INIT_STATE, action) => {
                 ...state,
                 chatPanel: true,
                 conversationData: action.payload
+            }
+        }
+        case ON_BACK_CLICK_FROM_CHAT_PANEL: {
+            return {
+                ...state,
+                chatPanel: false
             }
         }
         default:

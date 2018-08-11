@@ -132,3 +132,6 @@ export const ON_BACK_CLICK = 'on_back_click';
 export const ON_SELECT_STARTUP = 'on_select_startup';
 export const WATCH_ON_COMMENTS = 'watch_on_comments';
 export const WATCH_ON_COMMENTS_DONE = 'watch_on_comments_done';
+
+export const ON_BACK_CLICK_FROM_CHAT_PANEL = 'on_back_click_from_chat_panel';
+export const PUSH_COMMENT = 'push_comment';
