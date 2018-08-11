@@ -62,6 +62,8 @@ class DiscussionList extends Component {
 
 	render() {
 		const { classes, threads } = this.props;
+		let startUpThreads = threads[this.props.selectedStartupDetails._startupId];
+		console.log(startUpThreads)
 		return (
 			<Paper className={`${classes.root} ${classes.noElevation}`}>
 				<Table className={classes.table}>
@@ -75,8 +77,8 @@ class DiscussionList extends Component {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{threads && Object.keys(threads).map((key, val) => {
-								let discussionThread = threads[key];
+						{startUpThreads && Object.keys(startUpThreads).map((key, val) => {
+								let discussionThread = startUpThreads[key];
 								return (
 									<TableRow key={key} onClick={event => this.handleClick(event, discussionThread)} className={classes.rowHover}>
 										<TableCell

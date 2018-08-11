@@ -52,7 +52,7 @@ function* watchOnStartupThread({payload}) {
 
   while (true) {
     let outPayload = yield take(threadChannel)
-    yield put(watchOnThreadDone(outPayload))
+    yield put(watchOnThreadDone({[payload]: outPayload}))
   }
 }
 

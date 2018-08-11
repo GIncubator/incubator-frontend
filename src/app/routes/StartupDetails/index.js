@@ -181,7 +181,7 @@ class StartupDetails extends Component {
                 NEW THREAD
                 <Icon className={classNames(classes.icon, 'fa fa-plus-circle')} />
               </Button>
-            	<DiscussionList />
+            	<DiscussionList selectedStartupDetails={this.props.selectedStartupDetails}/>
           	</TabContainer>
           	<TabContainer dir={theme.direction}>
                     <h2>Resources</h2>
