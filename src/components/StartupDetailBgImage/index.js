@@ -7,27 +7,28 @@ const styles = (theme) => ({
 	},
 	bgImage: {
 		maxWidth: '100%',
-		minHeight: '300px !important'
+		minHeight: '300px !important',
+		maxHeight: '300px !important'
 	}
 })
 
 class StartupDetailBgImage extends Component {
 	render() {
-		const {classes} = this.props
+		const {classes, name, founderName } = this.props
 		return (
 			<div className={`img-overlay-card shadow ripple-effect ${classes.card}`}>
-				<div className={`center-crop-img ${classes.bgImage}`}>
-					<img src="https://user-images.githubusercontent.com/12299906/43918178-fb2ae0ac-9c2f-11e8-8d9b-b1023c3fab61.jpg"/>
+				<div className={`${classes.bgImage}`}>
+					<img src="https://user-images.githubusercontent.com/12299906/43993307-d223546c-9da8-11e8-96e9-2293fea30d07.jpg"/>
 				</div>
 				<div className="jr-cart-ab layer">
 					<div className="row text-center w-100">
 						<div className="col-sm-6 text-truncate">
 							<i className="zmdi zmdi-pin text-white mr-2" />
-							<span>Amazon </span>
+							<span>{name}</span>
 						</div>
 						<div className="col-sm-6 text-truncate">
 							<i className="zmdi zmdi-coffee text-white mr-2" />
-							<span>Jeff Bezos </span>
+							<span>{founderName}</span>
 						</div>
 					</div>
 				</div>

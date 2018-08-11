@@ -102,7 +102,7 @@ class StartupDetails extends Component {
     return (
       <div>
         <Button onClick={this.props.onBackClick} variant="raised" color="primary"> Back </Button>
-        <StartupDetailWithBgImage />
+        <StartupDetailWithBgImage name={this.props.selectedStartupDetails.name} founderName={this.props.selectedStartupDetails.founderName} />
         <Dialog open={this.state.open} onClose={() => this.handleRequestClose(null)} fullWidth>
             <DialogTitle>Create new thread</DialogTitle>
             <DialogContent>
