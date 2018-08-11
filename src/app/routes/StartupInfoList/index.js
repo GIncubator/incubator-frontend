@@ -7,7 +7,7 @@ import { getStartupListDetails } from 'actions/Auth';
 import { onBackClick, onSelectStartup } from 'actions/Discussion';
 
 import StartupDetails from '../StartupDetails';
-
+import Conversation from '../Conversation';
 
 class StartupInfoList extends React.Component {
     constructor() {
@@ -36,7 +36,7 @@ class StartupInfoList extends React.Component {
         let { chatPanel, showStartupDetailView, selectedStartup } = this.props;
         return (
             <div className="app-wrapper">
-                { !showStartupDetailView && 
+                { !showStartupDetailView && !chatPanel &&
                 <div>
                     <ContainerHeader match={this.props.match} title={<span>Startup Applications</span>}/>
                     <div className="row">
@@ -51,10 +51,10 @@ class StartupInfoList extends React.Component {
                  </div>
                 }
                 {
-                    showStartupDetailView && <StartupDetails onBackClick={this.onBackClick} selectedStartupDetails={this.props.startupInfoList[selectedStartup]}/>
+                    showStartupDetailView && !chatPanel && <StartupDetails onBackClick={this.onBackClick} selectedStartupDetails={this.props.startupInfoList[selectedStartup]}/>
                 }
                 {
-                    showStartupDetailView && chatPanel && <h2>Chat Screen</h2>
+                    showStartupDetailView && chatPanel && <Conversation />
                 }
 
             </div>

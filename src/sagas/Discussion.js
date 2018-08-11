@@ -50,7 +50,7 @@ const createFirebaseRefChannel = (firebaseRef) => {
 
 function* watchOnStartupThreadComments({payload}) {
   let { startupKey, threadId } = payload;
-  let startupCommentsRef = database.ref(`/startups/${startupKey}/threads/${threadId}`);
+  let startupCommentsRef = database.ref(`/startups/${startupKey}/threads/${threadId}/comments`);
   const commentsChannel = yield call(createFirebaseRefChannel, startupCommentsRef);
   while (true) {
     let outPayload = yield take(commentsChannel)
