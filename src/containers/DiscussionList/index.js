@@ -90,7 +90,7 @@ class DiscussionList extends Component {
 										</TableCell>
 										<TableCell numeric>
 											{
-												discussionThread.comments[0].createdAt
+												moment(discussionThread.comments[0].createdAt).format('lll')
 											}
 										</TableCell>
 										<TableCell numeric>
@@ -120,7 +120,7 @@ class DiscussionList extends Component {
 														/>
 													}
 													title={discussionThread.comments[discussionThread.comments.length - 1].sentBy.displayName}
-													subheader={discussionThread.comments[discussionThread.comments.length - 1].sentBy.sentAt}
+													subheader={moment(discussionThread.comments[discussionThread.comments.length - 1].createdAt).fromNow()}
 												/>
 										</TableCell>
 									</TableRow>

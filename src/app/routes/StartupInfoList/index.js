@@ -37,6 +37,7 @@ class StartupInfoList extends React.Component {
     }
     
     render() {
+        let { chatPanel, conversationData } = this.props;
         return (
             <div className="app-wrapper">
                 { !this.state.showStartupDetailView && 
@@ -56,6 +57,9 @@ class StartupInfoList extends React.Component {
                 {
                     this.state.showStartupDetailView && <StartupDetails onBackClick={this.onBackClick} selectedStartupDetails={this.props.startupInfoList[this.state.selectedStartup]}/>
                 }
+                {
+                    this.state.showStartupDetailView && chatPanel && <h2>Chat Screen</h2>
+                }
 
             </div>
         );
@@ -63,9 +67,10 @@ class StartupInfoList extends React.Component {
 }
 
 
-const mapStateToProps = ({auth}) => {
-    const { startupInfoList } = auth
-    return { startupInfoList }
+const mapStateToProps = (state) => {
+    const { startupInfoList } = state.auth;
+    const {conversationData, chatPanel} = state.discussion;
+    return { startupInfoList, conversationData, chatPanel };
 }
 
 const mapDispatchToProps = dispatch =>

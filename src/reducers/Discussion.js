@@ -6,7 +6,9 @@ import {
 } from 'constants/ActionTypes';
 
 const INIT_STATE = {
-   threads: {}
+   threads: {},
+   chatPanel: false,
+   conversationData: []
 };
 
 export default (state = INIT_STATE, action) => {
@@ -17,7 +19,6 @@ export default (state = INIT_STATE, action) => {
             }
         }
         case CREATE_THREAD_SUCCESS: {
-            console.log(action.payload);
             return {
                 ...state
             }
