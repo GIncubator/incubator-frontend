@@ -4,12 +4,14 @@ import { database, auth } from '../firebase/firebase';
 import { cleanEmail } from '../services/';
 import {
   CREATE_THREAD,
-  WATCH_STARTUP_THREADS
+  WATCH_STARTUP_THREADS,
+  WATCH_ON_COMMENTS
 } from 'constants/ActionTypes';
 
 import {
   createThreadDone,
-  watchOnThreadDone
+  watchOnThreadDone,
+  watchOnThreadCommentDone
 } from '../actions/Discussion';
 
 
@@ -44,6 +46,20 @@ const createFirebaseRefChannel = (firebaseRef) => {
       firebaseRef.off();
     }
   }, buffers.expanding())
+}
+
+function* watchOnStartupThreadComments({payload}) {
+  let { startupKey, threadId } = payload;
+  let startupCommentsRef = database.ref(`/startups/${startupKey}/threads/${threadId}`);
+  const commentsChannel = yield call(createFirebaseRefChannel, startupCommentsRef);
+  while (true) {
+    let outPayload = yield take(commentsChannel)
+    yield put(watchOnThreadCommentDone({ 
+      [startupKey]: {
+        [threadId]: outPayload
+      }
+    }));
+  }
 }
 
 function* watchOnStartupThread({payload}) {
@@ -92,9 +108,14 @@ export function* watchThread() {
   yield takeEvery(WATCH_STARTUP_THREADS, watchOnStartupThread);
 }
 
+export function* watchThreadComments() {
+  yield takeEvery(WATCH_ON_COMMENTS, watchOnStartupThreadComments);
+}
+
 export default function* rootSaga() {
   yield all([
       fork(createThreadSaga),
-      fork(watchThread)
+      fork(watchThread),
+      fork(watchThreadComments)
   ])
 }

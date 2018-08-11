@@ -130,3 +130,5 @@ export const WATCH_STARTUP_THREADS_SUCCESS = 'watch_startup_threads_success';
 
 export const ON_BACK_CLICK = 'on_back_click';
 export const ON_SELECT_STARTUP = 'on_select_startup';
+export const WATCH_ON_COMMENTS = 'watch_on_comments';
+export const WATCH_ON_COMMENTS_DONE = 'watch_on_comments_done';

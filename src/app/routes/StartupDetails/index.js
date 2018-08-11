@@ -19,7 +19,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 
 import StartupDisabledFormView from '../StartupDisabledFormView';
-import { createThread, watchOnThread, watchOnThreadDone } from 'Actions/Discussion';
+import { createThread, watchOnThread } from 'Actions/Discussion';
 
 function TabContainer({ children, dir }) {
   return (

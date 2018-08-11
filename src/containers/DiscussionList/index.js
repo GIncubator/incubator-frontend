@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -12,7 +13,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import moment from 'moment';
-
+import {
+	watchOnComments
+} from 'Actions/Discussion';
 const styles = theme => ({
 	root: {
 		width: "100%",
@@ -56,14 +59,13 @@ class DiscussionList extends Component {
 
 	}
 
-	handleClick(event, discussionThread) {
+	handleClick(event, discussionThread, threadId) {
 		let isAuthUserInList = discussionThread.participants.some(d => d.uid === this.props.authUser.uid);
 		if (!isAuthUserInList) {
-			console.log('Not permitted');
 			return;
 		}
-		console.log(this.props);
-		console.log(discussionThread);
+		let startupKey = this.props.discussion.selectedStartup;
+		this.props.watchOnComments({threadId, startupKey});
 	}
 
 	render() {
@@ -83,10 +85,10 @@ class DiscussionList extends Component {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{startUpThreads && Object.keys(startUpThreads).map((key, val) => {
+						{startUpThreads && Object.keys(startUpThreads).map((key) => {
 								let discussionThread = startUpThreads[key];
 								return (
-									<TableRow key={key} onClick={event => this.handleClick(event, discussionThread)} className={classes.rowHover}>
+									<TableRow key={key} onClick={event => this.handleClick(event, discussionThread, key)} className={classes.rowHover}>
 										<TableCell
 											component="th"
 											scope="row"
@@ -149,12 +151,13 @@ const mapStateToProps = (state) => {
 	return { discussion, authUser };
 };
 
-// const mapDispatchToProps = dispatch => {
-// 	return {
-// 		fetchDiscussionThreads: params => dispatch(fetchDiscussionThreads())
-// 	};
-// };
+const mapDispatchToProps = dispatch => {
+  return {
+    watchOnComments: bindActionCreators(watchOnComments, dispatch)
+  }
+}
 
 export default connect(
-	mapStateToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(withStyles(styles)(DiscussionList));

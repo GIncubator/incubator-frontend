@@ -6,13 +6,14 @@ import {
     ON_BACK_CLICK,
     ON_SELECT_STARTUP,
     ON_STARTUP_INFO_FETCH,
-    ON_STARTUP_INFO_FETCH_DONE
+    ON_STARTUP_INFO_FETCH_DONE,
+    WATCH_ON_COMMENTS_DONE
 } from 'constants/ActionTypes';
 
 const INIT_STATE = {
    threads: {},
    chatPanel: false,
-   conversationData: [],
+   conversationData: {},
    showStartupDetailView: false,
    selectedStartup: null,
    startupInfoList: [],
@@ -61,6 +62,13 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 startupInfoList: action.payload
+            }
+        }
+        case WATCH_ON_COMMENTS_DONE: {
+            return {
+                ...state,
+                chatPanel: true,
+                conversationData: action.payload
             }
         }
         default:
