@@ -16,8 +16,14 @@ export const VERTICAL_NAVIGATION = 'vertical_navigation';
 
 export const HORIZONTAL_MENU_POSITION = 'horizontal_menu_position';
 export const ABOVE_THE_HEADER = 'above_the_header';
+
+
 export const INSIDE_THE_HEADER = 'inside_the_header';
 export const BELOW_THE_HEADER = 'below_the_header';
+
+export const ON_SHOW_LOADER = 'on_show_loader';
+export const SHOW_MESSAGE = 'show_message';
+export const HIDE_MESSAGE = 'hide_message';
 
 //Auth const
 export const SIGNUP_USER = 'signup_user';
