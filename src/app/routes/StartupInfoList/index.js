@@ -5,9 +5,13 @@ import { bindActionCreators } from "redux";
 import {connect} from 'react-redux';
 import { getStartupListDetails } from 'actions/Auth';
 import { onBackClick, onSelectStartup } from 'actions/Discussion';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 import StartupDetails from '../StartupDetails';
 import Conversation from '../Conversation';
+import {
+	hideMessage
+} from 'actions/Auth';
 
 class StartupInfoList extends React.Component {
     constructor() {
@@ -28,12 +32,21 @@ class StartupInfoList extends React.Component {
         this.props.onBackClick();
     }
 
+
+	componentDidUpdate() {
+		if (this.props.showMessage) {
+			setTimeout(() => {
+					this.props.hideMessage();
+			}, 1500);
+		}
+	}
+
     componentDidMount() {
         this.props.getStartupListDetails();
     }
     
     render() {
-        let { chatPanel, showStartupDetailView, selectedStartup } = this.props;
+        let { chatPanel, showStartupDetailView, selectedStartup, alertMessage, showMessage } = this.props;
         return (
             <div className="app-wrapper">
                 { !showStartupDetailView && !chatPanel &&
@@ -50,6 +63,8 @@ class StartupInfoList extends React.Component {
                     </div>
                  </div>
                 }
+                {showMessage && NotificationManager.error(alertMessage)}
+                    <NotificationContainer/>
                 {
                     showStartupDetailView && !chatPanel && <StartupDetails onBackClick={this.onBackClick} selectedStartupDetails={this.props.startupInfoList[selectedStartup]}/>
                 }
@@ -65,14 +80,16 @@ class StartupInfoList extends React.Component {
 
 const mapStateToProps = (state) => {
     const { chatPanel, showStartupDetailView, selectedStartup, startupInfoList } = state.discussion;
-    return { startupInfoList, chatPanel, showStartupDetailView, selectedStartup};
+	const {  alertMessage, showMessage } = state.auth;
+    return { startupInfoList, chatPanel, showStartupDetailView, selectedStartup, alertMessage, showMessage};
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         getStartupListDetails: bindActionCreators(getStartupListDetails, dispatch),
         onBackClick: bindActionCreators(onBackClick, dispatch),
-        onSelectStartup: bindActionCreators(onSelectStartup, dispatch)
+        onSelectStartup: bindActionCreators(onSelectStartup, dispatch),
+        hideMessage: bindActionCreators(hideMessage, dispatch)
     }
 }
  

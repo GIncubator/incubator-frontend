@@ -10,12 +10,16 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
-import Card from '@material-ui/core/Card';
+import {
+	showAuthMessage
+} from 'actions/Auth';
+
 import CardHeader from '@material-ui/core/CardHeader';
 import moment from 'moment';
 import {
 	watchOnComments
-} from 'Actions/Discussion';
+} from 'actions/Discussion';
+
 const styles = theme => ({
 	root: {
 		width: "100%",
@@ -55,13 +59,11 @@ class DiscussionList extends Component {
 		this.state = {};
 	}
 
-	componentDidMount() {
-
-	}
 
 	handleClick(event, discussionThread, threadId) {
 		let isAuthUserInList = discussionThread.participants.some(d => d.uid === this.props.authUser.uid);
 		if (!isAuthUserInList) {
+			this.props.showAuthMessage('You are not added in this thread.');
 			return;
 		}
 		let startupKey = this.props.discussion.selectedStartup;
@@ -69,15 +71,16 @@ class DiscussionList extends Component {
 	}
 
 	render() {
-		const { classes } = this.props;
+		const { classes, showMessage, alertMessage } = this.props;
 		const {threads} = this.props.discussion;
 		let startUpThreads = threads[this.props.selectedStartupDetails._startupId];
 		return (
+			<div>
 			<Paper className={`${classes.root} ${classes.noElevation}`}>
 				<Table className={classes.table}>
 					<TableHead>
 						<TableRow>
-							<TableCell />
+							<TableCell/>
 							<TableCell numeric>DATE STARTED</TableCell>
 							<TableCell numeric>PARTICIPANTS</TableCell>
 							<TableCell numeric>COMMENTS</TableCell>
@@ -137,6 +140,7 @@ class DiscussionList extends Component {
 					</TableBody>
 				</Table>
 			</Paper>
+			</div>
 		);
 	}
 }
@@ -153,7 +157,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    watchOnComments: bindActionCreators(watchOnComments, dispatch)
+		watchOnComments: bindActionCreators(watchOnComments, dispatch),
+		showAuthMessage: bindActionCreators(showAuthMessage, dispatch)
   }
 }
 

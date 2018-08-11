@@ -8,7 +8,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-
 import {
     onBackClickFromChatPanel,
     pushComment
@@ -53,7 +52,6 @@ class Conversation extends React.Component {
      }
 
     render() {
-        console.log(this.props);
         let { conversationData, selectedStartup, selectedStartupThread, threads } = this.props.discussion;
         let authUser = this.props.authUser;
         let conversation = conversationData[selectedStartup][selectedStartupThread];
