@@ -2,13 +2,20 @@ import Moment from 'moment';
 import {
     CREATE_THREAD,
     CREATE_THREAD_SUCCESS,
-    WATCH_STARTUP_THREADS_SUCCESS
+    WATCH_STARTUP_THREADS_SUCCESS,
+    ON_BACK_CLICK,
+    ON_SELECT_STARTUP,
+    ON_STARTUP_INFO_FETCH,
+    ON_STARTUP_INFO_FETCH_DONE
 } from 'constants/ActionTypes';
 
 const INIT_STATE = {
    threads: {},
    chatPanel: false,
-   conversationData: []
+   conversationData: [],
+   showStartupDetailView: false,
+   selectedStartup: null,
+   startupInfoList: [],
 };
 
 export default (state = INIT_STATE, action) => {
@@ -27,6 +34,33 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 threads: action.payload
+            }
+        }
+        case ON_SELECT_STARTUP: {
+            return {
+                ...state,
+                chatPanel: false,
+                selectedStartup: action.payload,
+                showStartupDetailView: true
+            }
+        }
+        case ON_BACK_CLICK: {
+            return {
+                ...state,
+                selectedStartup: null,
+                showStartupDetailView: false,
+                chatPanel: false
+            }
+        }
+        case ON_STARTUP_INFO_FETCH: {
+            return {
+                ...state
+            }
+        }
+        case ON_STARTUP_INFO_FETCH_DONE: {
+            return {
+                ...state,
+                startupInfoList: action.payload
             }
         }
         default:

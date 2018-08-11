@@ -4,6 +4,8 @@ import Startup from '../Startup';
 import { bindActionCreators } from "redux";
 import {connect} from 'react-redux';
 import { getStartupListDetails } from 'actions/Auth';
+import { onBackClick, onSelectStartup } from 'actions/Discussion';
+
 import StartupDetails from '../StartupDetails';
 
 
@@ -19,17 +21,11 @@ class StartupInfoList extends React.Component {
     }
 
     selectStartup(key) {
-        this.setState({
-            selectedStartup: key,
-            showStartupDetailView: true
-        })
+        this.props.onSelectStartup(key)
     }
 
     onBackClick() {
-        this.setState({
-            selectedStartup: null,
-            showStartupDetailView: false
-        })
+        this.props.onBackClick();
     }
 
     componentDidMount() {
@@ -37,10 +33,10 @@ class StartupInfoList extends React.Component {
     }
     
     render() {
-        let { chatPanel, conversationData } = this.props;
+        let { chatPanel, showStartupDetailView, selectedStartup } = this.props;
         return (
             <div className="app-wrapper">
-                { !this.state.showStartupDetailView && 
+                { !showStartupDetailView && 
                 <div>
                     <ContainerHeader match={this.props.match} title={<span>Startup Applications</span>}/>
                     <div className="row">
@@ -55,10 +51,10 @@ class StartupInfoList extends React.Component {
                  </div>
                 }
                 {
-                    this.state.showStartupDetailView && <StartupDetails onBackClick={this.onBackClick} selectedStartupDetails={this.props.startupInfoList[this.state.selectedStartup]}/>
+                    showStartupDetailView && <StartupDetails onBackClick={this.onBackClick} selectedStartupDetails={this.props.startupInfoList[selectedStartup]}/>
                 }
                 {
-                    this.state.showStartupDetailView && chatPanel && <h2>Chat Screen</h2>
+                    showStartupDetailView && chatPanel && <h2>Chat Screen</h2>
                 }
 
             </div>
@@ -68,12 +64,16 @@ class StartupInfoList extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    const { startupInfoList } = state.auth;
-    const {conversationData, chatPanel} = state.discussion;
-    return { startupInfoList, conversationData, chatPanel };
+    const { chatPanel, showStartupDetailView, selectedStartup, startupInfoList } = state.discussion;
+    return { startupInfoList, chatPanel, showStartupDetailView, selectedStartup};
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ getStartupListDetails }, dispatch);
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(StartupInfoList)
+const mapDispatchToProps = dispatch => {
+    return {
+        getStartupListDetails: bindActionCreators(getStartupListDetails, dispatch),
+        onBackClick: bindActionCreators(onBackClick, dispatch),
+        onSelectStartup: bindActionCreators(onSelectStartup, dispatch)
+    }
+}
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(StartupInfoList)

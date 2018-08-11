@@ -7,12 +7,12 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { fetchDiscussionThreads } from "actions/Discussion";
 import { connect } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import moment from 'moment';
+
 const styles = theme => ({
 	root: {
 		width: "100%",
@@ -53,17 +53,23 @@ class DiscussionList extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this);
+
 	}
 
 	handleClick(event, discussionThread) {
-		console.log(discussionThread)
+		let isAuthUserInList = discussionThread.participants.some(d => d.uid === this.props.authUser.uid);
+		if (!isAuthUserInList) {
+			console.log('Not permitted');
+			return;
+		}
+		console.log(this.props);
+		console.log(discussionThread);
 	}
 
 	render() {
-		const { classes, threads } = this.props;
+		const { classes } = this.props;
+		const {threads} = this.props.discussion;
 		let startUpThreads = threads[this.props.selectedStartupDetails._startupId];
-		console.log(startUpThreads)
 		return (
 			<Paper className={`${classes.root} ${classes.noElevation}`}>
 				<Table className={classes.table}>
@@ -137,8 +143,10 @@ DiscussionList.propTypes = {
 	classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ discussion }) => {
-	return discussion;
+const mapStateToProps = (state) => {
+	let { authUser } = state.auth;
+	let discussion = state.discussion;
+	return { discussion, authUser };
 };
 
 // const mapDispatchToProps = dispatch => {

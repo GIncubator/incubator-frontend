@@ -123,3 +123,10 @@ export const CREATE_THREAD = 'create_thread';
 export const CREATE_THREAD_SUCCESS = 'create_thread_success';
 export const WATCH_STARTUP_THREADS = 'watch_startup_threads';
 export const WATCH_STARTUP_THREADS_SUCCESS = 'watch_startup_threads_success';
+
+
+
+
+
+export const ON_BACK_CLICK = 'on_back_click';
+export const ON_SELECT_STARTUP = 'on_select_startup';
