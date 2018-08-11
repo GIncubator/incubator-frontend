@@ -33,7 +33,7 @@ import * as Api from './../api'
 import gravatar from 'gravatar'
 import { database } from '../firebase/firebase';
 
-function fbToUserModel(fbAuthUser) {
+export function fbToUserModel(fbAuthUser) {
   let {
     displayName,
     email,

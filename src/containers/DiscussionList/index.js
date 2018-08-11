@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-
+import moment from 'moment';
 const styles = theme => ({
 	root: {
 		width: "100%",
@@ -53,7 +53,7 @@ class DiscussionList extends Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchDiscussionThreads();
+		console.log(this);
 	}
 
 	handleClick(event, discussionThread) {
@@ -61,7 +61,7 @@ class DiscussionList extends Component {
 	}
 
 	render() {
-		const { classes, discussionThreads } = this.props;
+		const { classes, threads } = this.props;
 		return (
 			<Paper className={`${classes.root} ${classes.noElevation}`}>
 				<Table className={classes.table}>
@@ -75,10 +75,10 @@ class DiscussionList extends Component {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{discussionThreads &&
-							discussionThreads.map( (discussionThread, index) => {
+						{threads && Object.keys(threads).map((key, val) => {
+								let discussionThread = threads[key];
 								return (
-									<TableRow key={index} onClick={event => this.handleClick(event, discussionThread)} className={classes.rowHover}>
+									<TableRow key={key} onClick={event => this.handleClick(event, discussionThread)} className={classes.rowHover}>
 										<TableCell
 											component="th"
 											scope="row"
@@ -87,7 +87,9 @@ class DiscussionList extends Component {
 											{discussionThread.title}
 										</TableCell>
 										<TableCell numeric>
-											{discussionThread.sentAt}
+											{
+												discussionThread.comments[0].createdAt
+											}
 										</TableCell>
 										<TableCell numeric>
 											<div className={classes.row}>
@@ -115,8 +117,8 @@ class DiscussionList extends Component {
 														src="https://s.gravatar.com/avatar/3300539243f6973420509d515aef07ed?s=100&r=x&d=identicon"
 														/>
 													}
-													title={discussionThread.lastActivity.user || 'Dummy Name'}
-													subheader={discussionThread.lastActivity.sentAt}
+													// title={discussionThread.lastActivity.user || 'Dummy Name'}
+													// subheader={discussionThread.lastActivity.sentAt || 'now'}
 												/>
 										</TableCell>
 									</TableRow>
@@ -134,19 +136,15 @@ DiscussionList.propTypes = {
 };
 
 const mapStateToProps = ({ discussion }) => {
-	const { discussionThreads } = discussion;
-	return {
-		discussionThreads
-	};
+	return discussion;
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		fetchDiscussionThreads: params => dispatch(fetchDiscussionThreads())
-	};
-};
+// const mapDispatchToProps = dispatch => {
+// 	return {
+// 		fetchDiscussionThreads: params => dispatch(fetchDiscussionThreads())
+// 	};
+// };
 
 export default connect(
-	mapStateToProps,
-	mapDispatchToProps
+	mapStateToProps
 )(withStyles(styles)(DiscussionList));

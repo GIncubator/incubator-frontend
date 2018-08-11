@@ -19,30 +19,6 @@ export const ABOVE_THE_HEADER = 'above_the_header';
 export const INSIDE_THE_HEADER = 'inside_the_header';
 export const BELOW_THE_HEADER = 'below_the_header';
 
-//Contact Module const
-
-export const SHOW_MESSAGE = 'show_message';
-export const HIDE_MESSAGE = 'hide_message';
-
-export const FETCH_ALL_CONTACT = 'fetch_all_contact';
-export const FETCH_ALL_CONTACT_SUCCESS = 'fetch_all_contact_success';
-export const ADD_FAVOURITE = 'add_favourite';
-export const ON_CONTACT_SELECT = 'on_contact_select';
-export const ON_ADD_CONTACT = 'on_add_contact';
-export const ON_CONTACT_CLOSE = 'on_contact_close';
-export const ON_FILTER_OPTION_SELECT = 'on_filter_option_select';
-export const ON_SAVE_CONTACT = 'on_save_contact';
-export const ON_DELETE_CONTACT = 'on_delete_contact';
-export const ON_DELETE_SELECTED_CONTACT = 'on_delete_selected_contact';
-export const FILTER_CONTACT = 'filter_contact';
-export const GET_ALL_CONTACT = 'get_all_contact';
-export const GET_UNSELECTED_ALL_CONTACT = 'get_unselected_all_contact';
-export const ON_ALL_CONTACT_SELECT = 'on_all_contact_select';
-export const UPDATE_SEARCH_USER = 'update_search_user';
-export const ON_TOGGLE_DRAWER = 'on_toggle_drawer';
-export const HANDLE_REQUEST_CLOSE = 'handle_request_close';
-export const HIDE_CONTACT_LOADER = 'hide_contact_loader';
-
 //Auth const
 export const SIGNUP_USER = 'signup_user';
 export const SIGNUP_USER_SUCCESS = 'signup_user_success';
@@ -60,22 +36,6 @@ export const SIGNOUT_USER = 'signout_user';
 export const SIGNOUT_USER_SUCCESS = 'signout_user_success';
 export const INIT_URL = 'init_url';
 
-// Chat Module const
-
-export const FETCH_ALL_CHAT_USER = 'fetch_all_chat_user';
-export const FETCH_ALL_CHAT_USER_CONVERSATION = 'fetch_all_chat_user_conversation';
-export const FETCH_ALL_CHAT_USER_SUCCESS = 'fetch_all_chat_user_success';
-export const FETCH_ALL_CHAT_USER_CONVERSATION_SUCCESS = 'fetch_all_chat_user_conversation_success';
-export const FILTER_USERS = 'filter_users';
-export const ON_SELECT_USER = 'on_select_user';
-export const ON_SHOW_LOADER = 'on_show_loader';
-export const ON_HIDE_LOADER = 'on_hide_loader';
-export const USER_INFO_STATE = 'user_info_state';
-export const SUBMIT_COMMENT = 'submit_comment';
-export const UPDATE_MESSAGE_VALUE = 'update_message_value';
-export const UPDATE_SEARCH_CHAT_USER = 'update_search_chat_user';
-export const FETCH_DISCUSSION_THREADS = 'fetch_discussion_threads';
-export const FETCH_DISCUSSION_THREADS_SUCCESS = 'fetch_discussion_threads_success';
 
 //// Mail Module const
 
@@ -149,3 +109,11 @@ export const ON_STARTUP_INFO_FETCH_DONE = 'on_startup_info_fetch_done';
 
 export const ON_SINGLE_STARTUP_INFO_FETCH = 'on_single_startup_info_fetch';
 export const ON_SINGLE_STARTUP_INFO_FETCH_DONE = 'on_single_startup_info_fetch_done';
+
+
+//// Thread and Chat
+
+export const CREATE_THREAD = 'create_thread';
+export const CREATE_THREAD_SUCCESS = 'create_thread_success';
+export const WATCH_STARTUP_THREADS = 'watch_startup_threads';
+export const WATCH_STARTUP_THREADS_SUCCESS = 'watch_startup_threads_success';

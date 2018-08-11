@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import {connect} from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -17,6 +19,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 
 import StartupDisabledFormView from '../StartupDisabledFormView';
+import { createThread, watchOnThread, watchOnThreadDone } from 'Actions/Discussion';
 
 function TabContainer({ children, dir }) {
   return (
@@ -61,6 +64,7 @@ class StartupDetails extends Component {
       'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
       document.querySelector('#insertion-point-jss'),
     );
+    this.props.watchOnThread(this.props.selectedStartupDetails._startupId);
   }
 
 
@@ -72,7 +76,9 @@ class StartupDetails extends Component {
   handleRequestClose = (type) => {
       this.setState({open: false});
       if(type) {
-        
+        let thread = this.state.threadForm;
+        thread.startupKey = this.props.selectedStartupDetails._startupId;
+        this.props.createThread(thread);
         this.setState({ threadForm: { name: '', message: '', participants: ''}})
       }
   };
@@ -187,4 +193,16 @@ class StartupDetails extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(StartupDetails);
+const mapStateToProps = ({discussion}) => {
+  return { discussion };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createThread: bindActionCreators(createThread, dispatch),
+    watchOnThread: bindActionCreators(watchOnThread, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, 
+  { withTheme: true })(StartupDetails));

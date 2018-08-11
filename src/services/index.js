@@ -15,7 +15,7 @@ let axiosConfig = {
   }
 };
 
-const cleanEmail = email => email.replace(/\./g, ',');
+export const cleanEmail = email => email.replace(/\./g, ',');
 
 const registerUser = (name, email, password) => axios.post(CREATE_USER_URL, { name, email, password });
 const loginUser = (email, password) => axios.post(LOGIN_USER_URL, { email, password });
