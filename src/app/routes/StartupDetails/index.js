@@ -177,7 +177,9 @@ class StartupDetails extends Component {
               </Button>
             	<DiscussionList />
           	</TabContainer>
-          	<TabContainer dir={theme.direction}>{"Item Three"}</TabContainer>
+          	<TabContainer dir={theme.direction}>
+                    <h2>Resources</h2>
+            </TabContainer>
         </SwipeableViews>
 
         </div>

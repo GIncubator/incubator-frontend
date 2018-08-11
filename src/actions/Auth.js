@@ -160,7 +160,7 @@ export const getStartupListDetails = () => {
 export const getStartupListDetailsDone = (startupInfoList) => {
 	return {
 		type: ON_STARTUP_INFO_FETCH_DONE,
-		payload: startupInfoList
+		payload: startupInfoList || []
 	}
 }
 
