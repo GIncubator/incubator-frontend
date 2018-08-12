@@ -98,7 +98,8 @@ class StartupDetails extends Component {
 
   render() {
     const { classes, theme } = this.props;
-
+    const { authUser } = this.props;
+    console.log(authUser);
     return (
       <div>
         <Button onClick={this.props.onBackClick} variant="raised" color="primary"> Back </Button>
@@ -177,10 +178,11 @@ class StartupDetails extends Component {
             <StartupDisabledFormView selectedStartupDetails={this.props.selectedStartupDetails}/>
           </TabContainer>
         	<TabContainer dir={theme.direction}>
-              <Button variant="contained" color="default" className={classes.button} onClick={event => this.handleAddNewThread(event)} >
+             { authUser.GUSEC_ROLE === 'GUSEC_ADMIN' && <Button variant="contained" color="default" className={classes.button} onClick={event => this.handleAddNewThread(event)} >
                 NEW THREAD
                 <Icon className={classNames(classes.icon, 'fa fa-plus-circle')} />
               </Button>
+             }
             	<DiscussionList selectedStartupDetails={this.props.selectedStartupDetails}/>
           	</TabContainer>
           	<TabContainer dir={theme.direction}>
@@ -193,8 +195,10 @@ class StartupDetails extends Component {
   }
 }
 
-const mapStateToProps = ({discussion}) => {
-  return { discussion };
+const mapStateToProps = (state) => {
+  let discussion = state.discussion;
+  let { authUser } = state.auth;
+  return { discussion, authUser };
 }
 
 const mapDispatchToProps = dispatch => {
