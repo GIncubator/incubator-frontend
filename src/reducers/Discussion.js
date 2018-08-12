@@ -14,9 +14,7 @@ import {
 
 const INIT_STATE = {
    threads: {},
-   chatPanel: false,
    conversationData: {},
-   showStartupDetailView: false,
    selectedStartup: null,
    selectedStartupThread: null,
    startupInfoList: [],
@@ -43,9 +41,8 @@ export default (state = INIT_STATE, action) => {
         case ON_SELECT_STARTUP: {
             return {
                 ...state,
-                chatPanel: false,
                 selectedStartup: action.payload,
-                showStartupDetailView: true
+               
             }
         }
         case WATCH_ON_COMMENTS: {
@@ -58,8 +55,6 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 selectedStartup: null,
-                showStartupDetailView: false,
-                chatPanel: false
             }
         }
         case ON_STARTUP_INFO_FETCH: {
@@ -76,14 +71,12 @@ export default (state = INIT_STATE, action) => {
         case WATCH_ON_COMMENTS_DONE: {
             return {
                 ...state,
-                chatPanel: true,
                 conversationData: action.payload
             }
         }
         case ON_BACK_CLICK_FROM_CHAT_PANEL: {
             return {
-                ...state,
-                chatPanel: false
+                ...state
             }
         }
         default:

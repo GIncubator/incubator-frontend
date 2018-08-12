@@ -17,7 +17,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
-
+import ContainerHeader from 'components/ContainerHeader/index';
 import StartupDisabledFormView from '../StartupDisabledFormView';
 import { createThread, watchOnThread } from 'actions/Discussion';
 
@@ -60,11 +60,12 @@ class StartupDetails extends Component {
   };
 
   componentDidMount() {
+    const { match: { params } } = this.props;
     loadCSS(
       'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
       document.querySelector('#insertion-point-jss'),
     );
-    this.props.watchOnThread(this.props.selectedStartupDetails._startupId);
+    this.props.watchOnThread(this.selectedStartupDetails._startupId);
   }
 
 
@@ -77,7 +78,7 @@ class StartupDetails extends Component {
       this.setState({open: false});
       if(type) {
         let thread = this.state.threadForm;
-        thread.startupKey = this.props.selectedStartupDetails._startupId;
+        thread.startupKey = selectedStartupDetails._startupId;
         this.props.createThread(thread);
         this.setState({ threadForm: { name: '', message: '', participants: ''}})
       }
@@ -99,10 +100,13 @@ class StartupDetails extends Component {
   render() {
     const { classes, theme } = this.props;
     const { authUser } = this.props;
+    const { match: { params } } = this.props;
+    this.selectedStartupDetails = this.props.discussion.startupInfoList[params.startupId];
     return (
-      <div>
-        <Button onClick={this.props.onBackClick} variant="raised" color="primary"> Back </Button>
-        <StartupDetailWithBgImage name={this.props.selectedStartupDetails.name} founderName={this.props.selectedStartupDetails.founderName} />
+      
+      <div className="app-wrapper">
+        <ContainerHeader match={this.props.match} title={<span>Startup Details</span>}/>
+        <StartupDetailWithBgImage name={this.selectedStartupDetails.name} founderName={this.selectedStartupDetails.founderName} />
         <Dialog open={this.state.open} onClose={() => this.handleRequestClose(null)} fullWidth>
             <DialogTitle>Create new thread</DialogTitle>
             <DialogContent>
@@ -174,7 +178,7 @@ class StartupDetails extends Component {
 
         <SwipeableViews axis={theme.direction === "rtl" ? "x-reverse" : "x"} index={this.state.value} onChangeIndex={this.handleChangeIndex}>
           <TabContainer dir={theme.direction}>
-            <StartupDisabledFormView selectedStartupDetails={this.props.selectedStartupDetails}/>
+            <StartupDisabledFormView selectedStartupDetails={this.selectedStartupDetails}/>
           </TabContainer>
         	<TabContainer dir={theme.direction}>
              { authUser.GUSEC_ROLE === 'GUSEC_ADMIN' && <Button variant="contained" color="default" className={classes.button} onClick={event => this.handleAddNewThread(event)} >
@@ -182,13 +186,13 @@ class StartupDetails extends Component {
                 <Icon className={classNames(classes.icon, 'fa fa-plus-circle')} />
               </Button>
              }
-            	<DiscussionList selectedStartupDetails={this.props.selectedStartupDetails}/>
+            	<DiscussionList selectedStartupDetails={this.selectedStartupDetails}/>
           	</TabContainer>
           	<TabContainer dir={theme.direction}>
                 <h2>Resources</h2>
             </TabContainer>
         </SwipeableViews>
-
+    
         </div>
     );
   }

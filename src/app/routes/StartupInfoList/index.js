@@ -15,11 +15,7 @@ import {
 
 class StartupInfoList extends React.Component {
     constructor() {
-        super()
-        this.state = {
-            showStartupDetailView: false,
-            selectedStartup: null
-        }
+        super();
         this.selectStartup = this.selectStartup.bind(this);
         this.onBackClick = this.onBackClick.bind(this);
     }
@@ -36,7 +32,7 @@ class StartupInfoList extends React.Component {
 	componentDidUpdate() {
 		if (this.props.showMessage) {
 			setTimeout(() => {
-					this.props.hideMessage();
+				this.props.hideMessage();
 			}, 1500);
 		}
 	}
@@ -46,10 +42,9 @@ class StartupInfoList extends React.Component {
     }
     
     render() {
-        let { chatPanel, showStartupDetailView, selectedStartup, alertMessage, showMessage } = this.props;
+
         return (
             <div className="app-wrapper">
-                { !showStartupDetailView && !chatPanel &&
                 <div>
                     <ContainerHeader match={this.props.match} title={<span>Startup Applications</span>}/>
                     <div className="row">
@@ -57,21 +52,11 @@ class StartupInfoList extends React.Component {
                             Object.keys(this.props.startupInfoList).map(key => {
                                 let val = this.props.startupInfoList[key]
                                 val._startupId = key;
-                                return (<Startup key={key} props={val} onClick={this.selectStartup}/>)
+                                return (<Startup key={key} startup={val} />)
                             })              
                         }
                     </div>
                  </div>
-                }
-                {showMessage && NotificationManager.error(alertMessage)}
-                    <NotificationContainer/>
-                {
-                    showStartupDetailView && !chatPanel && <StartupDetails onBackClick={this.onBackClick} selectedStartupDetails={this.props.startupInfoList[selectedStartup]}/>
-                }
-                {
-                    showStartupDetailView && chatPanel && <Conversation />
-                }
-
             </div>
         );
     }
