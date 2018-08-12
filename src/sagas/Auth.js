@@ -1,6 +1,6 @@
 import {all, call, fork, put, takeEvery} from "redux-saga/effects"
 import {auth, facebookAuthProvider, githubAuthProvider, googleAuthProvider, twitterAuthProvider} from "firebase/firebase"
-import { startupInfo, startupInfoList, getStartupInfo, writeUserData } from '../services'
+import { startupInfo, startupInfoList, getStartupInfo, writeUserData, registerUser, loginUser } from '../services'
 import {
   SIGNIN_FACEBOOK_USER,
   SIGNIN_GITHUB_USER,
@@ -52,13 +52,10 @@ export function fbToUserModel(fbAuthUser) {
 
 
 const createUserWithEmailPasswordRequest = async (name, email, password) => {
-  return await auth.createUserWithEmailAndPassword(email, password)
-  .then((user) => { 
-    let authUser = auth.currentUser;
-    let photoURL =  gravatar.url(email, {s: '100', r: 'x', d: 'identicon'}, true)
-    authUser.updateProfile({displayName: name, photoURL}).then(()=> {
-      return user;
-    })
+  return await registerUser(name, email, password).then(data => {
+    return auth.signInWithCustomToken(data.data.token)
+  }).then(() => {
+    return auth.currentUser;
   })
   .catch(error => error)
 }
@@ -70,7 +67,13 @@ const saveUserModelDataToFb = async (userModel) => {
 
 const signInUserWithEmailPasswordRequest = async (email, password) =>
   await auth.signInWithEmailAndPassword(email, password)
-  .then(() => { return auth.currentUser} )
+  .then(() => auth.currentUser.getIdToken())
+  .then(token => loginUser(token))
+  .then(data => {
+    return auth.signInWithCustomToken(data.data.token)
+  }).then(() => {
+    return auth.currentUser
+  })
   .catch(error => error)
 
 const signOutRequest = async () =>

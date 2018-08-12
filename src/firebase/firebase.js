@@ -5,7 +5,7 @@ import Config from './../../config'
 const config = Config.FireBase
 firebase.initializeApp(config)
 const auth = firebase.auth()
-
+window.auth = auth;
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 const facebookAuthProvider = new firebase.auth.FacebookAuthProvider()
 const githubAuthProvider = new firebase.auth.GithubAuthProvider()
