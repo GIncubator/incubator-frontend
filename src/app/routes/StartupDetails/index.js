@@ -99,7 +99,6 @@ class StartupDetails extends Component {
   render() {
     const { classes, theme } = this.props;
     const { authUser } = this.props;
-    console.log(authUser);
     return (
       <div>
         <Button onClick={this.props.onBackClick} variant="raised" color="primary"> Back </Button>

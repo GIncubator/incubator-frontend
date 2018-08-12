@@ -71,7 +71,7 @@ class DiscussionList extends Component {
 	}
 
 	render() {
-		const { classes, showMessage, alertMessage } = this.props;
+		const { classes } = this.props;
 		const {threads} = this.props.discussion;
 		let startUpThreads = threads[this.props.selectedStartupDetails._startupId];
 		return (
