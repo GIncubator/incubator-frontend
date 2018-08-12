@@ -184,7 +184,7 @@ class StartupDetails extends Component {
             	<DiscussionList selectedStartupDetails={this.props.selectedStartupDetails}/>
           	</TabContainer>
           	<TabContainer dir={theme.direction}>
-                    <h2>Resources</h2>
+                <h2>Resources</h2>
             </TabContainer>
         </SwipeableViews>
 

@@ -63,7 +63,7 @@ class DiscussionList extends Component {
 	handleClick(event, discussionThread, threadId) {
 		let isAuthUserInList = discussionThread.participants.some(d => d.uid === this.props.authUser.uid);
 		if (!isAuthUserInList) {
-			this.props.showAuthMessage('You are not added in this thread.');
+			this.props.showAuthMessage("You don't have required permission to participate in this discussion thread");
 			return;
 		}
 		let startupKey = this.props.discussion.selectedStartup;
