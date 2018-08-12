@@ -33,7 +33,7 @@ import * as Api from './../api'
 import gravatar from 'gravatar'
 import { database } from '../firebase/firebase';
 
-export function fbToUserModel(fbAuthUser) {
+export const fbToUserModel = async (fbAuthUser) => {
   let {
     displayName,
     email,
@@ -41,12 +41,15 @@ export function fbToUserModel(fbAuthUser) {
     emailVerified,
     uid
   } = fbAuthUser;
+  let { claims } = await fbAuthUser.getIdTokenResult();
+  let GUSEC_ROLE = claims.GUSEC_ROLE || 'GUSEC_USER';
   return {
     displayName,
     email,
     photoURL,
     emailVerified,
-    uid
+    uid,
+    GUSEC_ROLE
   }
 }
 
@@ -132,7 +135,7 @@ function* createUserWithEmailPassword({payload}) {
       const signUpUser = yield call(createUserWithEmailPasswordRequest, name, email, password);
       console.log(signUpUser);
       if(!(signUpUser instanceof Error)) {
-        let userModel = fbToUserModel(auth.currentUser);
+        let userModel = yield call(fbToUserModel, auth.currentUser);
         localStorage.setItem('user', JSON.stringify(userModel));
         const savedUserModelFb = yield call(saveUserModelDataToFb, userModel);
         yield put(userSignUpSuccess(userModel));
@@ -213,10 +216,10 @@ function* signInUserWithTwitter() {
 function* signInUserWithEmailPassword({payload}) {
   const {email, password} = payload
   try {
-    const signInUser = yield call(signInUserWithEmailPasswordRequest, email, password);
+    const signInUser = yield call(signInUserWithEmailPasswordRequest, email, password)
     if(!(signInUser instanceof Error)) {
-      let userModel = fbToUserModel(signInUser);
-      localStorage.setItem('user', JSON.stringify(userModel));
+      let userModel = yield call(fbToUserModel, signInUser)
+      localStorage.setItem('user', JSON.stringify(userModel))
       yield put(userSignInSuccess(userModel));
     } else {
       yield put(showAuthMessage(signInUser.message));
