@@ -68,6 +68,7 @@ class DiscussionList extends Component {
 		}
 		let startupKey = this.props.discussion.selectedStartup;
 		this.props.watchOnComments({threadId, startupKey});
+		this.props.history.push(`/startup-applications/${startupKey}/conversations/${threadId}`);
 	}
 
 	render() {

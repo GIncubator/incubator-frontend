@@ -20,6 +20,7 @@ import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import ContainerHeader from 'components/ContainerHeader/index';
 import StartupDisabledFormView from '../StartupDisabledFormView';
 import { createThread, watchOnThread } from 'actions/Discussion';
+import { onSelectStartup } from 'actions/Discussion';
 
 function TabContainer({ children, dir }) {
   return (
@@ -65,6 +66,7 @@ class StartupDetails extends Component {
       'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
       document.querySelector('#insertion-point-jss'),
     );
+    this.props.onSelectStartup(this.selectedStartupDetails._startupId);
     this.props.watchOnThread(this.selectedStartupDetails._startupId);
   }
 
@@ -78,7 +80,7 @@ class StartupDetails extends Component {
       this.setState({open: false});
       if(type) {
         let thread = this.state.threadForm;
-        thread.startupKey = selectedStartupDetails._startupId;
+        thread.startupKey = this.selectedStartupDetails._startupId;
         this.props.createThread(thread);
         this.setState({ threadForm: { name: '', message: '', participants: ''}})
       }
@@ -105,7 +107,7 @@ class StartupDetails extends Component {
     return (
       
       <div className="app-wrapper">
-        <ContainerHeader match={this.props.match} title={<span>Startup Details</span>}/>
+        <ContainerHeader match={this.props.match}  title={<span>Startup Details</span>}/>
         <StartupDetailWithBgImage name={this.selectedStartupDetails.name} founderName={this.selectedStartupDetails.founderName} />
         <Dialog open={this.state.open} onClose={() => this.handleRequestClose(null)} fullWidth>
             <DialogTitle>Create new thread</DialogTitle>
@@ -207,7 +209,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     createThread: bindActionCreators(createThread, dispatch),
-    watchOnThread: bindActionCreators(watchOnThread, dispatch)
+    watchOnThread: bindActionCreators(watchOnThread, dispatch),
+    onSelectStartup: bindActionCreators(onSelectStartup, dispatch)
   }
 }
 

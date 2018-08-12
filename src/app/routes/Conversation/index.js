@@ -46,10 +46,7 @@ class Conversation extends React.Component {
             this.sendMessage();
         }
     }
-    
-    componentDidMount(){
-        console.log(this.props);
-     }
+ 
 
     render() {
         let { conversationData, selectedStartup, selectedStartupThread, threads } = this.props.discussion;
