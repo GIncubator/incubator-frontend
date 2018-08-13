@@ -13,12 +13,15 @@ import Avatar from "@material-ui/core/Avatar";
 import {
 	showAuthMessage
 } from 'actions/Auth';
-
+import {
+	hideMessage
+} from 'actions/Auth';
 import CardHeader from '@material-ui/core/CardHeader';
 import moment from 'moment';
 import {
 	watchOnComments
 } from 'actions/Discussion';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const styles = theme => ({
 	root: {
@@ -59,6 +62,14 @@ class DiscussionList extends Component {
 		this.state = {};
 	}
 
+	componentDidUpdate() {
+		if (this.props.showMessage) {
+			setTimeout(() => {
+				this.props.hideMessage();
+			}, 1500);
+		}
+	}
+
 
 	handleClick(event, discussionThread, threadId) {
 		let isAuthUserInList = discussionThread.participants.some(d => d.uid === this.props.authUser.uid);
@@ -68,15 +79,18 @@ class DiscussionList extends Component {
 		}
 		let startupKey = this.props.discussion.selectedStartup;
 		this.props.watchOnComments({threadId, startupKey});
-		this.props.history.push(`/startup-applications/${startupKey}/conversations/${threadId}`);
+		this.props.history.push(`/app/startup-applications/${startupKey}/threads/${threadId}`);
 	}
 
 	render() {
-		const { classes } = this.props;
-		const {threads} = this.props.discussion;
-		let startUpThreads = threads[this.props.selectedStartupDetails._startupId];
+		const { classes, showMessage, alertMessage } = this.props;
+		const { threads , selectedStartup } = this.props.discussion;
+		let startUpThreads = threads[selectedStartup];
+		console.log(alertMessage, showMessage)
 		return (
 			<div>
+				{showMessage && NotificationManager.error(alertMessage)}
+        <NotificationContainer/>
 			<Paper className={`${classes.root} ${classes.noElevation}`}>
 				<Table className={classes.table}>
 					<TableHead>
@@ -151,15 +165,16 @@ DiscussionList.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-	let { authUser } = state.auth;
+	let { authUser, showMessage, alertMessage } = state.auth;
 	let discussion = state.discussion;
-	return { discussion, authUser };
+	return { discussion, authUser, showMessage, alertMessage };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
 		watchOnComments: bindActionCreators(watchOnComments, dispatch),
-		showAuthMessage: bindActionCreators(showAuthMessage, dispatch)
+		showAuthMessage: bindActionCreators(showAuthMessage, dispatch),
+		hideMessage: bindActionCreators(hideMessage, dispatch)
   }
 }
 

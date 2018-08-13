@@ -53,8 +53,8 @@ class App extends React.Component {
               <Switch>
                 <Route exact path={`${match.url}/dashboard`} component={asyncComponent(() => import("./routes/Dashboard") )} />
                 <Route exact path={`${match.url}/startup-applications`} component={asyncComponent(() => import("./routes/StartupInfoList") )} />
-                <Route path={`${match.url}/startup-applications/:startupId`} component={asyncComponent(() => import("./routes/StartupDetails") )} />
-                <Route path={`${match.url}/startup-applications/:startupId/conversations/:threadId`} component={asyncComponent(() => import("./routes/Conversation") )} />
+                <Route exact path={`${match.url}/startup-applications/:startupId`} component={asyncComponent(() => import("./routes/StartupDetails") )} />
+                <Route exact path={`${match.url}/startup-applications/:startupId/threads/:threadId`} component={asyncComponent(() => import("./routes/Conversation") )} />
                 
                 <Route component={asyncComponent(() => import("components/Error404") )} />
               </Switch>

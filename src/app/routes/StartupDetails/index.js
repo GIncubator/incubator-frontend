@@ -66,8 +66,9 @@ class StartupDetails extends Component {
       'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
       document.querySelector('#insertion-point-jss'),
     );
-    this.props.onSelectStartup(this.selectedStartupDetails._startupId);
-    this.props.watchOnThread(this.selectedStartupDetails._startupId);
+    let startupKey = this.selectedStartupDetails._startupId;
+    this.props.onSelectStartup(startupKey);
+    this.props.watchOnThread(startupKey);
   }
 
 
@@ -112,7 +113,6 @@ class StartupDetails extends Component {
         <Dialog open={this.state.open} onClose={() => this.handleRequestClose(null)} fullWidth>
             <DialogTitle>Create new thread</DialogTitle>
             <DialogContent>
-              <div className="jr-card">
                 <TextField
                     autoFocus
                     margin="dense"
@@ -126,8 +126,6 @@ class StartupDetails extends Component {
                     fullWidth
                     required
                 />
-                </div>
-                <div className="jr-card">
                 <TextField
                     autoFocus
                     margin="dense"
@@ -143,8 +141,6 @@ class StartupDetails extends Component {
                     defaultValue={this.state.threadForm.message}
                     rows="2"
                 />
-                </div>
-                <div className="jr-card">
                 <TextField
                     autoFocus
                     margin="dense"
@@ -160,7 +156,6 @@ class StartupDetails extends Component {
                     }
                     rows="2"
                 />
-                </div>
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => this.handleRequestClose('create')} color="primary">
@@ -188,7 +183,7 @@ class StartupDetails extends Component {
                 <Icon className={classNames(classes.icon, 'fa fa-plus-circle')} />
               </Button>
              }
-            	<DiscussionList selectedStartupDetails={this.selectedStartupDetails}/>
+            	<DiscussionList history={this.props.history}/>
           	</TabContainer>
           	<TabContainer dir={theme.direction}>
                 <h2>Resources</h2>

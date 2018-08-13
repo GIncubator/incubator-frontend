@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import ContainerHeader from 'components/ContainerHeader/index';
 
 import {
     onBackClickFromChatPanel,
@@ -37,8 +38,11 @@ class Conversation extends React.Component {
                 photoURL: authUser.photoURL
             }
         }
-        let { selectedStartup, selectedStartupThread } = this.props.discussion;
-        this.props.pushComment({ comment, selectedStartup, selectedStartupThread })
+
+        this.props.pushComment({ comment, 
+            selectedStartup: this.startupKey,
+            selectedStartupThread: this.threadKey
+        });
     }
 
     handleInput(evt) {
@@ -49,21 +53,20 @@ class Conversation extends React.Component {
  
 
     render() {
-        let { conversationData, selectedStartup, selectedStartupThread, threads } = this.props.discussion;
+        let { conversationData, threads } = this.props.discussion;
         let authUser = this.props.authUser;
-        let conversation = conversationData[selectedStartup][selectedStartupThread];
-        let title = threads[selectedStartup][selectedStartupThread].title;
+
+        let { match: { params } } = this.props;
+        this.startupKey = params.startupId;
+        this.threadKey = params.threadId;
+        let conversation = conversationData[this.startupKey][this.threadKey];
+
+        let title = threads[this.startupKey][this.threadKey].title;
         return (
-            <div className="chat-box">
+            <div className="app-wrapper">
+            <ContainerHeader match={this.props.match} title={title}/>
+            <div className="chat-box flex-column">
                 <div className="chat-box-main">
-                    <div className="chat-main flex-column">
-                    <div className="chat-main-header">
-                            <Button variant="raised" className="m-1" color="primary" onClick={()=> {
-                                this.props.onBackClickFromChatPanel();
-                            }}>Back</Button>
-                            <Typography align="right" className="m-1" color="primary" variant="title">{title}</Typography>
-                        </div>
-                    </div>
                     <div className="chat-list-scroll scrollbar">
                         <div className="chat-main-content">
                             {
@@ -97,6 +100,7 @@ class Conversation extends React.Component {
                                 </div>
                             </div>
                      </div>
+                 </div>
                  </div>
         )
     }

@@ -4,24 +4,12 @@ import Startup from '../Startup';
 import { bindActionCreators } from "redux";
 import {connect} from 'react-redux';
 import { getStartupListDetails } from 'actions/Auth';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
 
-import {
-	hideMessage
-} from 'actions/Auth';
 
 class StartupInfoList extends React.Component {
     constructor() {
         super();
     }
-
-	// componentDidUpdate() {
-	// 	if (this.props.showMessage) {
-	// 		setTimeout(() => {
-	// 			this.props.hideMessage();
-	// 		}, 1500);
-	// 	}
-	// }
 
     componentDidMount() {
         this.props.getStartupListDetails();
@@ -51,7 +39,6 @@ class StartupInfoList extends React.Component {
 
 const mapStateToProps = (state) => {
     const {  startupInfoList } = state.discussion;
-	// const {  alertMessage, showMessage } = state.auth;
     return { startupInfoList };
 }
 
