@@ -1,11 +1,11 @@
 const devConfig = {
   FireBase: {
-    apiKey: 'AIzaSyA-ZiCPD1pMkM5_7gqs_M03Ql3P-yzZiQU',
-    authDomain: 'gusec-incubator-sandbox.firebaseapp.com',
-    databaseURL: 'https://gusec-incubator-sandbox.firebaseio.com',
-    projectId: 'gusec-incubator-sandbox',
-    storageBucket: 'gusec-incubator-sandbox.appspot.com',
-    messagingSenderId: '940339804600'
+    apiKey: "AIzaSyCLL5ZFtg4Y3_ORIHtOepa22AHoGYukIw4",
+    authDomain: "gusec-incubator-project.firebaseapp.com",
+    databaseURL: "https://gusec-incubator-project.firebaseio.com",
+    projectId: "gusec-incubator-project",
+    storageBucket: "gusec-incubator-project.appspot.com",
+    messagingSenderId: "990443185412"
   },
   apiGateway: {
     URL: 'http://localhost:4000'

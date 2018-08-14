@@ -215,7 +215,8 @@ class WebpackBaseConfig {
           reducers: `${this.srcPathAbsolute}/reducers/`,
           app: `${this.srcPathAbsolute}/app/`,
           styles: `${this.srcPathAbsolute}/styles/`,
-          util: `${this.srcPathAbsolute}/util/`
+		  util: `${this.srcPathAbsolute}/util/`,
+		  public: path.resolve('./public'),
         },
         extensions: ['.js', '.jsx'],
         modules: [
