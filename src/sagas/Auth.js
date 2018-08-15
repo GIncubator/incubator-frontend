@@ -53,7 +53,6 @@ export const fbToUserModel = async (fbAuthUser) => {
   }
 }
 
-
 const createUserWithEmailPasswordRequest = async (name, email, password) => {
   return await registerUser(name, email, password).then(data => {
     return auth.signInWithCustomToken(data.data.token)
@@ -251,6 +250,7 @@ const submitStartupInfoRequest = async (payload) =>
 
 function* submitStartupInfoData({payload}) {
   try {
+    // return new Promise((res) => {})
     const startup = yield call(submitStartupInfoRequest, payload);
     yield put(submitStartupInfoDone('Application submitted succesfully'))
   } catch(error) {
@@ -317,6 +317,7 @@ export function* fetchStartupInfoList() {
 export function* fetchSingleStartupInfo() {
   yield takeEvery(ON_SINGLE_STARTUP_INFO_FETCH, fetchSingleStartupInfoRequest);
 }
+
 export default function* rootSaga() {
   yield all([fork(signInUser),
     fork(createUserAccount),
@@ -325,7 +326,7 @@ export default function* rootSaga() {
     fork(signInWithTwitter),
     fork(signInWithGithub),
     fork(signOutUser),
-    fork(submitStartupInfo),
+    // fork(submitStartupInfo),
     fork(fetchStartupInfoList),
     fork(fetchSingleStartupInfo)
   ])

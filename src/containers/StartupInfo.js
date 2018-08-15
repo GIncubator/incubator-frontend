@@ -1,41 +1,45 @@
-import React from "react";
-import { connect } from "react-redux";
-import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
+import React from "react"
+import { connect } from "react-redux"
+import TextField from "@material-ui/core/TextField"
+import Select from "@material-ui/core/Select"
+import MenuItem from "@material-ui/core/MenuItem"
+import Checkbox from "@material-ui/core/Checkbox"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import FormGroup from "@material-ui/core/FormGroup"
+import Radio from "@material-ui/core/Radio"
+import RadioGroup from "@material-ui/core/RadioGroup"
+import FormHelperText from "@material-ui/core/FormHelperText"
+import FormControl from "@material-ui/core/FormControl"
+import FormLabel from "@material-ui/core/FormLabel"
 
-import Button from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button"
 import {
   NotificationContainer,
   NotificationManager
-} from "react-notifications";
-import CircularProgress from "@material-ui/core/CircularProgress";
+} from "react-notifications"
+import CircularProgress from "@material-ui/core/CircularProgress"
 import NoAuthHeader from 'components/NoAuthHeader'
 
 import {
   hideMessage,
   showAuthLoader,
   userSignUp,
+} from "actions/Auth"
+import {
+  hideStartUpMessage,
+  showStartUpLoader,
   submitStartupInfo
-} from "actions/Auth";
-import { Field, reduxForm } from "redux-form";
+} from "actions/StartUp"
+import { Field, reduxForm } from "redux-form"
 
 const formStyle = {
   width: "1000px"
-};
+}
 
-const errorColor = "#f44336";
+const errorColor = "#f44336"
 
 const validate = values => {
-  const errors = {};
+  const errors = {}
   const requiredFields = [
     "startUpName",
     "founderName",
@@ -60,27 +64,27 @@ const validate = values => {
     "expectedFund",
     "gusecPremisesAccess",
     "facilitiesNeededFromGUSEC"
-  ];
+  ]
   const dynamicFields = [
     "coFounderName-0",
     "coFounderDesignation-0",
     "legalEntityMemberName-0",
     "legalEntityMemberDesignation-0",
     "socialMediaLinks-0"
-  ];
+  ]
   requiredFields.forEach(field => {
     if (!values[field]) {
-      errors[field] = "* Required";
+      errors[field] = "* Required"
     }
-  });
+  })
   dynamicFields.map(field => {
-    const position = Object.keys(values).indexOf(field);
-    const key = Object.keys(values)[position];
+    const position = Object.keys(values).indexOf(field)
+    const key = Object.keys(values)[position]
 
     if (position === -1 || !values[key]) {
-      errors[field] = "* Required";
+      errors[field] = "* Required"
     }
-  });
+  })
 
   const emailFields = [
     'founderEmailAddress',
@@ -92,8 +96,8 @@ const validate = values => {
     }
   })
 
-  return errors;
-};
+  return errors
+}
 
 const renderTextField = ({
   input,
@@ -120,8 +124,8 @@ const renderTextField = ({
         ""
       )}
     </div>
-  );
-};
+  )
+}
 
 const renderCheckbox = ({ input, label, meta: {touched, error}, ...rest }) => (
   <FormControl component="fieldset" error={touched && error}>
@@ -137,7 +141,7 @@ const renderCheckbox = ({ input, label, meta: {touched, error}, ...rest }) => (
       ''
     }
   </FormControl>
-);
+)
 
 const renderRadioGroup = ({ input, label, meta: {touched, error}, ...rest }) => (
   <FormControl component="fieldset" error={touched && error}>
@@ -154,28 +158,11 @@ const renderRadioGroup = ({ input, label, meta: {touched, error}, ...rest }) => 
       ''
     }
   </FormControl>
-);
-
-const renderSelectField = ({
-  input,
-  label,
-  meta: { touched, error },
-  children,
-  ...custom
-}) => (
-  <SelectField
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    onChange={(event, index, value) => input.onChange(value)}
-    children={children}
-    {...custom}
-  />
-);
+)
 
 class StartupInfo extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
       name: "",
       founderName: "",
@@ -219,83 +206,83 @@ class StartupInfo extends React.Component {
         gusec_email_address: false
       },
       gusecPremisesAccess: ""
-    };
+    }
   }
 
   submitApplication() {
-    debugger;
-    this.props.showAuthLoader();
-    this.props.submitStartupInfo(this.state);
+    debugger
+    this.props.showStartUpLoader()
+    this.props.submitStartupInfo(this.state)
   }
 
   handleCheckBoxChange(name) {
     return event => {
-      let facilitiesNeededFromGUSEC = this.state.facilitiesNeededFromGUSEC;
-      facilitiesNeededFromGUSEC[name] = !facilitiesNeededFromGUSEC[name];
-      this.setState({ facilitiesNeededFromGUSEC });
-    };
+      let facilitiesNeededFromGUSEC = this.state.facilitiesNeededFromGUSEC
+      facilitiesNeededFromGUSEC[name] = !facilitiesNeededFromGUSEC[name]
+      this.setState({ facilitiesNeededFromGUSEC })
+    }
   }
 
   componentDidUpdate() {
     if (this.props.showMessage) {
       setTimeout(() => {
-        this.props.hideMessage();
-      }, 3000);
+        this.props.hideStartUpMessage()
+      }, 3000)
     }
   }
 
   handleCofounderNameChange(idx) {
     return evt => {
       const newCofounders = this.state.coFounders.map((coFounder, sidx) => {
-        if (idx !== sidx) return coFounder;
-        return { ...coFounder, name: evt.target.value };
-      });
+        if (idx !== sidx) return coFounder
+        return { ...coFounder, name: evt.target.value }
+      })
 
-      this.setState({ coFounders: newCofounders });
-    };
+      this.setState({ coFounders: newCofounders })
+    }
   }
 
   handleCofounderDesgChange(idx) {
     return evt => {
       const newCofounders = this.state.coFounders.map((coFounder, sidx) => {
-        if (idx !== sidx) return coFounder;
-        return { ...coFounder, designation: evt.target.value };
-      });
+        if (idx !== sidx) return coFounder
+        return { ...coFounder, designation: evt.target.value }
+      })
 
-      this.setState({ coFounders: newCofounders });
-    };
+      this.setState({ coFounders: newCofounders })
+    }
   }
 
   addCofounder() {
     this.setState({
       coFounders: this.state.coFounders.concat([{ name: "", designation: "" }])
-    });
+    })
   }
 
   handleLegalEntityMemberNameChange(idx) {
     return evt => {
       const newlegalEntityMembers = this.state.legalEntityMembers.map(
         (legalEntity, sidx) => {
-          if (idx !== sidx) return legalEntity;
-          return { ...legalEntity, name: evt.target.value };
+          if (idx !== sidx) return legalEntity
+          return { ...legalEntity, name: evt.target.value }
         }
-      );
+      )
 
-      this.setState({ legalEntityMembers: newlegalEntityMembers });
-    };
+      this.setState({ legalEntityMembers: newlegalEntityMembers })
+    }
   }
 
   handleLegalEntityMemberDesgChange(idx) {
     return evt => {
       const newlegalEntityMembers = this.state.legalEntityMembers.map(
         (legalEntity, sidx) => {
-          if (idx !== sidx) return legalEntity;
-          return { ...legalEntity, designation: evt.target.value };
+          if (idx !== sidx) return legalEntity
+          return { ...legalEntity, designation: evt.target.value }
         }
-      );
+      )
 
-      this.setState({ legalEntityMembers: newlegalEntityMembers });
-    };
+      this.setState({ legalEntityMembers: newlegalEntityMembers })
+    }
   }
 
   addLegalEntityMember() {
@@ -303,26 +290,26 @@ class StartupInfo extends React.Component {
       legalEntityMembers: this.state.legalEntityMembers.concat([
         { name: "", designation: "" }
       ])
-    });
+    })
   }
 
   handleSocialMediaLinkChange(idx) {
     return evt => {
       const newSocialMediaLinks = this.state.socialMediaLinks.map(
         (link, sidx) => {
-          if (idx !== sidx) return link;
-          return evt.target.value;
+          if (idx !== sidx) return link
+          return evt.target.value
         }
-      );
+      )
 
-      this.setState({ socialMediaLinks: newSocialMediaLinks });
-    };
+      this.setState({ socialMediaLinks: newSocialMediaLinks })
+    }
   }
 
   addSocialLink() {
     this.setState({
       socialMediaLinks: this.state.socialMediaLinks.concat([""])
-    });
+    })
   }
 
   render() {
@@ -345,7 +332,7 @@ class StartupInfo extends React.Component {
       bankAccountNumber,
       bankName,
       bankIFSC
-    } = this.state;
+    } = this.state
     const {
       showMessage,
       loader,
@@ -355,7 +342,7 @@ class StartupInfo extends React.Component {
       pristine,
       reset,
       submitting
-    } = this.props;
+    } = this.props
     return (
       <div className="app-container mini-drawer">
         <div className="app-main-container">
@@ -430,7 +417,7 @@ class StartupInfo extends React.Component {
                       />
                     </div>
 
-                    <div className="jr-card">
+                    {/* <div className="jr-card">
                       <h2 className="mb-0">Details about cofounders *</h2>
                       <p className="text-muted">
                         Add only cofounder and respective designation per line.
@@ -1086,7 +1073,7 @@ class StartupInfo extends React.Component {
                           control={<Radio color="primary"/>}
                         />
                       </Field>
-                    </div>
+                    </div> */}
 
                     <Button
                       type="submit"
@@ -1114,21 +1101,21 @@ class StartupInfo extends React.Component {
           </main>
         </div>
       </div>
-    );
+    )
   }
 }
 
-const mapStateToProps = ({ auth }) => {
-  const { loader, alertMessage, showMessage, showDoneMessage } = auth;
-  return { loader, alertMessage, showMessage, showDoneMessage };
-};
+const mapStateToProps = ({ startup }) => {
+  const { loader, alertMessage, showMessage, showDoneMessage } = startup
+  return { loader, alertMessage, showMessage, showDoneMessage }
+}
 
 export default connect(
   mapStateToProps,
   {
     userSignUp,
-    hideMessage,
-    showAuthLoader,
+    hideStartUpMessage,
+    showStartUpLoader,
     submitStartupInfo
   }
 )(
@@ -1136,4 +1123,4 @@ export default connect(
     form: "StartupInfo",
     validate
   })(StartupInfo)
-);
+)

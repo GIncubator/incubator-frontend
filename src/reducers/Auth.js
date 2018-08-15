@@ -25,7 +25,6 @@ const INIT_STATE = {
     showDoneMessage: false
 };
 
-
 export default (state = INIT_STATE, action) => {
     switch (action.type) {
         case SIGNUP_USER_SUCCESS: {
@@ -56,7 +55,6 @@ export default (state = INIT_STATE, action) => {
                 loader: false
             }
         }
-
         case SHOW_MESSAGE: {
             return {
                 ...state,
@@ -73,7 +71,6 @@ export default (state = INIT_STATE, action) => {
                 loader: false
             }
         }
-
         case SIGNIN_GOOGLE_USER_SUCCESS: {
             return {
                 ...state,
@@ -112,21 +109,6 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 loader: false
-            }
-        }
-        case ON_STARTUP_INFO_SUBMIT: {
-            return {
-                ...state,
-                showDoneMessage: false,
-                loader: true,
-            }
-        }
-        case ON_STARTUP_INFO_SUBMIT_DONE: {
-            return {
-                ...state,
-                loader: false,
-                showDoneMessage: true,
-                alertMessage: action.payload
             }
         }
         default:
