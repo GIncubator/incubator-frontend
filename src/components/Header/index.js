@@ -134,8 +134,8 @@ class Header extends React.Component {
           <Link className="app-logo mr-2 d-none d-sm-block" to="/">
             <img
               src={require('public/images/gusec-logo.png')}
-              alt="Jambo"
-              title="Jambo"
+              alt="Gusec Incubator"
+              title="Gusec Incubator"
             />
           </Link>
 

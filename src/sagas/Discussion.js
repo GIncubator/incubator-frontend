@@ -51,11 +51,11 @@ const createFirebaseRefChannel = (firebaseRef) => {
 
 function* watchOnStartupThreadComments({payload}) {
   let { startupKey, threadId } = payload;
-  let startupCommentsRef = database.ref(`/startups/${startupKey}/threads/${threadId}/comments`);
+  let startupCommentsRef = database.ref(`/StartUpInfo/${startupKey}/threads/${threadId}/comments`);
   const commentsChannel = yield call(createFirebaseRefChannel, startupCommentsRef);
   while (true) {
     let outPayload = yield take(commentsChannel)
-    yield put(watchOnThreadCommentDone({ 
+    yield put(watchOnThreadCommentDone({
       [startupKey]: {
         [threadId]: outPayload
       }
@@ -65,8 +65,8 @@ function* watchOnStartupThreadComments({payload}) {
 
 const createCommentInThread = async (comment, startupKey, threadKey) => {
     let { createdAt, sentBy } = comment;
-   await database.ref(`/startups/${startupKey}/threads/${threadKey}/comments`).push(comment);
-   return database.ref(`/startups/${startupKey}/threads/${threadKey}/lastActivity`).set({ createdAt, sentBy });
+   await database.ref(`/StartUpInfo/${startupKey}/threads/${threadKey}/comments`).push(comment);
+   return database.ref(`/StartUpInfo/${startupKey}/threads/${threadKey}/lastActivity`).set({ createdAt, sentBy });
 }
 
 function* pushCommentToThreadRequest({payload}) {
@@ -75,7 +75,7 @@ function* pushCommentToThreadRequest({payload}) {
 }
 
 function* watchOnStartupThread({payload}) {
-  let startupRef = database.ref(`/startups/${payload}/threads`);
+  let startupRef = database.ref(`/StartUpInfo/${payload}/threads`);
   const threadChannel = yield call(createFirebaseRefChannel, startupRef)
 
   while (true) {
@@ -87,10 +87,10 @@ function* watchOnStartupThread({payload}) {
 const createThreadFb = async (thread, startupKey) => {
   let comment = thread.comments[0];
   delete thread.comments;
-  let threads = database.ref(`/startups/${startupKey}/threads`);
+  let threads = database.ref(`/StartUpInfo/${startupKey}/threads`);
   let threadKey = threads.push().key;
   await threads.child(threadKey).set(thread);
-  return await database.ref(`/startups/${startupKey}/threads/${threadKey}/comments`)
+  return await database.ref(`/StartUpInfo/${startupKey}/threads/${threadKey}/comments`)
     .push(comment).then(d => d).catch(e=>e);
   // return await threads.push(thread).then(d => console.log()).catch(e=>e);
 };

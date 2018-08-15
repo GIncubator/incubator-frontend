@@ -18,7 +18,7 @@ const registerUser = (name, email, password) => axios.post(CREATE_USER_URL, { na
 const loginUser = (idToken) => axios.post(LOGIN_USER_URL, { idToken });
 
 
-const dbRefStartups = database.ref().child('startups');
+const dbRefStartups = database.ref().child('StartUpInfo');
 const dbRefThreads = database.ref().child('threads');
 
 
@@ -26,7 +26,7 @@ const startupInfo = (startup) => {
   return dbRefStartups.push(startup)
 }
 
-const startupInfoList = async () => 
+const startupInfoList = async () =>
   await dbRefStartups.once('value')
         .then((snapshot) => snapshot.val())
         .catch(error => error);
