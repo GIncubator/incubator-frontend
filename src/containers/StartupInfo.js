@@ -58,7 +58,8 @@ const validate = values => {
     "typeOfIncorporation",
     "raisedFunds",
     "expectedFund",
-    "gusecPremisesAccess"
+    "gusecPremisesAccess",
+    "facilitiesNeededFromGUSEC"
   ];
   const dynamicFields = [
     "coFounderName-0",
@@ -81,12 +82,16 @@ const validate = values => {
     }
   });
 
-  if (
-    values.email &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
-    errors.email = "Invalid email address";
-  }
+  const emailFields = [
+    'founderEmailAddress',
+    'secondaryEmailAddress'
+  ]
+  emailFields.map(email => {
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      errors[email] = "* Invalid email address"
+    }
+  })
+
   return errors;
 };
 
@@ -118,12 +123,20 @@ const renderTextField = ({
   );
 };
 
-const renderCheckbox = ({ input, label }) => (
-  <Checkbox
-    label={label}
-    checked={input.value ? true : false}
-    onCheck={input.onChange}
-  />
+const renderCheckbox = ({ input, label, meta: {touched, error}, ...rest }) => (
+  <FormControl component="fieldset" error={touched && error}>
+    <FormLabel component="h3" style={touched && error ? {color: errorColor} : {color: 'inherit'}} style={{'margin-top': '15px'}}>{label}</FormLabel>
+    <FormGroup
+      onChange={(event, value) => input.onChange(event)}
+    >
+    {rest.children}
+    </FormGroup>
+    {
+      touched && error ?
+      <p className="mb-0" style={{ color: errorColor }}> {error} </p> :
+      ''
+    }
+  </FormControl>
 );
 
 const renderRadioGroup = ({ input, label, meta: {touched, error}, ...rest }) => (
@@ -615,6 +628,7 @@ class StartupInfo extends React.Component {
                       <p className="text-muted">
                         Has your startup raised any funds. If yes, how much?
                       </p>
+                      <hr />
                       <Field
                         type="text"
                         name="expectedFund"
@@ -914,9 +928,17 @@ class StartupInfo extends React.Component {
                       </p>
                     </div>
 
-                    <div className="jr-card  align-items-center">
-                      <h3 className="mb-10">Facilities Needed From GUSEC *</h3>
-                      <FormGroup>
+                    <div className="jr-card align-items-center">
+                      <Field
+                        name="facilitiesNeededFromGUSEC"
+                        component={renderCheckbox}
+                        onChange={(event, value) => {
+                            console.log(event.target.value)
+                          }
+                        }
+                        value={() => this.state.facilitiesNeededFromGUSEC}
+                        label="Facilities Needed From GUSEC *"
+                      >
                         <FormControlLabel
                           control={
                             <Checkbox
@@ -1027,7 +1049,8 @@ class StartupInfo extends React.Component {
                           }
                           label="24x7 co-working access"
                         />
-                      </FormGroup>
+                      </Field>
+                      < hr />
                       <Field
                         type="text"
                         name="gusecPremisesAccess"

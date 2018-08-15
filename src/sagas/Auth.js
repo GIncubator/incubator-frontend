@@ -224,7 +224,7 @@ function* signInUserWithEmailPassword({payload}) {
     } else {
       yield put(showAuthMessage(signInUser.message));
     }
-    
+
   } catch (error) {
       yield put(showAuthMessage(error))
   }
@@ -251,8 +251,9 @@ const submitStartupInfoRequest = async (payload) =>
 
 function* submitStartupInfoData({payload}) {
   try {
-    const startup = yield call(submitStartupInfoRequest, payload);
-    yield put(submitStartupInfoDone('Application submitted succesfully'))
+    // const startup = yield call(submitStartupInfoRequest, payload);
+    // yield put(submitStartupInfoDone('Application submitted succesfully'))
+    yield Promise.resolve()
   } catch(error) {
     yield put(showAuthMessage('Not able to save'))
   }
