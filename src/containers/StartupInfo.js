@@ -18,7 +18,7 @@ import {
   NotificationManager
 } from "react-notifications";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import TopNav from "./TopNav";
+import NoAuthHeader from 'components/NoAuthHeader'
 
 import {
   hideMessage,
@@ -359,7 +359,7 @@ class StartupInfo extends React.Component {
     return (
       <div className="app-container mini-drawer">
         <div className="app-main-container">
-          <TopNav />
+          <NoAuthHeader />
           <main className="app-main-content-wrapper">
             <div className="app-main-content">
               <div className="app-wrapper d-flex justify-content-center align-items-center">
