@@ -2,7 +2,6 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
-import Avatar from "@material-ui/core/Avatar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
@@ -15,14 +14,7 @@ import {
   INSIDE_THE_HEADER
 } from "constants/ActionTypes";
 import SearchBox from "components/SearchBox";
-import MailNotification from "../MailNotification";
-import AppNotification from "../AppNotification";
-import CardHeader from "components/dashboard/Common/CardHeader/index";
 import { switchLanguage, toggleCollapsedNav } from "actions/Setting";
-import IntlMessages from "util/IntlMessages";
-import LanguageSwitcher from "components/LanguageSwitcher/index";
-import Menu from "components/TopNav/Menu";
-import UserInfoPopup from "components/UserInfo/UserInfoPopup";
 
 class NoAuthHeader extends React.Component {
   constructor() {
