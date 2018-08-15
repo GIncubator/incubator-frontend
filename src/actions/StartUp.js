@@ -42,10 +42,10 @@ export const submitStartupInfo = (startupInfo) => {
 	}
 }
 
-export const submitStartupInfoDone = (message) => {
+export const submitStartupInfoDone = ({startUpRegistrationInfo, message}) => {
 	return {
 		type: ON_STARTUP_INFO_SUBMIT_DONE,
-		payload: message
+		payload: {startUpRegistrationInfo, message}
 	}
 }
 

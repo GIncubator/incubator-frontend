@@ -10,6 +10,7 @@ import {
 } from "constants/ActionTypes"
 
 const INIT_STATE = {
+  startUpRegistrationInfo: {},
   startupInfo: {}
 }
 
@@ -74,7 +75,8 @@ export default (state = INIT_STATE, action) => {
           ...state,
           loader: false,
           showDoneMessage: true,
-          alertMessage: action.payload
+          alertMessage: action.payload.message,
+          startUpRegistrationInfo: action.payload.startUpRegistrationInfo
         }
       }
 

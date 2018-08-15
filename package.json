@@ -74,7 +74,8 @@
     "save": "^2.3.1",
     "script-ext-html-webpack-plugin": "^1.8.8",
     "style-ext-html-webpack-plugin": "^3.4.7",
-    "typeface-roboto": "^0.0.45"
+    "typeface-roboto": "^0.0.45",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "clean": "rimraf dist/*",
