@@ -31,8 +31,16 @@ const startupInfoList = async () =>
         .then((snapshot) => snapshot.val())
         .catch(error => error);
 
-const getStartupInfo = async (id) => {
-  return await dbRefStartups.child(id).once('value').then(snapshot => snapshot.val()).catch(error => error);
+const getStartupInfo = async (trackingId) => {
+  const query = dbRefStartups
+    .orderByChild('trackingId')
+    .equalTo(trackingId)
+    .limitToFirst(1)
+
+    return await query
+      .once('value')
+      .then(snapshot => snapshot.val())
+      .catch(error => error)
 }
 
 const writeUserData = async (email, displayName, uid , photoURL) => {

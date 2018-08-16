@@ -104,7 +104,7 @@ const signInUserWithTwitterRequest = async () =>
   .catch(error => error)
 
 
-// function* createUserWithEmailPassword({payload}) {
+// function* createUserWithEmailPassword({trackingId})
 //   const {name, email, password} = payload
 //   try {
 //       const signUpUser = yield call(createUserWithEmailPasswordRequest, email, password)
@@ -243,20 +243,20 @@ function* signOut() {
   }
 }
 
-const submitStartupInfoRequest = async (payload) =>
-  await startupInfo(payload)
-    .then(data => data)
-    .catch(error => error);
+// const submitStartupInfoRequest = async (payload) =>
+//   await startupInfo(payload)
+//     .then(data => data)
+//     .catch(error => error);
 
-function* submitStartupInfoData({payload}) {
-  try {
-    // return new Promise((res) => {})
-    const startup = yield call(submitStartupInfoRequest, payload);
-    yield put(submitStartupInfoDone('Application submitted succesfully'))
-  } catch(error) {
-    yield put(showAuthMessage('Not able to save'))
-  }
-}
+// function* submitStartupInfoData({payload}) {
+//   try {
+//     // return new Promise((res) => {})
+//     const startup = yield call(submitStartupInfoRequest, payload);
+//     yield put(submitStartupInfoDone('Application submitted succesfully'))
+//   } catch(error) {
+//     yield put(showAuthMessage('Not able to save'))
+//   }
+// }
 
 const fetchStartupDetails = async () =>
   await startupInfoList()
@@ -268,15 +268,24 @@ function* fetchStartupInfoListRequest() {
     yield put(getStartupListDetailsDone(startupList));
 }
 
-const fetchSingleStartupDetails = async (id) =>
-  await getStartupInfo(id)
-    .then(data => data)
-    .catch(error => error);
+// const fetchSingleStartupDetails = async (id) =>
+//   await getStartupInfo(id)
+//     .then(data => data)
+//     .catch(error => error);
 
-function* fetchSingleStartupInfoRequest({payload}) {
-    const startup = yield call(fetchSingleStartupDetails, payload);
-    yield put(getSingleStartupDetailsDone(startup));
-}
+// function* fetchSingleStartupInfoRequest({payload}) {
+//   const {trackingId, founderEmailAddress} = payload
+//   const startup = yield call(fetchSingleStartupDetails, trackingId)
+//   let formattedPayload
+//   if (startup) {
+//     const key = Object.keys(startup)[0]
+//     formattedPayload = startup[key]
+//     if (formattedPayload.founderEmailAddress !== founderEmailAddress) {
+//       formattedPayload = null
+//     }
+//   }
+//   yield put(getSingleStartupDetailsDone({startUpInfo: formattedPayload, message: 'Application status check completed.'}));
+// }
 
 export function* createUserAccount() {
   yield takeEvery(SIGNUP_USER, createUserWithEmailPassword)
@@ -306,17 +315,17 @@ export function* signOutUser() {
   yield takeEvery(SIGNOUT_USER, signOut)
 }
 
-export function* submitStartupInfo() {
-  yield takeEvery(ON_STARTUP_INFO_SUBMIT, submitStartupInfoData);
-}
+// export function* submitStartupInfo() {
+//   yield takeEvery(ON_STARTUP_INFO_SUBMIT, submitStartupInfoData);
+// }
 
 export function* fetchStartupInfoList() {
   yield takeEvery(ON_STARTUP_INFO_FETCH, fetchStartupInfoListRequest);
 }
 
-export function* fetchSingleStartupInfo() {
-  yield takeEvery(ON_SINGLE_STARTUP_INFO_FETCH, fetchSingleStartupInfoRequest);
-}
+// export function* fetchSingleStartupInfo() {
+//   yield takeEvery(ON_SINGLE_STARTUP_INFO_FETCH, fetchSingleStartupInfoRequest);
+// }
 
 export default function* rootSaga() {
   yield all([fork(signInUser),
@@ -328,6 +337,6 @@ export default function* rootSaga() {
     fork(signOutUser),
     // fork(submitStartupInfo),
     fork(fetchStartupInfoList),
-    fork(fetchSingleStartupInfo)
+    // fork(fetchSingleStartupInfo)
   ])
 }

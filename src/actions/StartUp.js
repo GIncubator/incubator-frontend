@@ -62,16 +62,16 @@ export const getStartupListDetailsDone = (startupInfoList) => {
 	}
 }
 
-export const getSingleStartupDetails = (id) => {
+export const getSingleStartupDetails = (trackingDetails) => {
 	return {
 		type: ON_SINGLE_STARTUP_INFO_FETCH,
-		payload: id
+		payload: trackingDetails
 	}
 }
 
-export const getSingleStartupDetailsDone = (startupInfo) => {
+export const getSingleStartupDetailsDone = (startUpInfo) => {
 	return {
 		type: ON_SINGLE_STARTUP_INFO_FETCH_DONE,
-		payload: startupInfo
+		payload: startUpInfo
 	}
 }

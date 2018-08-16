@@ -338,7 +338,7 @@ class StartupInfo extends React.Component {
       showMessage,
       loader,
       alertMessage,
-      showDoneMessage,
+      showSISDoneMessage,
       handleSubmit,
       pristine,
       reset,
@@ -351,7 +351,7 @@ class StartupInfo extends React.Component {
           <main className="app-main-content-wrapper">
             <div className="app-main-content">
               <div className="app-wrapper d-flex justify-content-center align-items-center">
-                { !showDoneMessage ?
+                { !showSISDoneMessage ?
                   <div className="jr-card" style={formStyle}>
                     <div className="jr-card-header">
                       <h1 className="mb-0">
@@ -419,7 +419,7 @@ class StartupInfo extends React.Component {
                         />
                       </div>
 
-                      {/* <div className="jr-card">
+                      <div className="jr-card">
                         <h2 className="mb-0">Details about cofounders *</h2>
                         <p className="text-muted">
                           Add only cofounder and respective designation per line.
@@ -1075,7 +1075,7 @@ class StartupInfo extends React.Component {
                             control={<Radio color="primary"/>}
                           />
                         </Field>
-                      </div> */}
+                      </div>
 
                       <Button
                         type="submit"
@@ -1093,7 +1093,7 @@ class StartupInfo extends React.Component {
                         </div>
                       )}
                       {showMessage && NotificationManager.error(alertMessage)}
-                      {showDoneMessage &&
+                      {showSISDoneMessage &&
                         NotificationManager.success(alertMessage)}
                       <NotificationContainer />
                     </form>
@@ -1125,8 +1125,8 @@ class StartupInfo extends React.Component {
 }
 
 const mapStateToProps = ({ startup }) => {
-  const { loader, alertMessage, showMessage, showDoneMessage, startUpRegistrationInfo } = startup
-  return { loader, alertMessage, showMessage, showDoneMessage, startUpRegistrationInfo }
+  const { loader, alertMessage, showMessage, showSISDoneMessage, startUpRegistrationInfo } = startup
+  return { loader, alertMessage, showMessage, showSISDoneMessage, startUpRegistrationInfo }
 }
 
 export default connect(

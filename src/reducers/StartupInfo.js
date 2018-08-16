@@ -11,7 +11,7 @@ import {
 
 const INIT_STATE = {
   startUpRegistrationInfo: {},
-  startupInfo: {}
+  startUpInfo: null
 }
 
 export default (state = INIT_STATE, action) => {
@@ -51,21 +51,26 @@ export default (state = INIT_STATE, action) => {
     case ON_SINGLE_STARTUP_INFO_FETCH:
       {
         return {
-          ...state
+          ...state,
+          showSSIFDoneMessage: false,
+          loader: true,
         }
       }
     case ON_SINGLE_STARTUP_INFO_FETCH_DONE:
       {
         return {
           ...state,
-          startupInfo: action.payload
+          loader: false,
+          showSSIFDoneMessage: true,
+          alertMessage: action.payload.message,
+          startUpInfo: action.payload.startUpInfo
         }
       }
     case ON_STARTUP_INFO_SUBMIT:
       {
         return {
           ...state,
-          showDoneMessage: false,
+          showSISDoneMessage: false,
           loader: true,
         }
       }
@@ -74,7 +79,7 @@ export default (state = INIT_STATE, action) => {
         return {
           ...state,
           loader: false,
-          showDoneMessage: true,
+          showSISDoneMessage: true,
           alertMessage: action.payload.message,
           startUpRegistrationInfo: action.payload.startUpRegistrationInfo
         }

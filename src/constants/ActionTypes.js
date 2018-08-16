@@ -22,6 +22,7 @@ export const INSIDE_THE_HEADER = 'inside_the_header';
 export const BELOW_THE_HEADER = 'below_the_header';
 
 export const ON_SHOW_LOADER = 'on_show_loader';
+export const ON_HIDE_LOADER = 'on_hide_loader';
 export const SHOW_MESSAGE = 'show_message';
 export const HIDE_MESSAGE = 'hide_message';
 

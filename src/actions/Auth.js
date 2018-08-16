@@ -137,20 +137,20 @@ export const hideAuthLoader = () => {
 	};
 };
 
-export const submitStartupInfo = (startupInfo) => {
-	startupInfo.applicationStatus = 'SUBMITTED';
-	return {
-		type: ON_STARTUP_INFO_SUBMIT,
-		payload: startupInfo
-	}
-}
+// export const submitStartupInfo = (startupInfo) => {
+// 	startupInfo.applicationStatus = 'SUBMITTED';
+// 	return {
+// 		type: ON_STARTUP_INFO_SUBMIT,
+// 		payload: startupInfo
+// 	}
+// }
 
-export const submitStartupInfoDone = (message) => {
-	return {
-		type: ON_STARTUP_INFO_SUBMIT_DONE,
-		payload: message
-	}
-}
+// export const submitStartupInfoDone = (message) => {
+// 	return {
+// 		type: ON_STARTUP_INFO_SUBMIT_DONE,
+// 		payload: message
+// 	}
+// }
 
 export const getStartupListDetails = () => {
 	return {
@@ -165,16 +165,16 @@ export const getStartupListDetailsDone = (startupInfoList) => {
 	}
 }
 
-export const getSingleStartupDetails = (id) => {
-	return {
-		type: ON_SINGLE_STARTUP_INFO_FETCH,
-		payload: id
-	}
-}
+// export const getSingleStartupDetails = (trackingDetails) => {
+// 	return {
+// 		type: ON_SINGLE_STARTUP_INFO_FETCH,
+// 		payload: trackingDetails
+// 	}
+// }
 
-export const getSingleStartupDetailsDone = (startupInfo) => {
-	return {
-		type: ON_SINGLE_STARTUP_INFO_FETCH_DONE,
-		payload: startupInfo
-	}
-}
+// export const getSingleStartupDetailsDone = (startupInfo) => {
+// 	return {
+// 		type: ON_SINGLE_STARTUP_INFO_FETCH_DONE,
+// 		payload: startupInfo
+// 	}
+// }
