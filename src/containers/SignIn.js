@@ -52,9 +52,9 @@ class SignIn extends Component {
         <div className="app-login-main-content">
 
           <div className="app-logo-content d-flex align-items-center justify-content-center">
-            <Link className="logo-lg" to="/" title="Jambo">
-            <img src="http://via.placeholder.com/177x65" alt="jambo" title="jambo" />
-            </Link>
+              <Link className="app-logo-md" to="/" title="Gusec Incubator">
+                  <img src={require('public/images/gusec-logo.png')} alt="Gusec Incubator" title="Gusec Incubator"/>
+              </Link>
           </div>
 
           <div className="app-login-content">

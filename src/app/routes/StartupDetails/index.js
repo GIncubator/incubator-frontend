@@ -21,6 +21,11 @@ import ContainerHeader from "components/ContainerHeader/index";
 import StartupDisabledFormView from "../StartupDisabledFormView";
 import { createThread, watchOnThread } from "actions/Discussion";
 import { onSelectStartup } from "actions/Discussion";
+import StartUpApplicationForm from 'components/StartUpApplicationForm'
+import AddCircle from '@material-ui/icons/AddCircle';
+import { PulseLoader} from 'react-spinners'
+import { css } from 'react-emotion'
+import { getStartupListDetails } from "actions/Auth";
 
 function TabContainer({ children, dir }) {
   return <div dir={dir}>{children}</div>;
@@ -40,7 +45,15 @@ const styles = theme => {
       margin: theme.spacing.unit
     },
     button: {
-      margin: theme.spacing.unit * 2
+      margin: theme.spacing.unit * 2,
+      padding: '4px 8px'
+    },
+    dialogHeader: {
+      position: 'relative',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      display: 'inline-block',
+      'margin-left': '10px'
     }
   };
 };
@@ -56,6 +69,10 @@ class StartupDetails extends Component {
     }
   };
 
+  componentWillMount() {
+		this.props.getStartupListDetails();
+	}
+
   componentDidMount() {
     const {
       match: { params }
@@ -64,9 +81,11 @@ class StartupDetails extends Component {
       "https://use.fontawesome.com/releases/v5.1.0/css/all.css",
       document.querySelector("#insertion-point-jss")
     );
-    let startupKey = this.selectedStartupDetails._startupId;
-    this.props.onSelectStartup(startupKey);
-    this.props.watchOnThread(startupKey);
+
+    if (this.selectedStartupDetails) {
+      this.props.onSelectStartup(this.selectedStartupDetails._startupId);
+      this.props.watchOnThread(this.selectedStartupDetails._startupId);
+    }
   }
 
   handleClickOpen = () => {
@@ -82,6 +101,7 @@ class StartupDetails extends Component {
       this.setState({
         threadForm: { name: "", message: "", participants: "" }
       });
+      this.props.getStartupListDetails();
     }
   };
 
@@ -98,20 +118,26 @@ class StartupDetails extends Component {
   }
 
   render() {
+    const pulseLoaderClass = css`
+      text-align: center;
+      margin-top: 20px;
+    `;
     const { classes, theme } = this.props;
     const { authUser } = this.props;
     const {
       match: { params }
     } = this.props;
-    this.selectedStartupDetails = this.props.discussion.startupInfoList[
-      params.startupId
-    ];
-    return (
+
+
+    if (this.props.discussion.startupInfoList) {
+      this.selectedStartupDetails = this.props.discussion.startupInfoList[params.startupId];
+      this.selectedStartupDetails._startupId = params.startupId
+    }
+
+    return this.selectedStartupDetails ?
+    (
       <div className="app-wrapper">
-        <ContainerHeader
-          match={this.props.match}
-          title={<span>Startup Details</span>}
-        />
+        <ContainerHeader match={this.props.match}  title={<span>Startup Details</span>}/>
         <StartupDetailWithBgImage
           name={this.selectedStartupDetails.name}
           founderName={this.selectedStartupDetails.founderName}
@@ -121,7 +147,12 @@ class StartupDetails extends Component {
           onClose={() => this.handleRequestClose(null)}
           fullWidth
         >
-          <DialogTitle>Create new thread</DialogTitle>
+          <DialogTitle>
+            <i style={{'font-size': '48px'}}>
+              <AddCircle fontSize="inherit" />
+            </i>
+            <div className={classes.dialogHeader}>Create new thread</div>
+          </DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
@@ -208,9 +239,10 @@ class StartupDetails extends Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-            <StartupDisabledFormView
+            {/* <StartupDisabledFormView
               selectedStartupDetails={this.selectedStartupDetails}
-            />
+            /> */}
+            <StartUpApplicationForm initialValues={this.selectedStartupDetails} hideButtons={true} disableForm={true} />
           </TabContainer>
           <TabContainer dir={theme.direction}>
             {authUser.GUSEC_ROLE === "GUSEC_ADMIN" && (
@@ -220,10 +252,10 @@ class StartupDetails extends Component {
                 className={classes.button}
                 onClick={event => this.handleAddNewThread(event)}
               >
-                NEW THREAD
                 <Icon
                   className={classNames(classes.icon, "fa fa-plus-circle")}
                 />
+                NEW THREAD
               </Button>
             )}
             <DiscussionList history={this.props.history} />
@@ -233,7 +265,13 @@ class StartupDetails extends Component {
           </TabContainer>
         </SwipeableViews>
       </div>
-    );
+    )
+    :
+    <PulseLoader
+      className={pulseLoaderClass}
+      size={12}
+      loading={true}
+    />
   }
 }
 
@@ -247,7 +285,8 @@ const mapDispatchToProps = dispatch => {
   return {
     createThread: bindActionCreators(createThread, dispatch),
     watchOnThread: bindActionCreators(watchOnThread, dispatch),
-    onSelectStartup: bindActionCreators(onSelectStartup, dispatch)
+    onSelectStartup: bindActionCreators(onSelectStartup, dispatch),
+    getStartupListDetails: bindActionCreators(getStartupListDetails, dispatch)
   };
 };
 

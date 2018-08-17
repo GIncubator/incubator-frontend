@@ -1,26 +1,30 @@
-import axios from 'axios';
-import { database } from '../firebase/firebase';
+import axios from 'axios'
+import { database } from '../firebase/firebase'
 
-const CREATE_USER_URL = 'http://localhost:4000/auth/firebase/register';
-const LOGIN_USER_URL = 'http://localhost:4000/auth/firebase/login';
-const STARTUP_INFO_URL = 'http://localhost:4000/api/v1/startupinfo';
-
+const CREATE_USER_URL = 'http://localhost:4000/auth/firebase/register'
+const LOGIN_USER_URL = 'http://localhost:4000/auth/firebase/login'
+const STARTUP_INFO_URL = 'http://localhost:4000/api/v1/startupinfo'
 
 let axiosConfig = {
-  headers : {
+  headers: {
     'Content-Type': 'application/json',
   }
-};
+}
 
-export const cleanEmail = email => email.replace(/\./g, ',');
+export const cleanEmail = email => email.replace(/\./g, ',')
 
-const registerUser = (name, email, password) => axios.post(CREATE_USER_URL, { name, email, password });
-const loginUser = (idToken) => axios.post(LOGIN_USER_URL, { idToken });
+const registerUser = (name, email, password) => axios.post(CREATE_USER_URL, {
+  name,
+  email,
+  password
+})
 
+const loginUser = (idToken) => axios.post(LOGIN_USER_URL, {
+  idToken
+})
 
-const dbRefStartups = database.ref().child('StartUpInfo');
-const dbRefThreads = database.ref().child('threads');
-
+const dbRefStartups = database.ref().child('StartUpInfo')
+const dbRefThreads = database.ref().child('threads')
 
 const startupInfo = (startup) => {
   return dbRefStartups.push(startup)
@@ -28,8 +32,8 @@ const startupInfo = (startup) => {
 
 const startupInfoList = async () =>
   await dbRefStartups.once('value')
-        .then((snapshot) => snapshot.val())
-        .catch(error => error);
+  .then((snapshot) => snapshot.val())
+  .catch(error => error)
 
 const getStartupInfo = async (trackingId) => {
   const query = dbRefStartups
@@ -37,19 +41,22 @@ const getStartupInfo = async (trackingId) => {
     .equalTo(trackingId)
     .limitToFirst(1)
 
-    return await query
-      .once('value')
-      .then(snapshot => snapshot.val())
-      .catch(error => error)
+  return await query
+    .once('value')
+    .then(snapshot => snapshot.val())
+    .catch(error => error)
 }
 
-const writeUserData = async (email, displayName, uid , photoURL) => {
-  let emailUid = cleanEmail(email);
-  return await database.ref('users/' + emailUid).set({
-    displayName,
-    uid,
-    photoURL
-  });
+const writeUserData = async (email, displayName, uid, photoURL) => {
+  let emailUid = cleanEmail(email)
+
+  return await database
+    .ref('users/' + emailUid)
+    .set({
+      displayName,
+      uid,
+      photoURL
+    })
 }
 
 export {

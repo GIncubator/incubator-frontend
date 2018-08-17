@@ -49,8 +49,8 @@ class SignUp extends React.Component {
                 className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
                 <div className="app-login-main-content">
                     <div className="app-logo-content d-flex align-items-center justify-content-center">
-                        <Link className="logo-lg" to="/" title="Jambo">
-                            <img src="http://via.placeholder.com/177x65" alt="jambo" title="jambo"/>
+                        <Link className="app-logo-md" to="/" title="Gusec Incubator">
+                            <img src={require('public/images/gusec-logo.png')} alt="Gusec Incubator" title="Gusec Incubator"/>
                         </Link>
                     </div>
 
@@ -59,7 +59,7 @@ class SignUp extends React.Component {
                             <h1>Sign Up</h1>
                         </div>
 
-                    
+
                         <div className="app-login-form">
                             <form method="post" action="/">
                                 <TextField
