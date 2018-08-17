@@ -25,6 +25,7 @@ const loginUser = (idToken) => axios.post(LOGIN_USER_URL, {
 
 const dbRefStartups = database.ref().child('StartUpInfo')
 const dbRefThreads = database.ref().child('threads')
+const dbRefUsers = database.ref().child('users')
 
 const startupInfo = (startup) => {
   return dbRefStartups.push(startup)
@@ -59,11 +60,17 @@ const writeUserData = async (email, displayName, uid, photoURL) => {
     })
 }
 
+const fetchUsers = async () =>
+  await dbRefUsers.once('value')
+  .then(snapshot => snapshot.val())
+  .catch(error => error)
+
 export {
   registerUser,
   loginUser,
   startupInfo,
   startupInfoList,
   getStartupInfo,
-  writeUserData
+  writeUserData,
+  fetchUsers
 }
