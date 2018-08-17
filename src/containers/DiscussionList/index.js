@@ -10,175 +10,220 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
+import { showAuthMessage } from "actions/Auth";
+import { hideMessage } from "actions/Auth";
+import CardHeader from "@material-ui/core/CardHeader";
+import moment from "moment";
+import { watchOnComments } from "actions/Discussion";
 import {
-	showAuthMessage
-} from 'actions/Auth';
-import {
-	hideMessage
-} from 'actions/Auth';
-import CardHeader from '@material-ui/core/CardHeader';
-import moment from 'moment';
-import {
-	watchOnComments
-} from 'actions/Discussion';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+  NotificationContainer,
+  NotificationManager
+} from "react-notifications";
+import { withRouter } from "react-router";
+import { PulseLoader } from "react-spinners";
+import { css } from "react-emotion";
 
 const styles = theme => ({
-	root: {
-		width: "100%",
-		overflowX: "auto"
-	},
-	table: {
-		minWidth: 700
-	},
-	rowHover: {
-		'&:hover': {
-			cursor: 'pointer'
-		}
-	},
-	noElevation: {
-		boxShadow: "none",
-		background: "transparent"
-	},
-	row: {
-		display: "flex",
-		justifyContent: "center"
-	},
-	mdText: {
-		fontSize: "1.2rem"
-	},
-	noLRPadding: {
-		paddingLeft: 0,
-		paddingRight: 0
-	},
-	xsText: {
-		fontSize: '.75rem'
-	}
+  root: {
+    width: "100%",
+    overflowX: "auto"
+  },
+  table: {
+    minWidth: 700
+  },
+  rowHover: {
+    "&:hover": {
+      cursor: "pointer"
+    }
+  },
+  noElevation: {
+    boxShadow: "none",
+    background: "transparent"
+  },
+  row: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  mdText: {
+    fontSize: "1.2rem"
+  },
+  noLRPadding: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+  xsText: {
+    fontSize: ".75rem"
+  }
 });
 
 class DiscussionList extends Component {
-	constructor() {
-		super();
-		this.state = {};
-	}
+  constructor() {
+    super();
+    this.state = {};
+  }
 
-	componentDidUpdate() {
-		if (this.props.showMessage) {
-			setTimeout(() => {
-				this.props.hideMessage();
-			}, 1500);
-		}
-	}
+  componentDidUpdate() {
+    if (this.props.showMessage) {
+      setTimeout(() => {
+        this.props.hideMessage();
+      }, 1500);
+    }
+  }
 
+  handleClick(event, discussionThread, threadId) {
+    const {
+      match: { params }
+    } = this.props;
+    let isAuthUserInList = discussionThread.participants.some(
+      d => d.uid === this.props.authUser.uid
+    );
+    if (!isAuthUserInList) {
+      this.props.showAuthMessage(
+        "You don't have required permission to participate in this discussion thread"
+      );
+      return;
+    }
+    let startupKey = this.props.discussion.selectedStartup;
+    this.props.watchOnComments({ threadId, startupKey });
+    this.props.history.push(
+      `/app/startup-applications/${startupKey}/threads/${threadId}`
+    );
+  }
 
-	handleClick(event, discussionThread, threadId) {
-		let isAuthUserInList = discussionThread.participants.some(d => d.uid === this.props.authUser.uid);
-		if (!isAuthUserInList) {
-			this.props.showAuthMessage("You don't have required permission to participate in this discussion thread");
-			return;
-		}
-		let startupKey = this.props.discussion.selectedStartup;
-		this.props.watchOnComments({threadId, startupKey});
-		this.props.history.push(`/app/startup-applications/${startupKey}/threads/${threadId}`);
-	}
+  render() {
+    const pulseLoaderClass = css`
+      text-align: center;
+      margin-top: 20px;
+    `;
 
-	render() {
-		const { classes, showMessage, alertMessage } = this.props;
-		const { threads , selectedStartup } = this.props.discussion;
-		let startUpThreads = threads[selectedStartup];
-		console.log(alertMessage, showMessage)
-		return (
-			<div>
-				{showMessage && NotificationManager.error(alertMessage)}
-        <NotificationContainer/>
-			<Paper className={`${classes.root} ${classes.noElevation}`}>
-				<Table className={classes.table}>
-					<TableHead>
-						<TableRow>
-							<TableCell/>
-							<TableCell numeric>DATE STARTED</TableCell>
-							<TableCell numeric>PARTICIPANTS</TableCell>
-							<TableCell numeric>COMMENTS</TableCell>
-							<TableCell numeric>LATEST ACTIVITY</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{startUpThreads && Object.keys(startUpThreads).map((key) => {
-								let discussionThread = startUpThreads[key];
-								return (
-									<TableRow key={key} onClick={event => this.handleClick(event, discussionThread, key)} className={classes.rowHover}>
-										<TableCell
-											component="th"
-											scope="row"
-											className={classes.mdText}
-										>
-											{discussionThread.title}
-										</TableCell>
-										<TableCell numeric>
-											{
-												moment(discussionThread.createdAt).format('lll')
-											}
-										</TableCell>
-										<TableCell numeric>
-											<div className={classes.row}>
-												{discussionThread.participants.map(
-													(user, i) => {
-														return (
-															<Avatar
-																key={i}
-																alt={user.displayName}
-																src={user.photoURL}
-															/>
-														);
-													}
-												)}
-											</div>
-										</TableCell>
-										<TableCell numeric>
-											{(discussionThread.comments && Object.keys(discussionThread.comments).length) || 0}
-										</TableCell>
-										<TableCell numeric>
-												<CardHeader className={`${classes.noLRPadding} ${classes.xsText}`}
-													avatar={
-														<Avatar
-														alt=""
-														src={discussionThread.lastActivityBy.photoURL}
-														/>
-													}
-													title={discussionThread.lastActivityBy.displayName}
-													subheader={moment(discussionThread.lastActivityBy.createdAt).fromNow()}
-												/>
-										</TableCell>
-									</TableRow>
-								);
-							})}
-					</TableBody>
-				</Table>
-			</Paper>
-			</div>
-		);
-	}
+    const {
+      match: { params }
+    } = this.props;
+    const { classes, showMessage, alertMessage } = this.props;
+    const { threads, selectedStartup } = this.props.discussion;
+    const { startupId } = params
+
+    if (threads && selectedStartup) {
+      this.startUpThreads = threads[selectedStartup];
+      this.threadCount = this.props.discussion.startupInfoList[startupId] && this.props.discussion.startupInfoList[startupId].threads && Object.keys(this.props.discussion.startupInfoList[startupId].threads).length
+    }
+
+    return (
+      <div>
+        {showMessage && NotificationManager.error(alertMessage)}
+        <NotificationContainer />
+        <Paper className={`${classes.root} ${classes.noElevation}`}>
+          {this.startUpThreads ? (
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell />
+                  <TableCell numeric>DATE STARTED</TableCell>
+                  <TableCell numeric>PARTICIPANTS</TableCell>
+                  <TableCell numeric>COMMENTS</TableCell>
+                  <TableCell numeric>LATEST ACTIVITY</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Object.keys(this.startUpThreads).map(key => {
+                  let discussionThread = this.startUpThreads[key];
+                  return (
+                    <TableRow
+                      key={key}
+                      onClick={event =>
+                        this.handleClick(event, discussionThread, key)
+                      }
+                      className={classes.rowHover}
+                    >
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        className={classes.mdText}
+                      >
+                        {discussionThread.title}
+                      </TableCell>
+                      <TableCell numeric>
+                        {moment(discussionThread.createdAt).format("lll")}
+                      </TableCell>
+                      <TableCell numeric>
+                        <div className={classes.row}>
+                          {discussionThread.participants.map((user, i) => {
+                            return (
+                              <Avatar
+                                key={i}
+                                alt={user.displayName}
+                                src={user.photoURL}
+                              />
+                            );
+                          })}
+                        </div>
+                      </TableCell>
+                      <TableCell numeric>
+                        {(discussionThread.comments &&
+                          Object.keys(discussionThread.comments).length) ||
+                          0}
+                      </TableCell>
+                      <TableCell numeric>
+                        <CardHeader
+                          className={`${classes.noLRPadding} ${classes.xsText}`}
+                          avatar={
+                            <Avatar
+                              alt=""
+                              src={discussionThread.lastActivityBy.photoURL}
+                            />
+                          }
+                          title={discussionThread.lastActivityBy.displayName}
+                          subheader={moment(
+                            discussionThread.lastActivityBy.createdAt
+                          ).fromNow()}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          )
+          :
+          [
+            (
+              !this.threadCount  ?
+                <h3 className="text-center">No discussion threads created yet!</h3>
+                :
+                <PulseLoader
+                  className={pulseLoaderClass}
+                  size={12}
+                  loading={true}
+                />
+            )
+          ]}
+        </Paper>
+      </div>
+    );
+  }
 }
 
 DiscussionList.propTypes = {
-	classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => {
-	let { authUser, showMessage, alertMessage } = state.auth;
-	let discussion = state.discussion;
-	return { discussion, authUser, showMessage, alertMessage };
+const mapStateToProps = state => {
+  let { authUser, showMessage, alertMessage } = state.auth;
+  let discussion = state.discussion;
+  return { discussion, authUser, showMessage, alertMessage };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-		watchOnComments: bindActionCreators(watchOnComments, dispatch),
-		showAuthMessage: bindActionCreators(showAuthMessage, dispatch),
-		hideMessage: bindActionCreators(hideMessage, dispatch)
-  }
-}
+    watchOnComments: bindActionCreators(watchOnComments, dispatch),
+    showAuthMessage: bindActionCreators(showAuthMessage, dispatch),
+    hideMessage: bindActionCreators(hideMessage, dispatch)
+  };
+};
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(withStyles(styles)(DiscussionList));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withStyles(styles)(DiscussionList))
+);

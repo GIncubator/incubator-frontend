@@ -13,11 +13,11 @@ import {
 } from 'constants/ActionTypes';
 
 const INIT_STATE = {
-   threads: {},
-   conversationData: {},
+   threads: null,
+   conversationData: null,
    selectedStartup: null,
    selectedStartupThread: null,
-   startupInfoList: [],
+   startupInfoList: null,
 };
 
 export default (state = INIT_STATE, action) => {
@@ -42,13 +42,7 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 selectedStartup: action.payload,
-               
-            }
-        }
-        case WATCH_ON_COMMENTS: {
-            return {
-                ...state,
-                selectedStartupThread: action.payload.threadId
+
             }
         }
         case ON_BACK_CLICK: {
@@ -67,6 +61,12 @@ export default (state = INIT_STATE, action) => {
                 ...state,
                 startupInfoList: action.payload
             }
+        }
+        case WATCH_ON_COMMENTS: {
+          return {
+              ...state,
+              selectedStartupThread: action.payload.threadId
+          }
         }
         case WATCH_ON_COMMENTS_DONE: {
             return {

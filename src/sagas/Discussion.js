@@ -59,7 +59,7 @@ function* watchOnStartupThreadComments({payload}) {
       [startupKey]: {
         [threadId]: outPayload
       }
-    }));
+    }))
   }
 }
 

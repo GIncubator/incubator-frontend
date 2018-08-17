@@ -45,8 +45,8 @@ const styles = theme => {
       margin: theme.spacing.unit
     },
     button: {
-      margin: theme.spacing.unit * 2,
-      padding: '4px 8px'
+      margin: '15px 10px 10px 0px',
+      padding: '4px 8px 4px 0px'
     },
     dialogHeader: {
       position: 'relative',
@@ -69,23 +69,16 @@ class StartupDetails extends Component {
     }
   };
 
-  componentWillMount() {
-		this.props.getStartupListDetails();
-	}
-
   componentDidMount() {
-    const {
-      match: { params }
-    } = this.props;
     loadCSS(
       "https://use.fontawesome.com/releases/v5.1.0/css/all.css",
       document.querySelector("#insertion-point-jss")
     );
 
-    if (this.selectedStartupDetails) {
-      this.props.onSelectStartup(this.selectedStartupDetails._startupId);
-      this.props.watchOnThread(this.selectedStartupDetails._startupId);
-    }
+    const {match: {params}} = this.props
+    this.props.getStartupListDetails()
+    this.props.onSelectStartup(params.startupId)
+    this.props.watchOnThread(params.startupId)
   }
 
   handleClickOpen = () => {
@@ -148,7 +141,7 @@ class StartupDetails extends Component {
           fullWidth
         >
           <DialogTitle>
-            <i style={{'font-size': '48px'}}>
+            <i style={{'fontSize': '48px'}}>
               <AddCircle fontSize="inherit" />
             </i>
             <div className={classes.dialogHeader}>Create new thread</div>
@@ -188,7 +181,6 @@ class StartupDetails extends Component {
                 })
               }
               defaultValue={this.state.threadForm.message}
-              rows="2"
             />
             <TextField
               autoFocus
@@ -261,7 +253,7 @@ class StartupDetails extends Component {
             <DiscussionList history={this.props.history} />
           </TabContainer>
           <TabContainer dir={theme.direction}>
-            <h2>Resources</h2>
+            <h2 className="text-center mt-5">Nothing to show here yet!</h2>
           </TabContainer>
         </SwipeableViews>
       </div>
