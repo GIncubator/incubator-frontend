@@ -17,14 +17,13 @@ import {
 	SIGNOUT_USER,
 	SIGNOUT_USER_SUCCESS,
 	SIGNUP_USER,
-	SIGNUP_USER_SUCCESS,
-	ON_STARTUP_INFO_SUBMIT,
-	ON_STARTUP_INFO_SUBMIT_DONE,
+  SIGNUP_USER_SUCCESS,
+  FETCH_USERS,
+  FETCH_USERS_DONE,
 	ON_STARTUP_INFO_FETCH,
 	ON_STARTUP_INFO_FETCH_DONE,
-	ON_SINGLE_STARTUP_INFO_FETCH,
-	ON_SINGLE_STARTUP_INFO_FETCH_DONE,
 } from 'constants/ActionTypes';
+import {} from '../constants/ActionTypes'
 
 export const userSignUp = (user) => {
 	return {
@@ -137,21 +136,6 @@ export const hideAuthLoader = () => {
 	};
 };
 
-// export const submitStartupInfo = (startupInfo) => {
-// 	startupInfo.applicationStatus = 'SUBMITTED';
-// 	return {
-// 		type: ON_STARTUP_INFO_SUBMIT,
-// 		payload: startupInfo
-// 	}
-// }
-
-// export const submitStartupInfoDone = (message) => {
-// 	return {
-// 		type: ON_STARTUP_INFO_SUBMIT_DONE,
-// 		payload: message
-// 	}
-// }
-
 export const getStartupListDetails = () => {
 	return {
 		type: ON_STARTUP_INFO_FETCH
@@ -165,16 +149,15 @@ export const getStartupListDetailsDone = (startupInfoList) => {
 	}
 }
 
-// export const getSingleStartupDetails = (trackingDetails) => {
-// 	return {
-// 		type: ON_SINGLE_STARTUP_INFO_FETCH,
-// 		payload: trackingDetails
-// 	}
-// }
+export const fetchUsers = () => {
+	return {
+		type: FETCH_USERS
+	}
+}
 
-// export const getSingleStartupDetailsDone = (startupInfo) => {
-// 	return {
-// 		type: ON_SINGLE_STARTUP_INFO_FETCH_DONE,
-// 		payload: startupInfo
-// 	}
-// }
+export const fetchUsersDone = (users) => {
+	return {
+		type: FETCH_USERS_DONE,
+		payload: users || []
+	}
+}

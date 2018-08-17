@@ -10,7 +10,9 @@ import {
   SIGNIN_TWITTER_USER_SUCCESS,
   SIGNIN_USER_SUCCESS,
   SIGNOUT_USER_SUCCESS,
-  SIGNUP_USER_SUCCESS
+  SIGNUP_USER_SUCCESS,
+  FETCH_USERS,
+  FETCH_USERS_DONE
 } from "constants/ActionTypes";
 
 const INIT_STATE = {
@@ -20,7 +22,8 @@ const INIT_STATE = {
   initURL: '',
   authUser: JSON.parse(localStorage.getItem('user')),
   token: localStorage.getItem('token'),
-  showDoneMessage: false
+  showDoneMessage: false,
+  users: null
 };
 
 export default (state = INIT_STATE, action) => {
@@ -119,6 +122,19 @@ export default (state = INIT_STATE, action) => {
         return {
           ...state,
           loader: false
+        }
+      }
+    case FETCH_USERS:
+      {
+        return {
+          ...state,
+        }
+      }
+    case FETCH_USERS_DONE:
+      {
+        return {
+          ...state,
+          users: action.payload
         }
       }
     default:

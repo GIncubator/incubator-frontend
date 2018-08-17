@@ -10,8 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
-import { showAuthMessage } from "actions/Auth";
-import { hideMessage } from "actions/Auth";
+import { showAuthMessage, hideMessage, fetchUsers } from "actions/Auth";
 import CardHeader from "@material-ui/core/CardHeader";
 import moment from "moment";
 import { watchOnComments } from "actions/Discussion";
@@ -44,15 +43,18 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "center"
   },
-  mdText: {
-    fontSize: "1.2rem"
+  normalText: {
+    fontSize: "1rem"
   },
-  noLRPadding: {
-    paddingLeft: 0,
-    paddingRight: 0
+  lessPadding: {
+    padding: '6px  0'
   },
   xsText: {
     fontSize: ".75rem"
+  },
+  smAvatar: {
+    width: 30,
+    height: 30
   }
 });
 
@@ -60,6 +62,10 @@ class DiscussionList extends Component {
   constructor() {
     super();
     this.state = {};
+  }
+
+  componentDidMount() {
+    this.props.fetchUsers()
   }
 
   componentDidUpdate() {
@@ -133,12 +139,12 @@ class DiscussionList extends Component {
                       onClick={event =>
                         this.handleClick(event, discussionThread, key)
                       }
-                      className={classes.rowHover}
+                      className={`${classes.rowHover} ${classes.rowHeight}`}
                     >
                       <TableCell
                         component="th"
                         scope="row"
-                        className={classes.mdText}
+                        className={classes.normalText}
                       >
                         {discussionThread.title}
                       </TableCell>
@@ -153,6 +159,7 @@ class DiscussionList extends Component {
                                 key={i}
                                 alt={user.displayName}
                                 src={user.photoURL}
+                                className={classes.smAvatar}
                               />
                             );
                           })}
@@ -165,11 +172,12 @@ class DiscussionList extends Component {
                       </TableCell>
                       <TableCell numeric>
                         <CardHeader
-                          className={`${classes.noLRPadding} ${classes.xsText}`}
+                          className={`${classes.lessPadding} ${classes.xsText}`}
                           avatar={
                             <Avatar
                               alt=""
                               src={discussionThread.lastActivityBy.photoURL}
+                              className={classes.smAvatar}
                             />
                           }
                           title={discussionThread.lastActivityBy.displayName}
@@ -217,7 +225,8 @@ const mapDispatchToProps = dispatch => {
   return {
     watchOnComments: bindActionCreators(watchOnComments, dispatch),
     showAuthMessage: bindActionCreators(showAuthMessage, dispatch),
-    hideMessage: bindActionCreators(hideMessage, dispatch)
+    hideMessage: bindActionCreators(hideMessage, dispatch),
+    fetchUsers: bindActionCreators(fetchUsers, dispatch),
   };
 };
 

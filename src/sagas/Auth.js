@@ -1,6 +1,6 @@
 import {all, call, fork, put, takeEvery} from "redux-saga/effects"
 import {auth, facebookAuthProvider, githubAuthProvider, googleAuthProvider, twitterAuthProvider} from "firebase/firebase"
-import { startupInfo, startupInfoList, getStartupInfo, writeUserData, registerUser, loginUser } from '../services'
+import { startupInfo, startupInfoList, getStartupInfo, writeUserData, registerUser, loginUser, fetchUsers } from '../services'
 import {
   SIGNIN_FACEBOOK_USER,
   SIGNIN_GITHUB_USER,
@@ -9,9 +9,8 @@ import {
   SIGNIN_USER,
   SIGNOUT_USER,
   SIGNUP_USER,
-  ON_STARTUP_INFO_SUBMIT,
+  FETCH_USERS,
   ON_STARTUP_INFO_FETCH,
-  ON_SINGLE_STARTUP_INFO_FETCH
 } from 'constants/ActionTypes'
 import {
   showAuthMessage,
@@ -20,7 +19,8 @@ import {
   userSignUpSuccess,
   submitStartupInfoDone,
   getStartupListDetailsDone,
-  getSingleStartupDetailsDone
+  getSingleStartupDetailsDone,
+  fetchUsersDone
 } from '../actions/Auth'
 import {
   userFacebookSignInSuccess,
@@ -243,20 +243,21 @@ function* signOut() {
   }
 }
 
-// const submitStartupInfoRequest = async (payload) =>
-//   await startupInfo(payload)
-//     .then(data => data)
-//     .catch(error => error);
+const fetchUsersRequest = async (payload) =>
+  await fetchUsers(payload)
+    .then(data => {
+      return data
+    })
+    .catch(error => error);
 
-// function* submitStartupInfoData({payload}) {
-//   try {
-//     // return new Promise((res) => {})
-//     const startup = yield call(submitStartupInfoRequest, payload);
-//     yield put(submitStartupInfoDone('Application submitted succesfully'))
-//   } catch(error) {
-//     yield put(showAuthMessage('Not able to save'))
-//   }
-// }
+function* fetchUsersSaga({payload}) {
+  try {
+    const users = yield call(fetchUsersRequest, payload)
+    yield put(fetchUsersDone(users))
+  } catch(error) {
+    yield put(showAuthMessage('Not able to fetch users'))
+  }
+}
 
 const fetchStartupDetails = async () =>
   await startupInfoList()
@@ -267,25 +268,6 @@ function* fetchStartupInfoListRequest() {
     const startupList = yield call(fetchStartupDetails);
     yield put(getStartupListDetailsDone(startupList));
 }
-
-// const fetchSingleStartupDetails = async (id) =>
-//   await getStartupInfo(id)
-//     .then(data => data)
-//     .catch(error => error);
-
-// function* fetchSingleStartupInfoRequest({payload}) {
-//   const {trackingId, founderEmailAddress} = payload
-//   const startup = yield call(fetchSingleStartupDetails, trackingId)
-//   let formattedPayload
-//   if (startup) {
-//     const key = Object.keys(startup)[0]
-//     formattedPayload = startup[key]
-//     if (formattedPayload.founderEmailAddress !== founderEmailAddress) {
-//       formattedPayload = null
-//     }
-//   }
-//   yield put(getSingleStartupDetailsDone({startUpInfo: formattedPayload, message: 'Application status check completed.'}));
-// }
 
 export function* createUserAccount() {
   yield takeEvery(SIGNUP_USER, createUserWithEmailPassword)
@@ -315,17 +297,14 @@ export function* signOutUser() {
   yield takeEvery(SIGNOUT_USER, signOut)
 }
 
-// export function* submitStartupInfo() {
-//   yield takeEvery(ON_STARTUP_INFO_SUBMIT, submitStartupInfoData);
-// }
+export function* fetchUsersIntercept() {
+  yield takeEvery(FETCH_USERS, fetchUsersSaga);
+}
 
 export function* fetchStartupInfoList() {
   yield takeEvery(ON_STARTUP_INFO_FETCH, fetchStartupInfoListRequest);
 }
 
-// export function* fetchSingleStartupInfo() {
-//   yield takeEvery(ON_SINGLE_STARTUP_INFO_FETCH, fetchSingleStartupInfoRequest);
-// }
 
 export default function* rootSaga() {
   yield all([fork(signInUser),
@@ -335,8 +314,7 @@ export default function* rootSaga() {
     fork(signInWithTwitter),
     fork(signInWithGithub),
     fork(signOutUser),
-    // fork(submitStartupInfo),
-    fork(fetchStartupInfoList),
-    // fork(fetchSingleStartupInfo)
+    fork(fetchUsersIntercept),
+    fork(fetchStartupInfoList)
   ])
 }

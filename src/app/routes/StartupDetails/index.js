@@ -26,6 +26,12 @@ import AddCircle from '@material-ui/icons/AddCircle';
 import { PulseLoader} from 'react-spinners'
 import { css } from 'react-emotion'
 import { getStartupListDetails } from "actions/Auth";
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Chip from '@material-ui/core/Chip';
 
 function TabContainer({ children, dir }) {
   return <div dir={dir}>{children}</div>;
@@ -54,7 +60,19 @@ const styles = theme => {
       transform: 'translateY(-50%)',
       display: 'inline-block',
       'margin-left': '10px'
-    }
+    },
+    formControl: {
+      margin: theme.spacing.unit,
+      minWidth: 120,
+      maxWidth: 300,
+    },
+    chips: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    chip: {
+      margin: theme.spacing.unit / 4,
+    },
   };
 };
 
@@ -65,7 +83,7 @@ class StartupDetails extends Component {
     threadForm: {
       name: "",
       message: "",
-      participants: ""
+      participants: []
     }
   };
 
@@ -88,11 +106,19 @@ class StartupDetails extends Component {
   handleRequestClose = type => {
     this.setState({ open: false });
     if (type) {
+      // FIXME : direct state mutation is very very bad. did due to something not working and scarcity of time.
+      const emails = []
+      this.state.threadForm.participants.map(participantString => {
+        const {key} = JSON.parse(participantString)
+        emails.push(key)
+      })
+      this.state.threadForm.participants = emails.join(',')
+
       let thread = this.state.threadForm;
       thread.startupKey = this.selectedStartupDetails._startupId;
       this.props.createThread(thread);
       this.setState({
-        threadForm: { name: "", message: "", participants: "" }
+        threadForm: { name: "", message: "", participants: [] }
       });
       this.props.getStartupListDetails();
     }
@@ -115,6 +141,17 @@ class StartupDetails extends Component {
       text-align: center;
       margin-top: 20px;
     `;
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+          width: 250,
+        },
+      },
+    };
+
     const { classes, theme } = this.props;
     const { authUser } = this.props;
     const {
@@ -125,6 +162,21 @@ class StartupDetails extends Component {
     if (this.props.discussion.startupInfoList) {
       this.selectedStartupDetails = this.props.discussion.startupInfoList[params.startupId];
       this.selectedStartupDetails._startupId = params.startupId
+    }
+
+    // this.users = [
+    //   { key: '06.subrata@gmail.com', value: 'Subrata Mal'},
+    //   { key: 'po@gmail.com', value: 'Po M.'}
+    // ]
+
+    this.users = []
+    if (this.props.users) {
+      Object.keys(this.props.users).map(email => {
+        const user = this.props.users[email]
+        if (user.email !== this.props.authUser.email) {
+          this.users.push({key: user.email, value: user.displayName})
+        }
+      })
     }
 
     return this.selectedStartupDetails ?
@@ -165,7 +217,6 @@ class StartupDetails extends Component {
               required
             />
             <TextField
-              autoFocus
               margin="dense"
               label="Post content"
               type="text"
@@ -182,25 +233,49 @@ class StartupDetails extends Component {
               }
               defaultValue={this.state.threadForm.message}
             />
-            <TextField
-              autoFocus
-              margin="dense"
-              label="Add users (emails separted by a comma)"
-              type="text"
-              fullWidth
-              multiline
-              required
-              defaultValue={this.state.threadForm.participants}
-              onChange={evt =>
-                this.setState({
-                  threadForm: {
-                    ...this.state.threadForm,
-                    participants: evt.target.value
-                  }
-                })
-              }
-              rows="2"
-            />
+            <FormControl fullWidth>
+              <InputLabel htmlFor="select-multiple-chip">Team Members *</InputLabel>
+              <Select
+                multiple
+                value={this.state.threadForm.participants}
+                onChange={evt =>
+                  this.setState({
+                    threadForm: {
+                      ...this.state.threadForm,
+                      participants: evt.target.value
+                    }
+                  })
+                }
+                input={<Input id="select-multiple-chip" />}
+                renderValue={selected => (
+                  <div className={classes.chips}>
+                    {
+                      selected.map((userString) => {
+                        const {key, value} = JSON.parse(userString)
+                        return <Chip key={key} label={value} className={classes.chip} />
+                      })
+                    }
+                  </div>
+                )}
+                MenuProps={MenuProps}
+              >
+                {this.users.map((user) => (
+                  <MenuItem
+                    key={user.key}
+                    value={JSON.stringify(user)}
+                    style={{
+                      fontWeight:
+                      this.state.threadForm.participants.indexOf(user.key) === -1
+                          ? theme.typography.fontWeightRegular
+                          : theme.typography.fontWeightMedium,
+                    }}
+                  >
+                    {user.value}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
           </DialogContent>
           <DialogActions>
             <Button
@@ -243,6 +318,7 @@ class StartupDetails extends Component {
                 color="default"
                 className={classes.button}
                 onClick={event => this.handleAddNewThread(event)}
+                disabled={this.users && this.users.length > 0 ? false : true}
               >
                 <Icon
                   className={classNames(classes.icon, "fa fa-plus-circle")}
@@ -269,8 +345,8 @@ class StartupDetails extends Component {
 
 const mapStateToProps = state => {
   let discussion = state.discussion;
-  let { authUser } = state.auth;
-  return { discussion, authUser };
+  let { authUser, users } = state.auth;
+  return { discussion, authUser, users };
 };
 
 const mapDispatchToProps = dispatch => {

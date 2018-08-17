@@ -42,6 +42,8 @@ export const SIGNIN_USER_SUCCESS = 'signin_user_success';
 export const SIGNOUT_USER = 'signout_user';
 export const SIGNOUT_USER_SUCCESS = 'signout_user_success';
 export const INIT_URL = 'init_url';
+export const FETCH_USERS = 'fetch_users'
+export const FETCH_USERS_DONE = 'fetch_users_done'
 
 
 //// Mail Module const
