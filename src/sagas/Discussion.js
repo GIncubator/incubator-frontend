@@ -1,21 +1,21 @@
 import { all, call, fork, put, takeEvery, take } from 'redux-saga/effects';
 import { eventChannel, buffers } from 'redux-saga';
 import { database, auth } from '../firebase/firebase';
-import { cleanEmail } from '../services/';
+import { cleanEmail, getStartUpInfoById } from '../services/';
 import {
   CREATE_THREAD,
   WATCH_STARTUP_THREADS,
   WATCH_ON_COMMENTS,
-  PUSH_COMMENT
+  PUSH_COMMENT,
+  FETCH_START_UP
 } from 'constants/ActionTypes';
 
 import {
   createThreadDone,
   watchOnThreadDone,
-  watchOnThreadCommentDone
+  watchOnThreadCommentDone,
+  fetchStartUpDone
 } from '../actions/Discussion';
-
-
 
 
 const getUserDetails = (participants) => {
@@ -125,6 +125,17 @@ function* createChattingThread({payload}) {
   yield put(createThreadDone('Thread created successfully'));
 }
 
+const fetchStartUpInfo = async (startUpId) =>
+  await getStartUpInfoById(startUpId)
+    .then(data => data)
+    .catch(error => error);
+
+function* fetchStartUpInfoRequest({payload}) {
+  const startUp = yield call(fetchStartUpInfo, payload)
+  startUp._startupId = payload
+  yield put(fetchStartUpDone(startUp))
+}
+
 export function* createThreadSaga() {
   yield takeEvery(CREATE_THREAD, createChattingThread);
 }
@@ -139,12 +150,16 @@ export function* watchThreadComments() {
 export function* pushCommentToThread() {
   yield takeEvery(PUSH_COMMENT, pushCommentToThreadRequest);
 }
+export function* fetchStartUpInfp() {
+  yield takeEvery(FETCH_START_UP, fetchStartUpInfoRequest)
+}
 
 export default function* rootSaga() {
   yield all([
       fork(createThreadSaga),
       fork(watchThread),
       fork(watchThreadComments),
-      fork(pushCommentToThread)
+      fork(pushCommentToThread),
+      fork(fetchStartUpInfp)
   ])
 }

@@ -89,7 +89,7 @@ class DiscussionList extends Component {
       );
       return;
     }
-    let startupKey = this.props.discussion.selectedStartup;
+    let startupKey = this.props.discussion.selectedStartup && this.props.discussion.selectedStartup._startupId;
     this.props.watchOnComments({ threadId, startupKey });
     this.props.history.push(
       `/app/startup-applications/${startupKey}/discussions/${threadId}`
@@ -110,7 +110,7 @@ class DiscussionList extends Component {
     const { startupId } = params
 
     if (threads && selectedStartup) {
-      this.startUpThreads = threads[selectedStartup];
+      this.startUpThreads = threads[selectedStartup._startupId];
       this.threadCount = this.props.discussion.startupInfoList[startupId] && this.props.discussion.startupInfoList[startupId].threads && Object.keys(this.props.discussion.startupInfoList[startupId].threads).length
     }
 

@@ -48,6 +48,13 @@ const getStartupInfo = async (trackingId) => {
     .catch(error => error)
 }
 
+const getStartUpInfoById = async (startUpId) =>
+  await database
+    .ref().child(`StartUpInfo/${startUpId}`)
+    .once('value')
+    .then(snap => snap.val())
+    .catch(err => err)
+
 const writeUserData = async (email, displayName, uid, photoURL) => {
   let emailUid = cleanEmail(email)
 
@@ -81,5 +88,6 @@ export {
   getStartupInfo,
   writeUserData,
   fetchUsers,
-  updateStartUpInfo
+  updateStartUpInfo,
+  getStartUpInfoById
 }

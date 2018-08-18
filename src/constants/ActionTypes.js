@@ -138,3 +138,6 @@ export const WATCH_ON_COMMENTS_DONE = 'watch_on_comments_done';
 
 export const ON_BACK_CLICK_FROM_CHAT_PANEL = 'on_back_click_from_chat_panel';
 export const PUSH_COMMENT = 'push_comment';
+
+export const FETCH_START_UP = 'fetch_start_up'
+export const FETCH_START_UP_DONE = 'fetch_start_up_done'

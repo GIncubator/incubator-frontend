@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button"
 import FormGroup from "@material-ui/core/FormGroup"
 import TextField from "@material-ui/core/TextField"
 import ContainerHeader from "components/ContainerHeader/index"
-import { onBackClickFromChatPanel, pushComment, onSelectStartup, watchOnThread, watchOnComments } from "actions/Discussion"
+import { onBackClickFromChatPanel, pushComment, fetchStartUp, watchOnThread, watchOnComments } from "actions/Discussion"
 import { PulseLoader} from 'react-spinners'
 import { css } from 'react-emotion'
 
@@ -23,7 +23,8 @@ class Conversation extends React.Component {
   componentDidMount() {
     const {match: {params}} = this.props
     const {startupId, threadId} = params
-    this.props.onSelectStartup(startupId)
+
+    this.props.fetchStartUp(startupId)
     this.props.watchOnThread(startupId)
     this.props.watchOnComments({ threadId, startupKey: startupId })
   }
@@ -71,12 +72,15 @@ class Conversation extends React.Component {
       const { conversationData, threads } = this.props.discussion
       this.conversationForThread = conversationData[this.startupKey][this.threadKey]
       this.title = threads[this.startupKey][this.threadKey].title
+
+      this.props.match.url = this.props.match.url.replace(this.props.match.params.startupId, this.props.discussion.selectedStartup.startUpName)
+      this.props.match.url = this.props.match.url.replace(this.props.match.params.threadId, this.title)
     }
 
     return (this.conversationForThread && this.title) ?
     (
       <div className="app-wrapper">
-        <ContainerHeader match={this.props.match} title={this.title} />
+        <ContainerHeader match={this.props.match} title={<span>Discussion Thread</span>} />
         <div className="chat-box flex-column">
           <div className="chat-box-main">
             <div className="chat-list-scroll scrollbar">
@@ -142,7 +146,7 @@ const mapDispatchToProps = dispatch => {
       onBackClickFromChatPanel,
       dispatch
     ),
-    onSelectStartup: bindActionCreators(onSelectStartup, dispatch),
+    fetchStartUp: bindActionCreators(fetchStartUp, dispatch),
     watchOnComments: bindActionCreators(watchOnComments, dispatch),
     watchOnThread: bindActionCreators(watchOnThread, dispatch),
   }

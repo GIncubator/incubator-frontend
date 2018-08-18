@@ -9,7 +9,9 @@ import {
     ON_STARTUP_INFO_FETCH_DONE,
     WATCH_ON_COMMENTS_DONE,
     WATCH_ON_COMMENTS,
-    ON_BACK_CLICK_FROM_CHAT_PANEL
+    ON_BACK_CLICK_FROM_CHAT_PANEL,
+    FETCH_START_UP,
+    FETCH_START_UP_DONE
 } from 'constants/ActionTypes';
 
 const INIT_STATE = {
@@ -38,12 +40,25 @@ export default (state = INIT_STATE, action) => {
                 threads: action.payload
             }
         }
-        case ON_SELECT_STARTUP: {
-            return {
-                ...state,
-                selectedStartup: action.payload,
+        // case ON_SELECT_STARTUP: {
+        //     return {
+        //         ...state,
+        //         selectedStartup: action.payload,
 
-            }
+        //     }
+        // }
+        case FETCH_START_UP: {
+          return {
+              ...state,
+
+          }
+        }
+        case FETCH_START_UP_DONE: {
+          return {
+              ...state,
+              selectedStartup: action.payload,
+
+          }
         }
         case ON_BACK_CLICK: {
             return {

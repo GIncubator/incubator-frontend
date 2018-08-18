@@ -19,8 +19,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { loadCSS } from "fg-loadcss/src/loadCSS";
 import ContainerHeader from "components/ContainerHeader/index";
 import StartupDisabledFormView from "../StartupDisabledFormView";
-import { createThread, watchOnThread } from "actions/Discussion";
-import { onSelectStartup } from "actions/Discussion";
+import { fetchStartUp, createThread, watchOnThread } from "actions/Discussion";
 import StartUpApplicationForm from 'components/StartUpApplicationForm'
 import AddCircle from '@material-ui/icons/AddCircle';
 import { PulseLoader} from 'react-spinners'
@@ -33,7 +32,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import { NotificationContainer, NotificationManager } from "react-notifications"
-
 
 function TabContainer({ children, dir }) {
   return <div dir={dir}>{children}</div>;
@@ -106,11 +104,15 @@ class StartupDetails extends Component {
 
     const {match: {params}} = this.props
 
+    if (!params.tabId) {
+      this.props.history.push(`${this.props.history.location.pathname}/details`)
+    }
+
     if (params.tabId !== 'resources') {
       this.props.getStartupListDetails()
 
       if (params.tabId === 'discussions') {
-        this.props.onSelectStartup(params.startupId)
+        this.props.fetchStartUp(params.startupId)
         this.props.watchOnThread(params.startupId)
       }
     }
@@ -189,6 +191,8 @@ class StartupDetails extends Component {
     if (this.props.discussion.startupInfoList) {
       this.selectedStartupDetails = this.props.discussion.startupInfoList[params.startupId];
       this.selectedStartupDetails._startupId = params.startupId
+
+      this.props.match.url = this.props.match.url.replace(this.props.match.params.startupId, this.selectedStartupDetails.startUpName)
     }
 
     this.users = []
@@ -379,7 +383,7 @@ const mapDispatchToProps = dispatch => {
   return {
     createThread: bindActionCreators(createThread, dispatch),
     watchOnThread: bindActionCreators(watchOnThread, dispatch),
-    onSelectStartup: bindActionCreators(onSelectStartup, dispatch),
+    fetchStartUp: bindActionCreators(fetchStartUp, dispatch),
     getStartupListDetails: bindActionCreators(getStartupListDetails, dispatch)
   };
 };
