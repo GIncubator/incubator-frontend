@@ -54,6 +54,7 @@ const writeUserData = async (email, displayName, uid, photoURL) => {
   return await database
     .ref('users/' + emailUid)
     .set({
+      email,
       displayName,
       uid,
       photoURL
@@ -65,6 +66,13 @@ const fetchUsers = async () =>
   .then(snapshot => snapshot.val())
   .catch(error => error)
 
+const updateStartUpInfo = async (startUpId, applicationStatus) =>
+  await database
+  .ref(`StartUpInfo/${startUpId}`)
+  .update({
+    applicationStatus
+  })
+
 export {
   registerUser,
   loginUser,
@@ -72,5 +80,6 @@ export {
   startupInfoList,
   getStartupInfo,
   writeUserData,
-  fetchUsers
+  fetchUsers,
+  updateStartUpInfo
 }

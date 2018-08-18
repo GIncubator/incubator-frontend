@@ -6,7 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SwipeableViews from "react-swipeable-views";
-import StartupDetailWithBgImage from "components/StartupDetailBgImage";
+import StartupDetailWithBgImage from "containers/StartupDetailBgImage";
 import DiscussionList from "containers/DiscussionList";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
@@ -32,6 +32,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
+import { NotificationContainer, NotificationManager } from "react-notifications"
+
 
 function TabContainer({ children, dir }) {
   return <div dir={dir}>{children}</div>;
@@ -84,8 +86,17 @@ class StartupDetails extends Component {
       name: "",
       message: "",
       participants: []
-    }
+    },
+    tabSelected: 'details',
+    tabSelectedIndex: 0
   };
+
+  tabs = ['details', 'discussions', 'resources']
+
+  constructor() {
+    super()
+    this.handleChange = this.handleChange.bind(this)
+  }
 
   componentDidMount() {
     loadCSS(
@@ -94,9 +105,18 @@ class StartupDetails extends Component {
     );
 
     const {match: {params}} = this.props
-    this.props.getStartupListDetails()
-    this.props.onSelectStartup(params.startupId)
-    this.props.watchOnThread(params.startupId)
+
+    if (params.tabId !== 'resources') {
+      this.props.getStartupListDetails()
+
+      if (params.tabId === 'discussions') {
+        this.props.onSelectStartup(params.startupId)
+        this.props.watchOnThread(params.startupId)
+      }
+    }
+
+    this.state.tabSelected = params.tabId
+    this.state.tabSelectedIndex = this.tabs.indexOf(params.tabId)
   }
 
   handleClickOpen = () => {
@@ -125,11 +145,20 @@ class StartupDetails extends Component {
   };
 
   handleChange = (event, value) => {
-    this.setState({ value });
+    const { match: {params} } = this.props
+    const index = parseInt(event.currentTarget.getAttribute('index'))
+    this.setState({ tabSelected: value, tabSelectedIndex: index })
+
+    let newPath
+    const currentPath = this.props.history.location.pathname
+    if (params.tabId && currentPath.endsWith(params.tabId)) {
+      newPath = currentPath.replace(params.tabId, value)
+    }
+    this.props.history.push(newPath)
   };
 
   handleChangeIndex = index => {
-    this.setState({ value: index });
+    this.setState({ tabSelectedIndex: index });
   };
 
   handleAddNewThread(event) {
@@ -154,20 +183,13 @@ class StartupDetails extends Component {
 
     const { classes, theme } = this.props;
     const { authUser } = this.props;
-    const {
-      match: { params }
-    } = this.props;
-
+    const { match: { params } } = this.props;
+    const { showMessage, alertMessage } = this.props
 
     if (this.props.discussion.startupInfoList) {
       this.selectedStartupDetails = this.props.discussion.startupInfoList[params.startupId];
       this.selectedStartupDetails._startupId = params.startupId
     }
-
-    // this.users = [
-    //   { key: '06.subrata@gmail.com', value: 'Subrata Mal'},
-    //   { key: 'po@gmail.com', value: 'Po M.'}
-    // ]
 
     this.users = []
     if (this.props.users) {
@@ -184,8 +206,9 @@ class StartupDetails extends Component {
       <div className="app-wrapper">
         <ContainerHeader match={this.props.match}  title={<span>Startup Details</span>}/>
         <StartupDetailWithBgImage
-          name={this.selectedStartupDetails.name}
+          startUpName={this.selectedStartupDetails.startUpName}
           founderName={this.selectedStartupDetails.founderName}
+          selectedStartUpDetails={this.selectedStartupDetails}
         />
         <Dialog
           open={this.state.open}
@@ -289,26 +312,24 @@ class StartupDetails extends Component {
 
         <AppBar className="bg-primary" position="static">
           <Tabs
-            value={this.state.value}
+            // value={this.state.value}
+            value={this.state.tabSelected}
             onChange={this.handleChange}
             scrollable
             scrollButtons="on"
           >
-            <Tab className="tab" label="Details" />
-            <Tab className="tab" label="Discussions" />
-            <Tab className="tab" label="Resources" />
+            <Tab className="tab" label="Details" value="details" index={0} />
+            <Tab className="tab" label="Discussions" value="discussions" index={1} />
+            <Tab className="tab" label="Resources" value="resources" index={2} />
           </Tabs>
         </AppBar>
 
         <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={this.state.value}
+          index={this.state.tabSelectedIndex}
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-            {/* <StartupDisabledFormView
-              selectedStartupDetails={this.selectedStartupDetails}
-            /> */}
             <StartUpApplicationForm initialValues={this.selectedStartupDetails} hideButtons={true} disableForm={true} />
           </TabContainer>
           <TabContainer dir={theme.direction}>
@@ -332,7 +353,12 @@ class StartupDetails extends Component {
             <h2 className="text-center mt-5">Nothing to show here yet!</h2>
           </TabContainer>
         </SwipeableViews>
+
+        {showMessage && NotificationManager.error(alertMessage)}
+        <NotificationContainer />
+
       </div>
+
     )
     :
     <PulseLoader
@@ -345,8 +371,8 @@ class StartupDetails extends Component {
 
 const mapStateToProps = state => {
   let discussion = state.discussion;
-  let { authUser, users } = state.auth;
-  return { discussion, authUser, users };
+  let { authUser, users, showMessage, alertMessage } = state.auth;
+  return { discussion, authUser, users, showMessage, alertMessage };
 };
 
 const mapDispatchToProps = dispatch => {

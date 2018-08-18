@@ -23,7 +23,6 @@ import {
 	ON_STARTUP_INFO_FETCH,
 	ON_STARTUP_INFO_FETCH_DONE,
 } from 'constants/ActionTypes';
-import {} from '../constants/ActionTypes'
 
 export const userSignUp = (user) => {
 	return {

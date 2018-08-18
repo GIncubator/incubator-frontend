@@ -66,6 +66,7 @@ export default (state = INIT_STATE, action) => {
           startUpInfo: action.payload.startUpInfo
         }
       }
+    /* StartUp Registration Actions */
     case ON_STARTUP_INFO_SUBMIT:
       {
         return {
@@ -84,6 +85,7 @@ export default (state = INIT_STATE, action) => {
           startUpRegistrationInfo: action.payload.startUpRegistrationInfo
         }
       }
+    /* StartUp Registration Actions */
 
     default:
       return state

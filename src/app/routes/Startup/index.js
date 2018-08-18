@@ -74,7 +74,7 @@ class Startup extends React.Component {
             {/* <Button size="small" color="primary" onClick={() => {onClick(this.props.startup._startupId)}}>Details</Button> */}
 
             <Link
-              to={`/app/startup-applications/${this.props.startup._startupId}`}
+              to={`/app/startup-applications/${this.props.startup._startupId}/details`}
             >
               <Button size="small" color="primary">
                 Details

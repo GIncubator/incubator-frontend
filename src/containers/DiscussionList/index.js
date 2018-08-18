@@ -92,7 +92,7 @@ class DiscussionList extends Component {
     let startupKey = this.props.discussion.selectedStartup;
     this.props.watchOnComments({ threadId, startupKey });
     this.props.history.push(
-      `/app/startup-applications/${startupKey}/threads/${threadId}`
+      `/app/startup-applications/${startupKey}/discussions/${threadId}`
     );
   }
 
@@ -196,7 +196,7 @@ class DiscussionList extends Component {
           [
             (
               !this.threadCount  ?
-                <h3 className="text-center">No discussion threads created yet!</h3>
+                <h3 className="text-center mt-5">No discussion threads created yet!</h3>
                 :
                 <PulseLoader
                   className={pulseLoaderClass}
