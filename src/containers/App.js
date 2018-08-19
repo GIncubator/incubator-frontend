@@ -74,8 +74,8 @@ class App extends Component {
                                                      component={MainApp}/>
                                     <Route path='/signin' component={SignIn}/>
                                     <Route path='/signup' component={SignUp}/>
-                                    <Route path='/startup-application' component={StartupInfo}/>
-                                    <Route path='/application/track-status' component={StartupInfoTracker}/>
+                                    <Route path='/startup/apply' component={StartupInfo}/>
+                                    <Route path='/startup/track-status' component={StartupInfoTracker}/>
                                     <Route
                                         component={asyncComponent(() => import('components/Error404'))}/>
                                 </Switch>

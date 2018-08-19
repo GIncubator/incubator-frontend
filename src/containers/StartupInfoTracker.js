@@ -76,7 +76,7 @@ const StartUp = ({ props }) => {
   return (
     <div className="jr-card p-0" style={{ width: "700px" }}>
       <div className="jr-card-header mb-0 p-4 bg-grey lighten-4">
-        <h1 className="media">{props.name}</h1>
+        <h1 className="media">{props.startUpName}</h1>
         <hr />
         <h3 className="card-heading">
           Application Status: {props.applicationStatus}

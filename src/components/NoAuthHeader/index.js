@@ -15,6 +15,17 @@ import {
 } from "constants/ActionTypes";
 import SearchBox from "components/SearchBox";
 import { switchLanguage, toggleCollapsedNav } from "actions/Setting";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = () => {
+  return {
+    links: {
+      ['&:hover']: {
+        'text-decoration': 'none'
+      }
+    }
+  }
+}
 
 class NoAuthHeader extends React.Component {
   constructor() {
@@ -47,7 +58,8 @@ class NoAuthHeader extends React.Component {
       drawerType,
       locale,
       navigationStyle,
-      horizontalNavPosition
+      horizontalNavPosition,
+      classes
     } = this.props;
     const drawerStyle = drawerType.includes(FIXED_DRAWER)
       ? "d-block d-xl-none"
@@ -69,13 +81,19 @@ class NoAuthHeader extends React.Component {
           <SearchBox styleName="d-none d-sm-block" />
 
           <Button size="small" className="ml-3 text-white d-none d-sm-block">
-            <Link className="mb-0 mr-auto" style={{color: '#fff'}} to="/signin">
+            <Link className={`mb-0 mr-auto ${classes.links}`} style={{color: '#fff'}} to="/startup/track-status">
+              Check Status
+            </Link>
+          </Button>
+
+          <Button size="small" className="ml-3 text-white d-none d-sm-block">
+            <Link className={`mb-0 mr-auto ${classes.links}`} style={{color: '#fff'}} to="/signin">
               Login
             </Link>
           </Button>
 
           <Button size="small" className="ml-3 text-white d-none d-sm-block">
-            <Link className="mb-0 mr-auto" style={{color: '#fff'}} to="/signup">
+            <Link className={`mb-0 mr-auto ${classes.links}`} style={{color: '#fff'}} to="/signup">
               Sign Up
             </Link>
           </Button>
@@ -126,5 +144,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     { toggleCollapsedNav, switchLanguage }
-  )(NoAuthHeader)
+  )(withStyles(styles, { withTheme: true})(NoAuthHeader))
 );

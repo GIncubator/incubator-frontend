@@ -28,12 +28,17 @@ const styles = theme => ({
   lgText: {
     "font-size": "30px"
   },
-  submissionStatus: {
-    width: "50%",
-    color: "white !important"
-  },
   select: {
-    color: "white"
+    color: "white",
+    fontSize: '24px'
+  },
+  startUpName: {
+    float: 'right',
+    marginRight: '50px'
+  },
+  submissionStatus: {
+    float: 'let',
+    marginLeft: '50px'
   }
 });
 
@@ -76,7 +81,7 @@ class StartupDetailBgImage extends Component {
           <div className={`row w-100 ${classes.dataRow}`}>
             {/* <img src={require('public/images/startup-logo-placeholder-200x140.jpg')} style={{width: '30%'}} /> */}
             <div className="col-sm-6 text-truncate">
-              <li className="media">
+              <li className={`media ${classes.startUpName}`}>
                 <i
                   className="align-self-center"
                   style={{ "font-size": iconFontSize }}

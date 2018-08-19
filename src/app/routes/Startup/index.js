@@ -6,12 +6,24 @@ import Call from '@material-ui/icons/Call'
 import Person from '@material-ui/icons/Person'
 import Place from '@material-ui/icons/Place'
 import AttachMoney from '@material-ui/icons/AttachMoney'
+import { withStyles } from "@material-ui/core/styles"
 
 const iconFontSize = "17.33px"
 
-class Startup extends React.Component {
+const styles = () => {
+  return {
+    links: {
+      ['&:hover']: {
+        'text-decoration': 'none'
+      }
+    }
+  }
+}
 
+class Startup extends React.Component {
   render() {
+    const { classes } = this.props
+
     return (
       <div className="col-md-4">
         <div className="jr-card p-0">
@@ -75,6 +87,7 @@ class Startup extends React.Component {
 
             <Link
               to={`/app/startup-applications/${this.props.startup._startupId}/details`}
+              className={classes.links}
             >
               <Button size="small" color="primary">
                 Details
@@ -87,4 +100,4 @@ class Startup extends React.Component {
   }
 }
 
-export default Startup
+export default withStyles(styles, { withTheme: true})(Startup)
