@@ -39,6 +39,9 @@ const styles = theme => ({
   submissionStatus: {
     float: 'let',
     marginLeft: '50px'
+  },
+  disabled: {
+    color: 'white'
   }
 });
 
@@ -68,7 +71,7 @@ class StartupDetailBgImage extends Component {
   }
 
   render() {
-    const { classes, startUpName, founderName } = this.props;
+    const { classes, startUpName, authUser } = this.props;
     return (
       <div className={`img-overlay-card shadow ripple-effect ${classes.card}`}>
         <div className={`${classes.bgImage}`}>
@@ -107,7 +110,10 @@ class StartupDetailBgImage extends Component {
                   defaultValue={this.state.applicationStatus}
                   onChange={evt => this.submitApplicationStatus(evt)}
                   className={classes.select}
-                  // MenuProps={MenuProps}
+                  disabled={authUser.GUSEC_ROLE !== 'GUSEC_ADMIN'}
+                  classes={{
+                    disabled: classes.disabled
+                  }}
                 >
                   {this.possibleApplicationStatus.map(status => (
                     <MenuItem key={status} value={status}>
@@ -124,6 +130,11 @@ class StartupDetailBgImage extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  let { authUser } = state.auth
+  return { authUser }
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     getStartupListDetails
@@ -131,6 +142,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(StartupDetailBgImage));
