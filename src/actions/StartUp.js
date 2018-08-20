@@ -37,7 +37,7 @@ export const hideStartUpLoader = () => {
 }
 
 export const submitStartupInfo = (startupInfo) => {
-	startupInfo.applicationStatus = 'SUBMITTED'
+	startupInfo.applicationStatus = 'Submitted'
 	return {
 		type: ON_STARTUP_INFO_SUBMIT,
 		payload: startupInfo
