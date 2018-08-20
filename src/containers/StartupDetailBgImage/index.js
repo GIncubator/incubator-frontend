@@ -20,7 +20,7 @@ const styles = theme => ({
     maxHeight: "300px !important"
   },
   dataRow: {
-    "margin-top": "150px"
+    "margin-top": "100px"
   },
   companyDetails: {
     "margin-left": "15px"

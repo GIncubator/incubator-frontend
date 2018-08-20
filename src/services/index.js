@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { database } from '../firebase/firebase'
+import config from './../../config'
 
-const CREATE_USER_URL = 'http://localhost:4000/auth/firebase/register'
-const LOGIN_USER_URL = 'http://localhost:4000/auth/firebase/login'
-const STARTUP_INFO_URL = 'http://localhost:4000/api/v1/startupinfo'
+const CREATE_USER_URL = `${config.apiGateway.URL}/auth/firebase/register`
+const LOGIN_USER_URL = `${config.apiGateway.URL}/auth/firebase/login`
+const STARTUP_INFO_URL = `${config.apiGateway.URL}/api/v1/startupinfo`
 
 let axiosConfig = {
   headers: {
